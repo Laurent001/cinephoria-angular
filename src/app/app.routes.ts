@@ -1,13 +1,12 @@
-import { Routes } from '@angular/router';
+import { Route, Routes } from '@angular/router';
 
-export const routes: Routes = [
-  {
+export const initRoutes = (): Routes => {
+  const routes = new Array<Route>();
+
+  routes.push({
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
-  },
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
-];
+  });
+
+  return routes;
+};
