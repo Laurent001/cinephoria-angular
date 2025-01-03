@@ -4,7 +4,7 @@ export const initRoutes = (): Routes => {
   const routes = new Array<Route>();
 
   routes.push({
-    path: 'home',
+    path: 'api/hello',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
   });
 
