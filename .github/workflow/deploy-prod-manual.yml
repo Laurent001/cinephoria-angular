@@ -1,0 +1,41 @@
+name: Manual Deploy to Vercel
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Verify dependencies
+        run: npm list --depth=0
+
+      - name: Verify Angular CLI version
+        run: ng version
+
+      - name: Build Angular project
+        run: npm run build -- --configuration production
+
+      - name: Display build logs on failure
+        if: failure()
+        run: cat ./dist/your-angular-app/index.html
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-args: "--prod"
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_FRONTEND_PROJECT_ID }}
+          working-directory: "./www"
