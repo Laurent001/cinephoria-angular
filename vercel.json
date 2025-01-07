@@ -1,3 +1,16 @@
 {
-  "routes": [{ "src": "/(.*)", "dest": "/index.html" }]
+  "version": 2,
+  "builds": [
+    {
+      "src": "www/**",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "www" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/www/browser/index.html"
+    }
+  ]
 }
