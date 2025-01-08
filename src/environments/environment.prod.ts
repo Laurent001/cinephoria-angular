@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url: 'https://cinephoria-angular.vercel.app',
+  url: 'https://cinephoria-node.vercel.app/',
 };
