@@ -1,5 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.dev';
 
 export const apiPrefixInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.url.startsWith('/v1/api')) {

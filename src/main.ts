@@ -20,7 +20,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app/app.component';
 import { initRoutes } from './app/app.routes';
-import { environment } from './environments/environment';
+import { environment } from './environments/environment.dev';
 
 if (environment.production) {
   enableProdMode();
