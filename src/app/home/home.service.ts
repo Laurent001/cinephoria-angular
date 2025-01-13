@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.dev';
-import { HomeResponse } from './home';
+import { FilmsResponse, HelloResponse, UsersResponse } from './home';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,15 @@ import { HomeResponse } from './home';
 export class HomeService {
   constructor(private http: HttpClient) {}
 
-  getHello(): Observable<HomeResponse> {
-    return this.http.get<HomeResponse>(`${environment.url}/api/hello`);
+  getHello(): Observable<HelloResponse> {
+    return this.http.get<HelloResponse>(`${environment.url}/api/hello`);
+  }
+
+  getUsers(): Observable<UsersResponse[]> {
+    return this.http.get<UsersResponse[]>(`${environment.url}/api/users`);
+  }
+
+  getFilms(): Observable<FilmsResponse[]> {
+    return this.http.get<FilmsResponse[]>(`${environment.url}/api/films`);
   }
 }

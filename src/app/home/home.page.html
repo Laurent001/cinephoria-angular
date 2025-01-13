@@ -1,3 +1,36 @@
 <app-layout [pageTitle]="'Accueil'">
-  <p>{{ message }}</p>
+  <ion-title>En ce moment dans nos cinémas : </ion-title>
+  <ion-content>
+    <ion-list>
+      <ion-item *ngFor="let film of films">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="1">
+              <ion-thumbnail>
+                <img
+                  class="film-poster"
+                  [src]="film.poster"
+                  alt="Affiche du film"
+                />
+              </ion-thumbnail>
+            </ion-col>
+            <ion-col size="4">
+              <ion-card>
+                <ion-card-header>
+                  <ion-card-title>{{ film.title }}</ion-card-title>
+                  <ion-card-subtitle>
+                    {{ film.release_date | date:'dd MMMM yyyy' }} | GENRE
+                    <!-- {{ film.genres.join(', ') }}--><br />
+                    Âge minimum : {{ film.age_minimum }} +<br />
+                    <!-- Note : {{ film.note }}/5 -->
+                  </ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content> {{ film.description }} </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </app-layout>
