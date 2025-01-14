@@ -19,6 +19,7 @@ export interface FilmsResponse {
   id: number;
   title: string;
   description: string;
+  genres: string;
   release_date: Date;
   age_minimum: number;
   favorite: number;
