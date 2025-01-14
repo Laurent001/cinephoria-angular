@@ -2,7 +2,7 @@
   <ion-title>En ce moment dans nos cinémas : </ion-title>
   <ion-content>
     <ion-list>
-      <ion-item *ngFor="let film of films">
+      <ion-item *ngFor="let film of films$ | async">
         <ion-grid>
           <ion-row>
             <ion-col

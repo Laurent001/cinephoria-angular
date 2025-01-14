@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   IonCard,
@@ -8,7 +8,6 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
-  IonTitle,
   IonCol,
   IonContent,
   IonGrid,
@@ -16,8 +15,10 @@ import {
   IonList,
   IonRow,
   IonThumbnail,
+  IonTitle,
 } from '@ionic/angular/standalone';
 import { TranslateModule } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 import { LayoutComponent } from '../layout/layout.component';
 import { FilmsResponse, UsersResponse } from './home';
 import { HomeService } from './home.service';
@@ -47,30 +48,10 @@ import { HomeService } from './home.service';
     LayoutComponent,
   ],
 })
-export class HomePage implements OnInit {
-  protected message = 'angular content';
-  protected users: UsersResponse[] = [];
-  protected films: FilmsResponse[] = [];
+export class HomePage {
+  protected films$: Observable<FilmsResponse[]>;
 
-  constructor(private http: HttpClient, private homeService: HomeService) {}
-
-  ngOnInit(): void {
-    this.homeService.getHello().subscribe({
-      next: (data) => {
-        this.message = data.message;
-      },
-      error: (error) => {
-        console.error('An error occurred:', error);
-      },
-    });
-
-    this.homeService.getFilms().subscribe({
-      next: (data: FilmsResponse[]) => {
-        this.films = data;
-      },
-      error: (error) => {
-        console.error('An error occurred:', error);
-      },
-    });
+  constructor(private http: HttpClient, private homeService: HomeService) {
+    this.films$ = this.homeService.getFilms();
   }
 }
