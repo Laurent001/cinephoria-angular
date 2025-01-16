@@ -20,7 +20,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { LayoutComponent } from '../layout/layout.component';
-import { FilmsResponse, UsersResponse } from './home';
+import { FilmsResponse } from './home';
 import { HomeService } from './home.service';
 
 @Component({
