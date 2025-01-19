@@ -1,5 +1,18 @@
 {
   "menu-home": "Accueil",
   "menu-slogan": "Venez vivre l'émotion sur grand écran !",
+  "menu-film": "Films",
+  "menu-booking": "Réservations",
+  "menu-contact": "Contact",
+  "menu-login": "Connexion",
+  "menu-logout": "Déconnexion",
+  "menu-incident": "Incidents",
+  "menu-intranet": "Intranet",
+  "menu-admin": "Admin",
+  "menu-space": "Mon espace",
+  "film-select-cinema": "Choisissez votre cinéma",
+  "film-select-genre": "Choisissez votre genre",
+  "film-select-date": "Choisir une date",
+  "film-screenings": "Séances",
   "home": "Accueil"
 }
