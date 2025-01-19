@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -19,9 +18,9 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
+import { FilmResponse } from '../film/film';
+import { FilmService } from '../film/film.service';
 import { LayoutComponent } from '../layout/layout.component';
-import { FilmsResponse } from './home';
-import { HomeService } from './home.service';
 
 @Component({
   selector: 'app-home',
@@ -49,9 +48,9 @@ import { HomeService } from './home.service';
   ],
 })
 export class HomePage {
-  protected films$: Observable<FilmsResponse[]>;
+  protected films$: Observable<FilmResponse[]>;
 
-  constructor(private http: HttpClient, private homeService: HomeService) {
-    this.films$ = this.homeService.getFilms();
+  constructor(private filmService: FilmService) {
+    this.films$ = this.filmService.getFilms();
   }
 }

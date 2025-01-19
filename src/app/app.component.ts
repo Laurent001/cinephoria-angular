@@ -73,7 +73,7 @@ export class AppComponent implements OnInit {
       },
       {
         title: this.translateService.instant('menu-film'),
-        url: '/films',
+        url: '/film',
         icon: 'film',
         roles: ['admin', 'user', 'employee', 'guest'],
       },
@@ -97,7 +97,7 @@ export class AppComponent implements OnInit {
       },
       {
         title: this.translateService.instant('menu-incident'),
-        url: '/incidents',
+        url: '/incident',
         icon: 'alert',
         roles: ['admin', 'employee'],
       },

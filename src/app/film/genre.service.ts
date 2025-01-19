@@ -2,15 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.dev';
-import { FilmsResponse } from './home';
+import { GenreResponse } from './film';
 
 @Injectable({
   providedIn: 'root',
 })
-export class HomeService {
+export class GenreService {
   constructor(private http: HttpClient) {}
 
-  getFilms(): Observable<FilmsResponse[]> {
-    return this.http.get<FilmsResponse[]>(`${environment.url}/api/films`);
+  getGenres(): Observable<GenreResponse[]> {
+    return this.http.get<GenreResponse[]>(`${environment.url}/api/genre`);
   }
 }

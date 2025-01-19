@@ -16,6 +16,7 @@ import {
 } from '@ionic/angular/standalone';
 import { apiPrefixInterceptor } from './app/config/api/api-prefix.interceptor';
 
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app/app.component';
@@ -35,6 +36,7 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(initRoutes(), withHashLocation()),
+    provideAnimations(),
     provideHttpClient(withInterceptors([apiPrefixInterceptor])),
     importProvidersFrom(
       TranslateModule.forRoot({

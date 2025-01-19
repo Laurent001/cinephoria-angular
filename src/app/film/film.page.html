@@ -1,13 +1,106 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>film</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-layout [pageTitle]="'menu-film' | translate">
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="4">
+              <ion-select
+                [(ngModel)]="selectedCinema"
+                (ionChange)="onCinemaChange($event)"
+                [placeholder]="'film-select-cinema' | translate"
+              >
+                <ion-select-option
+                  *ngFor="let cinema of cinemas"
+                  [value]="cinema.id"
+                >
+                  {{ cinema.name }}
+                </ion-select-option>
+              </ion-select>
+            </ion-col>
+            <ion-col size="4">
+              <ion-select
+                [(ngModel)]="selectedGenre"
+                (ionChange)="onGenreChange($event)"
+                [placeholder]="'film-select-genre' | translate"
+              >
+                <ion-select-option
+                  *ngFor="let genre of genres"
+                  [value]="genre.id"
+                >
+                  {{ genre.name }}
+                </ion-select-option>
+              </ion-select>
+            </ion-col>
+            <ion-col size="4">
+              <ion-button (click)="openDatePicker()"
+                >{{ selectedDate || 'film-select-date' | translate
+                }}</ion-button
+              >
+              <ion-modal [isOpen]="isDatePickerOpen">
+                <ng-template>
+                  <ion-datetime
+                    [min]="minDate"
+                    presentation="date"
+                    [showDefaultButtons]="true"
+                    (ionChange)="onDateChange($event)"
+                    (ionCancel)="closeDatePicker()"
+                  ></ion-datetime>
+                </ng-template>
+              </ion-modal>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">film</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+    <ion-list>
+      <ion-item *ngFor="let film of filmsFiltered$ | async">
+        <ion-grid>
+          <ion-row>
+            <ion-col
+              size="12"
+              size-xl="2"
+              size-lg="3"
+              size-md="3"
+              size-sm="4"
+              size-xs="6"
+            >
+              <ion-thumbnail>
+                <img
+                  class="film-poster"
+                  [src]="film.poster"
+                  alt="Affiche du film"
+                />
+              </ion-thumbnail>
+            </ion-col>
+            <ion-col
+              size="12"
+              size-xl="10"
+              size-lg="9"
+              size-md="9"
+              size-sm="8"
+              size-xs="6"
+            >
+              <ion-card>
+                <ion-card-header>
+                  <ion-card-title>{{ film.title }}</ion-card-title>
+                  <ion-card-subtitle>
+                    {{ film.release_date | date:'dd MMMM yyyy' }} | {{
+                    film.genres }}<br />
+                    Âge minimum : {{ film.age_minimum }}+<br />
+                    <!-- Note : {{ film.note }}/5 -->
+                  </ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content>{{ film.description }}</ion-card-content>
+                <ion-button [routerLink]="['/film', film.id, 'screenings']"
+                  >{{ 'film-screenings' | translate }}</ion-button
+                >
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</app-layout>

@@ -12,8 +12,16 @@ export const initRoutes = (): Routes => {
   });
 
   routes.push({
-    path: 'films',
+    path: 'film',
     loadComponent: () => import('./film/film.page').then((m) => m.FilmPage),
+    canActivate: [AuthGuard],
+    data: { roles: ['admin', 'user', 'guest', 'employee'] },
+  });
+
+  routes.push({
+    path: 'film/:id/screenings',
+    loadComponent: () =>
+      import('./film/screenings/screenings.page').then((m) => m.ScreeningPage),
     canActivate: [AuthGuard],
     data: { roles: ['admin', 'user', 'guest', 'employee'] },
   });
@@ -35,7 +43,7 @@ export const initRoutes = (): Routes => {
   });
 
   routes.push({
-    path: 'incidents',
+    path: 'incident',
     loadComponent: () =>
       import('./incident/incident.page').then((m) => m.IncidentPage),
     canActivate: [AuthGuard],
