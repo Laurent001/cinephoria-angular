@@ -1,0 +1,5 @@
+<div class="seat" [ngClass]="getSeatClass()">
+  {{ seat()?.number }}
+
+  <i *ngIf="seat()?.is_handi" class="bi bi-person-wheelchair handicap-icon"></i>
+</div>

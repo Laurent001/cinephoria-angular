@@ -1,0 +1,31 @@
+.seat {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid grey;
+  min-width: 20px;
+  max-width: 50px;
+  min-height: 30px;
+  max-height: 50px;
+  margin: 5px;
+  color: white;
+
+  &.available {
+    background-color: green;
+  }
+
+  &.booked {
+    background-color: rgb(187, 40, 40);
+  }
+
+  &.selected {
+    background-color: orange;
+  }
+
+  i {
+    bottom: 0;
+    position: absolute;
+    right: 3px;
+  }
+}

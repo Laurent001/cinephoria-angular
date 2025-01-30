@@ -93,8 +93,8 @@
                   </ion-card-subtitle>
                 </ion-card-header>
                 <ion-card-content>{{ film.description }}</ion-card-content>
-                <ion-button [routerLink]="['/film', film.id, 'screenings']"
-                  >{{ 'film-screenings' | translate }}</ion-button
+                <ion-button [routerLink]="['/booking', film.id]"
+                  >{{ 'screenings' | translate }}</ion-button
                 >
               </ion-card>
             </ion-col>

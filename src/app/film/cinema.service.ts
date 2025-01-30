@@ -11,6 +11,6 @@ export class CinemaService {
   constructor(private http: HttpClient) {}
 
   getCinemas(): Observable<CinemaResponse[]> {
-    return this.http.get<CinemaResponse[]>(`${environment.url}/api/cinema`);
+    return this.http.get<CinemaResponse[]>(`${environment.url}/cinema`);
   }
 }

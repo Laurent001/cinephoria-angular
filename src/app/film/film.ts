@@ -26,11 +26,14 @@ export interface GenreResponse {
 
 export interface ScreeningResponse {
   id: number;
-  auditorium_id: number;
-  remaining_seat: number;
-  remaining_handi_seat: number;
   start_time: Date;
   end_time: Date;
+  auditorium_name: string;
+  auditorium_seat: number;
+  auditorium_handi_seat: number;
+  auditorium_cinema_id: number;
+  auditorium_quality: string;
+  auditorium_price: number;
 }
 
 export interface ScreeningsFilmResponse {

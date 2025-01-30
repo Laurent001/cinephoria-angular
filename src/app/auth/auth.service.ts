@@ -8,19 +8,19 @@ import { User } from '../app';
   providedIn: 'root',
 })
 export class AuthService {
-  private userSubject = new BehaviorSubject<User | null>(null);
+  private userSubject = new BehaviorSubject<User | undefined>(undefined);
   user$ = this.userSubject.asObservable();
-  private apiUrl = `${environment.url}/api`;
+  private tokenKey = 'auth-token';
 
   constructor(private http: HttpClient) {
-    this.userSubject.next({ role: 'guest' } as User);
+    this.userSubject.next({ id: 0, role: 'guest' } as User);
   }
 
   setUser(user: User) {
     this.userSubject.next(user);
   }
 
-  getCurrentUser(): User | null {
+  getCurrentUser(): User | undefined {
     return this.userSubject.value;
   }
 
@@ -33,11 +33,30 @@ export class AuthService {
   }
 
   getUserRoles(userId: number): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/users/${userId}/roles`);
+    return this.http.get<string[]>(
+      `${environment.url}/api/users/${userId}/roles`
+    );
   }
 
   getUserRole(): string | null {
     const user = this.userSubject.value;
     return user ? user.role : null;
+  }
+
+  hasRole(roles: string[]): boolean {
+    const user = this.userSubject.value;
+    return user ? roles.includes(user.role) : false;
+  }
+
+  setToken(token: string) {
+    localStorage.setItem(this.tokenKey, token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  clearToken() {
+    localStorage.removeItem(this.tokenKey);
   }
 }
