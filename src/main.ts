@@ -14,13 +14,13 @@ import {
   IonicRouteStrategy,
   provideIonicAngular,
 } from '@ionic/angular/standalone';
-import { apiPrefixInterceptor } from './app/config/api/api-prefix.interceptor';
 
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app/app.component';
 import { initRoutes } from './app/app.routes';
+import { authInterceptor } from './app/config/auth.interceptor';
 import { environment } from './environments/environment.dev';
 
 if (environment.production) {
@@ -37,7 +37,7 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(initRoutes(), withHashLocation()),
     provideAnimations(),
-    provideHttpClient(withInterceptors([apiPrefixInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor])),
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: {

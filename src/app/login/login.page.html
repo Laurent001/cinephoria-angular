@@ -1,16 +1,53 @@
 <app-layout [pageTitle]="'Connexion'">
   <ion-content>
-    <ion-list>
-      <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" [(ngModel)]="email"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input type="password" [(ngModel)]="password"></ion-input>
-      </ion-item>
-    </ion-list>
-    <ion-button expand="full" (click)="login()">Login</ion-button>
-  </ion-content></app-layout
->
-> >
+    <ion-segment [(ngModel)]="currentView">
+      <ion-segment-button value="login">
+        <ion-label>Login</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="register">
+        <ion-label>Register</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div *ngIf="currentView === 'login'">
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" [(ngModel)]="loginEmail"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input type="password" [(ngModel)]="loginPassword"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-button expand="full" (click)="login(loginEmail, loginPassword)"
+        >Login</ion-button
+      >
+      <ion-button expand="full" fill="clear" (click)="resetPassword()"
+        >Forgot Password?</ion-button
+      >
+    </div>
+
+    <div *ngIf="currentView === 'register'">
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">First Name</ion-label>
+          <ion-input type="text" [(ngModel)]="registerFirstName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Last Name</ion-label>
+          <ion-input type="text" [(ngModel)]="registerLastName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" [(ngModel)]="registerEmail"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input type="password" [(ngModel)]="registerPassword"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-button expand="full" (click)="register()">Register</ion-button>
+    </div>
+  </ion-content>
+</app-layout>
