@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   IonButtons,
@@ -31,6 +31,6 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
 })
 export class LayoutComponent {
-  @Input() pageTitle: string = '';
+  readonly pageTitle = input<string>('');
   constructor() {}
 }

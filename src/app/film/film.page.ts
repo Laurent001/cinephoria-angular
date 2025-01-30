@@ -111,8 +111,6 @@ export class FilmPage implements OnInit {
   }
 
   onDateChange(event: any) {
-    console.log('event', event);
-
     const selectedDate = new Date(event.detail.value);
     this.selectedDate = selectedDate.toISOString().split('T')[0];
     if (this.selectedDate) {
