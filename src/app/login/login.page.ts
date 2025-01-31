@@ -64,10 +64,17 @@ export class LoginPage implements OnInit {
         this.authService.setUser(data.user);
         this.authService.setToken(data.token);
         this.router.navigate(['/home']);
+        this.utilsService.presentAlert('Vous êtes désormais connecté');
       },
       error: (error) => {
         console.error('Login error', error);
-        alert('An error occurred during login');
+        if (error.status === 404 || error.status === 401) {
+          this.utilsService.presentAlert('Identifiants invalides');
+        } else {
+          this.utilsService.presentAlert(
+            'Une erreur est survenue lors de la connexion'
+          );
+        }
       },
     });
   }
@@ -83,9 +90,6 @@ export class LoginPage implements OnInit {
       .subscribe({
         next: (response) => {
           this.login(this.registerEmail, this.registerPassword);
-          this.utilsService.presentAlert(
-            'Enregistrement effectué, vous êtes désormais connecté'
-          );
           this.router.navigate(['/home']);
         },
         error: (error) => {
