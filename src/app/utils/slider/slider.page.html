@@ -1,20 +1,36 @@
 <div class="slider-container">
-  <button (click)="prev()" [disabled]="currentIndex === 0">Précédent</button>
+  <button
+    (click)="prev()"
+    class="btn"
+    [ngClass]="{
+      'btn-primary': currentIndex !== 0,
+      'btn-secondary': currentIndex === 0
+    }"
+  >
+    Précédent
+  </button>
   <div class="slides">
     <app-screening
-      *ngFor="let screening of slides; let i = index"
-      [id]="screening.id"
-      [auditorium_id]="screening.auditorium_id"
-      [start_time]="screening.start_time"
-      [end_time]="screening.end_time"
-      [style.display]="i >= currentIndex && i < currentIndex + visibleSlides ? 'block' : 'none'"
+      *ngFor="let screening of screenings(); let i = index"
+      [screening]="screening"
+      [ngClass]="{
+        'd-none': i < currentIndex || i >= currentIndex + visibleScreenings,
+        'd-block': i >= currentIndex && i < currentIndex + visibleScreenings,
+        'bg-success text-white': selectedScreening === screening
+      }"
+      (click)="selectScreening(screening)"
     >
     </app-screening>
   </div>
 
   <button
     (click)="next()"
-    [disabled]="currentIndex >= totalSlides - visibleSlides"
+    class="btn btn-primary"
+    [ngClass]="{
+      'btn-primary': currentIndex < totalScreenings - visibleScreenings,
+      'btn-secondary': currentIndex >= totalScreenings - visibleScreenings
+    }"
+    [disabled]="currentIndex >= totalScreenings - visibleScreenings"
   >
     Suivant
   </button>

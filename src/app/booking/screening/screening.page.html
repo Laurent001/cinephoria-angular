@@ -1,0 +1,20 @@
+<div class="screening">
+  <p>salle : {{ screening()?.auditorium_name }}</p>
+  <p>Heure de début : {{ screening()?.start_time | date:'longTime' }}</p>
+  <p>Heure de fin : {{ screening()?.end_time | date:'longTime' }}</p>
+  <p>
+    {{'booking-seats' | translate}} :
+    <ng-container
+      *ngIf="seatsSelected() && seatsSelected().length > 0; else noSeats"
+    >
+      <span *ngFor="let seat of seatsSelected(); let i = index">
+        {{i !== 0 ? ', ' : ''}}{{ seat.number }} {{ seat.is_handi ? '(handi)' :
+        ''}}
+      </span>
+    </ng-container>
+    <ng-template #noSeats> {{ 'booking-no-seat' | translate }} </ng-template>
+  </p>
+  <p *ngIf="totalPrice() != 0">
+    {{'booking-price' | translate}} : {{ totalPrice() }}
+  </p>
+</div>
