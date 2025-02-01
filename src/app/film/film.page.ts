@@ -24,6 +24,7 @@ import {
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { LayoutComponent } from '../layout/layout.component';
+import { UtilsService } from '../utils/utils.service';
 import { CinemaService } from './cinema.service';
 import { CinemaResponse, FilmResponse, GenreResponse } from './film';
 import { FilmService } from './film.service';
@@ -69,12 +70,14 @@ export class FilmPage implements OnInit {
   selectedDate!: string | null;
   isDatePickerOpen = false;
   minDate: string = new Date().toISOString();
+  shortDescription: boolean = true;
 
   constructor(
     private filmService: FilmService,
     private cinemaService: CinemaService,
     private genreService: GenreService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private utilsService: UtilsService
   ) {
     this.translate.setDefaultLang('fr');
     this.selectedCinema = null;
@@ -127,5 +130,9 @@ export class FilmPage implements OnInit {
 
   closeDatePicker() {
     this.isDatePickerOpen = false;
+  }
+
+  async seeFullDescription(description: string) {
+    await this.utilsService.presentAlert('Pitch', description, ['OK']);
   }
 }

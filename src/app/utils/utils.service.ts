@@ -7,11 +7,11 @@ import { AlertController } from '@ionic/angular';
 export class UtilsService {
   constructor(private alertController: AlertController) {}
 
-  async presentAlert(message: string) {
+  async presentAlert(header: string, message: string, buttons: string[]) {
     const alert = await this.alertController.create({
-      header: 'Attention',
+      header: header,
       message: message,
-      buttons: ['OK'],
+      buttons: buttons,
     });
     await alert.present();
   }

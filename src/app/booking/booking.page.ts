@@ -111,7 +111,11 @@ export class BookingPage implements OnInit {
         this.addSeatSelected(seat);
         this.totalPrice += Number(this.screeningSelected.auditorium_price);
       } else {
-        await this.utilsService.presentAlert('Ce siège est déjà pris.');
+        await this.utilsService.presentAlert(
+          'Attention',
+          'Ce siège est déjà pris.',
+          ['OK']
+        );
       }
     }
   }
@@ -150,7 +154,7 @@ export class BookingPage implements OnInit {
   onBookingButton() {
     const requiredRoles = ['user'];
     if (!this.authService.hasRole(requiredRoles)) {
-      this.utilsService.presentAlert('Vous devez être connecté pour réserver');
+      this.utilsService.presentAlert('Attention', 'Vous devez être connecté pour réserver',['OK']);
       return;
     }
 
