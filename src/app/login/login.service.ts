@@ -12,7 +12,10 @@ export class LoginService {
 
   login(email: string, password: string): Observable<RegisterResponse> {
     const body = { email, password };
-    return this.http.post<RegisterResponse>(`${environment.url}/login`, body);
+    return this.http.post<RegisterResponse>(
+      `${environment.url}/api/login`,
+      body
+    );
   }
 
   register(
@@ -27,6 +30,6 @@ export class LoginService {
       firstName,
       lastName,
     };
-    return this.http.post(`${environment.url}/register`, data);
+    return this.http.post(`${environment.url}/api/register`, data);
   }
 }

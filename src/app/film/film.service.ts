@@ -11,28 +11,30 @@ export class FilmService {
   constructor(private http: HttpClient) {}
 
   getFilms(): Observable<FilmResponse[]> {
-    return this.http.get<FilmResponse[]>(`${environment.url}/film`);
+    return this.http.get<FilmResponse[]>(`${environment.url}/api/film`);
   }
 
   getFilmsByCinema(id?: number): Observable<FilmResponse[]> {
     return this.http.get<FilmResponse[]>(
-      `${environment.url}/film/cinema/${id}`
+      `${environment.url}/api/film/cinema/${id}`
     );
   }
 
   getFilmsByGenre(id?: number): Observable<FilmResponse[]> {
-    return this.http.get<FilmResponse[]>(`${environment.url}/film/genre/${id}`);
+    return this.http.get<FilmResponse[]>(
+      `${environment.url}/api/film/genre/${id}`
+    );
   }
 
   getFilmsByDate(date: string): Observable<FilmResponse[]> {
     return this.http.get<FilmResponse[]>(
-      `${environment.url}/film/date/${date}`
+      `${environment.url}/api/film/date/${date}`
     );
   }
 
   getScreeningsByFilmId(id: number): Observable<ScreeningsFilmResponse> {
     return this.http.get<ScreeningsFilmResponse>(
-      `${environment.url}/film/${id}/screenings`
+      `${environment.url}/api/film/${id}/screenings`
     );
   }
 }
