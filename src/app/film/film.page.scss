@@ -56,9 +56,37 @@ ion-card-content {
   padding-top: 10px;
 }
 
-ion-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  z-index: 10;
+.film-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-box-orient: vertical;
 }
+
+.see-more-button {
+  margin-top: 10px;
+  display: inline-block;
+  width: auto;
+  padding: 0 15px; /* Ajustez la marge intérieure pour contrôler la largeur */
+}
+
+.reservation-button {
+  margin-top: 10px;
+  display: flex;
+  width: 150px;
+  padding: 0;
+}
+
+// @media (max-width: 768px) {
+//   .film-description {
+//     -webkit-line-clamp: 2; /* reduce number of lines on smaller screens */
+//   }
+
+//   .reservation-button {
+//     margin-top: 10px;
+//     display: flex;
+//     width: 150px;
+//     padding: 0;
+//   }
+// }

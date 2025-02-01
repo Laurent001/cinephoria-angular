@@ -55,7 +55,7 @@
     </ion-list>
 
     <ion-list>
-      <ion-item *ngFor="let film of filmsFiltered$ | async">
+      <ion-item *ngFor="let film of filmsFiltered$ | async; let i = index">
         <ion-grid>
           <ion-row>
             <ion-col
@@ -92,10 +92,28 @@
                     <!-- Note : {{ film.note }}/5 -->
                   </ion-card-subtitle>
                 </ion-card-header>
-                <ion-card-content>{{ film.description }}</ion-card-content>
-                <ion-button [routerLink]="['/booking', film.id]"
-                  >{{ 'screenings' | translate }}</ion-button
-                >
+                <ion-card-content>
+                  <div>
+                    <p class="film-description d-xl-none">
+                      {{ film.description | slice:0:150 }}
+                    </p>
+                    <p class="film-description d-xl-block">
+                      {{ film.description }}
+                    </p>
+                    <a
+                      class="see-more d-xl-none"
+                      (click)="seeFullDescription(film.description)"
+                    >
+                      {{ 'see-more' | translate }}
+                    </a>
+                  </div>
+                  <ion-button
+                    class="reservation-button"
+                    [routerLink]="['/booking', film.id]"
+                  >
+                    {{ 'screenings' | translate }}
+                  </ion-button>
+                </ion-card-content>
               </ion-card>
             </ion-col>
           </ion-row>
