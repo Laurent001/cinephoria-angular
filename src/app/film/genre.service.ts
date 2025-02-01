@@ -11,6 +11,6 @@ export class GenreService {
   constructor(private http: HttpClient) {}
 
   getGenres(): Observable<GenreResponse[]> {
-    return this.http.get<GenreResponse[]>(`${environment.url}/genre`);
+    return this.http.get<GenreResponse[]>(`${environment.url}/api/genre`);
   }
 }

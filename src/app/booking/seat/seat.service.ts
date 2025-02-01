@@ -12,7 +12,7 @@ export class SeatService {
 
   getSeatsByScreeningId(id: number): Observable<SeatsScreeningResponse> {
     return this.http.get<SeatsScreeningResponse>(
-      `${environment.url}/screening/${id}`
+      `${environment.url}/api/screening/${id}`
     );
   }
 }
