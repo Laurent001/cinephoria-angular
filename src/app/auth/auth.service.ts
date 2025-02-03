@@ -32,9 +32,9 @@ export class AuthService {
     this.userSubject.next({ role: 'guest' } as User);
   }
 
-  getUserRoles(userId: number): Observable<string[]> {
+  getRolesByUserId(userId: number): Observable<string[]> {
     return this.http.get<string[]>(
-      `${environment.url}/api/users/${userId}/roles`
+      `${environment.url}/api/user/${userId}/roles`
     );
   }
 
@@ -46,6 +46,10 @@ export class AuthService {
   hasRole(roles: string[]): boolean {
     const user = this.userSubject.value;
     return user ? roles.includes(user.role) : false;
+  }
+
+  getUserByToken(token: string): Observable<User> {
+    return this.http.get<User>(`${environment.url}/api/user/token/${token}`);
   }
 
   setToken(token: string) {

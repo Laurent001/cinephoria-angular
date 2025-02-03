@@ -8,6 +8,7 @@ export interface Page {
 export interface User {
   id: number;
   email: string;
+  token: string;
   password: string;
   reset_password: boolean;
   first_name: string;
