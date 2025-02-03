@@ -31,8 +31,8 @@ import {
   peopleSharp,
   ticketSharp,
 } from 'ionicons/icons';
-import { BehaviorSubject } from 'rxjs';
-import { Page } from './app';
+import { BehaviorSubject, switchMap } from 'rxjs';
+import { Page, User } from './app';
 import { AuthService } from './auth/auth.service';
 
 @Component({
@@ -62,6 +62,7 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent implements OnInit {
   public pages$ = new BehaviorSubject<Page[]>([]);
   public showLogout = false;
+  private roles: string[] = [];
 
   updatePages(roles: string[]) {
     const pages = [
@@ -154,15 +155,42 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     const lang = 'fr';
-    this.translateService.use(lang).subscribe(() => {
-      this.authService.user$.subscribe((user) => {
-        const roles = user ? [user.role] : ['guest'];
-        this.updatePages(roles);
-        this.showLogout =
-          roles.includes('admin') ||
-          roles.includes('user') ||
-          roles.includes('employee');
+
+    this.translateService
+      .use(lang)
+      .pipe(
+        switchMap(() => {
+          const token = this.authService.getToken();
+          if (token) {
+            return this.authService.getUserByToken(token);
+          } else {
+            return this.authService.user$;
+          }
+        })
+      )
+      .subscribe((user?: User) => {
+        if (user) {
+          this.authService.setUser(user);
+          this.roles = [user.role];
+          this.updatePages(this.roles);
+          this.showLogout =
+            this.roles.includes('admin') ||
+            this.roles.includes('user') ||
+            this.roles.includes('employee');
+        } else {
+          this.roles = ['guest'];
+          this.updatePages(this.roles);
+          this.showLogout = false;
+        }
       });
+
+    this.authService.user$.subscribe((user) => {
+      this.roles = user ? [user.role] : ['guest'];
+      this.updatePages(this.roles);
+      this.showLogout =
+        this.roles.includes('admin') ||
+        this.roles.includes('user') ||
+        this.roles.includes('employee');
     });
   }
 
