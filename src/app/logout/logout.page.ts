@@ -12,6 +12,6 @@ export class LogoutPage implements OnInit {
 
   ngOnInit() {
     this.authService.resetUserToGuest();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 }

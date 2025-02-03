@@ -29,7 +29,7 @@ export class BookingService {
 
     if (!currentUser || !currentUser.id) {
       this.utilsService.presentAlert(
-        'Vous devez être connecté pour effectuer une réservation'
+        'Attention','Vous devez être connecté pour effectuer une réservation',['OK']
       );
       return;
     }
