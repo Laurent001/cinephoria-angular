@@ -1,6 +1,6 @@
 <app-layout
-  *ngIf="booking$ | async as booking"
-  [pageTitle]="'booking' | translate"
+  *ngIf="screenings$ | async as screenings"
+  [pageTitle]="'screenings' | translate"
 >
   <ion-content>
     <ion-list>
@@ -18,7 +18,7 @@
               <ion-thumbnail>
                 <img
                   class="film-poster"
-                  [src]="booking?.film?.poster"
+                  [src]="screenings?.film?.poster"
                   alt="Affiche du film"
                 />
               </ion-thumbnail>
@@ -33,17 +33,17 @@
             >
               <ion-card>
                 <ion-card-header>
-                  <ion-card-title>{{ booking?.film?.title }}</ion-card-title>
+                  <ion-card-title>{{ screenings?.film?.title }}</ion-card-title>
                   <ion-card-subtitle>
-                    {{ booking?.film?.release_date | date:'dd MMMM yyyy' }} | {{
-                    booking?.film?.genres }}<br />
-                    Âge minimum : {{ booking?.film?.age_minimum }}+
+                    {{ screenings?.film?.release_date | date:'dd MMMM yyyy' }} |
+                    {{ screenings?.film?.genres }}<br />
+                    Âge minimum : {{ screenings?.film?.age_minimum }}+
                   </ion-card-subtitle>
                 </ion-card-header>
                 <ion-card-content>
-                  {{ booking?.film?.description }}
+                  {{ screenings?.film?.description }}
                   <app-slider
-                    [screenings]="booking.screenings"
+                    [screenings]="screenings.screenings"
                     (screeningSelected)="onScreeningSelected($event)"
                   ></app-slider>
                 </ion-card-content>
@@ -52,7 +52,7 @@
                   class="screening-selected"
                   *ngIf="screeningSelected"
                 >
-                  <h4>{{'booking-current' | translate}} :</h4>
+                  <h4>{{'screening-current' | translate}} :</h4>
                   <app-screening
                     [screening]="screeningSelected"
                     [seatsSelected]="seatsSelected"
@@ -63,7 +63,7 @@
                     [disabled]="seatsSelected.length===0"
                     (click)="onBookingButton()"
                   >
-                    {{'screening-booking' | translate}}
+                    {{'booking-screening' | translate}}
                   </ion-button>
                 </ion-card-content>
               </ion-card>

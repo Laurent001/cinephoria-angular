@@ -26,8 +26,10 @@ import { FilmService } from '../film/film.service';
 import { UtilsService } from '../utils/utils.service';
 import { Booking } from './booking';
 import { BookingService } from './booking.service';
+import { BookingStateService } from './bookingState/booking-state.service';
 import { SeatResponse, SeatsScreeningResponse } from './screening/screening';
 import { ScreeningPage } from './screening/screening.page';
+import { ScreeningService } from './screening/screening.service';
 import { SeatPage } from './seat/seat.page';
 import { SeatService } from './seat/seat.service';
 @Component({
@@ -63,8 +65,9 @@ import { SeatService } from './seat/seat.service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class BookingPage implements OnInit {
+  screenings$?: Observable<ScreeningsFilmResponse>;
   filmId?: number;
-  booking$?: Observable<ScreeningsFilmResponse>;
+  booking: Booking;
   screeningSelected?: ScreeningResponse;
   seats$?: Observable<SeatsScreeningResponse>;
   totalPrice: number = 0;
@@ -77,27 +80,65 @@ export class BookingPage implements OnInit {
     private filmService: FilmService,
     private seatService: SeatService,
     private bookingService: BookingService,
+    private bookingStateService: BookingStateService,
     private authService: AuthService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private screeningService: ScreeningService
   ) {
     this.translate.setDefaultLang('fr');
+    this.booking = {
+      userId: this.authService.getCurrentUser()?.id,
+      screeningId: this.screeningSelected?.id,
+      totalPrice: 0,
+      seatsSelected: [],
+    };
+
+    const bookingState = localStorage.getItem('bookingState');
+    if (bookingState) {
+      this.booking = JSON.parse(bookingState) as Booking;
+      console.log('this.booking', this.booking.screeningId);
+
+      this.seatsSelected = this.booking.seatsSelected;
+      this.totalPrice = this.booking.totalPrice;
+
+      if (this.booking.screeningId) {
+        this.screeningService
+          .getScreeningById(this.booking.screeningId)
+          .pipe(
+            tap((screening) => {
+              console.log('screening', screening);
+
+              this.onScreeningSelected(screening);
+            })
+          )
+          .subscribe();
+      }
+    }
   }
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
-      this.filmId = +params['id'];
-      this.booking$ = this.filmService.getScreeningsByFilmId(this.filmId);
-    });
+    this.screenings$ = this.route.params.pipe(
+      switchMap((params) => {
+        this.filmId = +params['id'];
+        return this.filmService.getScreeningsByFilmId(this.filmId);
+      })
+    );
   }
 
   onScreeningSelected(screening: ScreeningResponse) {
     this.screeningSelected = screening;
 
-    this.seatsSelected = [];
-    this.totalPrice = 0;
     this.seats$ = this.seatService.getSeatsByScreeningId(screening.id).pipe(
       tap((seats: SeatsScreeningResponse) => {
         this.seatsAvailable = seats.seats.filter((seat) => seat.is_available);
+
+        if (this.booking.screeningId === this.screeningSelected?.id) {
+          this.seatsSelected = this.booking.seatsSelected;
+          this.totalPrice = this.booking.totalPrice;
+        } else {
+          this.seatsSelected = [];
+          this.totalPrice = 0;
+        }
       })
     );
   }
@@ -107,9 +148,11 @@ export class BookingPage implements OnInit {
       if (this.isSeatSelected(seat)) {
         this.removeSeatSelected(seat);
         this.totalPrice -= Number(this.screeningSelected.auditorium_price);
+        this.booking.totalPrice = this.totalPrice;
       } else if (this.isSeatAvailable(seat)) {
-        this.addSeatSelected(seat);
         this.totalPrice += Number(this.screeningSelected.auditorium_price);
+        this.booking.totalPrice = this.totalPrice;
+        this.addSeatSelected(seat);
       } else {
         await this.utilsService.presentAlert(
           'Attention',
@@ -137,12 +180,20 @@ export class BookingPage implements OnInit {
 
   addSeatSelected(seat: SeatResponse) {
     this.seatsSelected.push(seat);
+
+    this.booking.seatsSelected = this.seatsSelected;
+    this.booking.screeningId = this.screeningSelected?.id;
+    this.bookingStateService.setBookingState(this.booking);
   }
 
   removeSeatSelected(seat: SeatResponse) {
     this.seatsSelected = this.seatsSelected.filter(
-      (selectedSeat) => selectedSeat !== seat
+      (selectedSeat) => selectedSeat.id !== seat.id
     );
+
+    this.booking.seatsSelected = this.seatsSelected;
+    this.booking.screeningId = this.screeningSelected?.id;
+    this.bookingStateService.setBookingState(this.booking);
   }
 
   removeSeatAvailable(seat: SeatResponse) {
@@ -154,38 +205,50 @@ export class BookingPage implements OnInit {
   onBookingButton() {
     const requiredRoles = ['user'];
     if (!this.authService.hasRole(requiredRoles)) {
-      this.utilsService.presentAlert('Attention', 'Vous devez être connecté pour réserver',['OK']);
+      this.utilsService.presentAlert(
+        'Attention',
+        'Vous devez être connecté pour réserver',
+        ['OK']
+      );
       return;
     }
 
-    //todo: login token etc.
     const userId = this.authService.getCurrentUser()?.id;
     const screeningId = this.screeningSelected?.id;
-    const booking: Booking = {
+    this.booking = {
       userId: userId,
       screeningId: screeningId,
       totalPrice: this.totalPrice,
       seatsSelected: this.seatsSelected,
     };
 
-    this.seats$ = this.bookingService.createBookingByCurrentUSer(booking)?.pipe(
-      switchMap(() => {
-        if (screeningId) {
-          return this.seatService.getSeatsByScreeningId(screeningId).pipe(
-            tap((seats: SeatsScreeningResponse) => {
-              this.seatsAvailable = seats.seats.filter(
-                (seat) => seat.is_available
-              );
-            })
-          );
-        } else {
-          return EMPTY;
-        }
-      }),
-      tap(() => {
-        this.seatsSelected = [];
-        this.totalPrice = 0;
-      })
-    );
+    this.bookingStateService.setBookingState(this.booking);
+    this.seats$ = this.bookingService
+      .createBookingByCurrentUSer(this.booking)
+      ?.pipe(
+        switchMap(() => {
+          if (screeningId) {
+            return this.seatService.getSeatsByScreeningId(screeningId).pipe(
+              tap((seats: SeatsScreeningResponse) => {
+                this.seatsAvailable = seats.seats.filter(
+                  (seat) => seat.is_available
+                );
+              })
+            );
+          } else {
+            return EMPTY;
+          }
+        }),
+        tap(() => {
+          this.seatsSelected = [];
+          this.totalPrice = 0;
+          this.booking = {
+            userId: userId,
+            screeningId: screeningId,
+            totalPrice: 0,
+            seatsSelected: [],
+          };
+        })
+      );
   }
 }
