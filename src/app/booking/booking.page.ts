@@ -72,7 +72,6 @@ export class BookingPage implements OnInit {
   seats$?: Observable<SeatsScreeningResponse>;
   totalPrice: number = 0;
   seatsSelected: SeatResponse[] = [];
-  seatsAvailable: SeatResponse[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -130,8 +129,6 @@ export class BookingPage implements OnInit {
 
     this.seats$ = this.seatService.getSeatsByScreeningId(screening.id).pipe(
       tap((seats: SeatsScreeningResponse) => {
-        this.seatsAvailable = seats.seats.filter((seat) => seat.is_available);
-
         if (this.booking.screeningId === this.screeningSelected?.id) {
           this.seatsSelected = this.booking.seatsSelected;
           this.totalPrice = this.booking.totalPrice;
@@ -149,7 +146,7 @@ export class BookingPage implements OnInit {
         this.removeSeatSelected(seat);
         this.totalPrice -= Number(this.screeningSelected.auditorium_price);
         this.booking.totalPrice = this.totalPrice;
-      } else if (this.isSeatAvailable(seat)) {
+      } else if (seat.is_available) {
         this.totalPrice += Number(this.screeningSelected.auditorium_price);
         this.booking.totalPrice = this.totalPrice;
         this.addSeatSelected(seat);
@@ -169,15 +166,6 @@ export class BookingPage implements OnInit {
     );
   }
 
-  isSeatAvailable(seat: SeatResponse): boolean {
-    return (
-      !this.isSeatSelected(seat) &&
-      this.seatsAvailable.some(
-        (seatsAvailable) => seatsAvailable.id === seat.id
-      )
-    );
-  }
-
   addSeatSelected(seat: SeatResponse) {
     this.seatsSelected.push(seat);
 
@@ -194,12 +182,6 @@ export class BookingPage implements OnInit {
     this.booking.seatsSelected = this.seatsSelected;
     this.booking.screeningId = this.screeningSelected?.id;
     this.bookingStateService.setBookingState(this.booking);
-  }
-
-  removeSeatAvailable(seat: SeatResponse) {
-    this.seatsAvailable = this.seatsAvailable.filter(
-      (seatAvailable) => seatAvailable !== seat
-    );
   }
 
   onBookingButton() {
@@ -228,13 +210,7 @@ export class BookingPage implements OnInit {
       ?.pipe(
         switchMap(() => {
           if (screeningId) {
-            return this.seatService.getSeatsByScreeningId(screeningId).pipe(
-              tap((seats: SeatsScreeningResponse) => {
-                this.seatsAvailable = seats.seats.filter(
-                  (seat) => seat.is_available
-                );
-              })
-            );
+            return this.seatService.getSeatsByScreeningId(screeningId);
           } else {
             return EMPTY;
           }
