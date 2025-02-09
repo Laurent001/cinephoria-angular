@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import {} from '../film/film';
+import {
+  ScreeningsByFilmResponse,
+  ScreeningResponse,
+} from '../screening/screening';
 
 @Injectable({
   providedIn: 'root',
@@ -14,5 +19,17 @@ export class UtilsService {
       buttons: buttons,
     });
     await alert.present();
+  }
+
+  findScreeningById(
+    screeningIdSelected?: number,
+    screenings?: ScreeningsByFilmResponse
+  ): ScreeningResponse | undefined {
+    if (screeningIdSelected === undefined || screenings === undefined) {
+      return undefined;
+    }
+    return screenings.screenings.find(
+      (screening) => screening.id === screeningIdSelected
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { ScreeningResponse } from 'src/app/film/film';
+import { ScreeningResponse } from 'src/app/screening/screening';
 
 export interface SeatResponse {
   id: number;

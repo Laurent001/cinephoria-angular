@@ -104,8 +104,24 @@ ion-col {
   max-width: 50px;
 }
 
+.film-description {
+  margin-top: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.see-more-button {
+  margin-top: 10px;
+  display: inline-block;
+  width: auto;
+  padding: 0 15px;
+}
+
 @media (max-width: 768px) {
   ion-col {
-    min-width: 100%; /* Forcer la colonne à prendre toute la largeur sur petits écrans */
+    min-width: 100%;
   }
 }
