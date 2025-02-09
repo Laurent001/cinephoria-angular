@@ -11,12 +11,12 @@
   </button>
   <div class="slides">
     <app-screening
-      *ngFor="let screening of screenings(); let i = index"
+      *ngFor="let screening of screenings?.screenings; let i = index"
       [screening]="screening"
       [ngClass]="{
         'd-none': i < currentIndex || i >= currentIndex + visibleScreenings,
         'd-block': i >= currentIndex && i < currentIndex + visibleScreenings,
-        'bg-success text-white': selectedScreening === screening
+        'bg-success text-white': (selectedScreening?.id || booking?.screening?.id) === screening.id
       }"
       (click)="selectScreening(screening)"
     >
@@ -25,12 +25,12 @@
 
   <button
     (click)="next()"
-    class="btn btn-primary"
+    class="btn"
     [ngClass]="{
-      'btn-primary': currentIndex < totalScreenings - visibleScreenings,
-      'btn-secondary': currentIndex >= totalScreenings - visibleScreenings
+      'btn-primary': currentIndex < (totalScreenings - visibleScreenings),
+      'btn-secondary': currentIndex >= (totalScreenings - visibleScreenings)
     }"
-    [disabled]="currentIndex >= totalScreenings - visibleScreenings"
+    [disabled]="currentIndex >= (totalScreenings - visibleScreenings) && !booking?.screening?.id"
   >
     Suivant
   </button>

@@ -26,13 +26,6 @@ export const initRoutes = (): Routes => {
 
   routes.push({
     path: 'booking',
-    loadComponent: () => import('./film/film.page').then((m) => m.FilmPage),
-    canActivate: [AuthGuard],
-    data: { roles: ['admin', 'user', 'guest', 'employee'] },
-  });
-
-  routes.push({
-    path: 'booking/:id',
     loadComponent: () =>
       import('./booking/booking.page').then((m) => m.BookingPage),
     canActivate: [AuthGuard],

@@ -1,10 +1,30 @@
-<app-layout
-  *ngIf="screenings$ | async as screenings"
-  [pageTitle]="'screenings' | translate"
->
+<app-layout [pageTitle]="'menu-film' | translate">
   <ion-content>
     <ion-list>
       <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="4">
+              <ion-select
+                [(ngModel)]="cinemaSelectedId"
+                (ionChange)="onCinemaChange($event.detail.value)"
+                [placeholder]="'film-select-cinema' | translate"
+              >
+                <ion-select-option
+                  *ngFor="let cinema of cinemas"
+                  [value]="cinema.id"
+                >
+                  {{ cinema.name }}
+                </ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-item *ngFor="let film of filmsFiltered$ | async; let i = index">
         <ion-grid>
           <ion-row>
             <ion-col
@@ -18,7 +38,7 @@
               <ion-thumbnail>
                 <img
                   class="film-poster"
-                  [src]="screenings?.film?.poster"
+                  [src]="film.poster"
                   alt="Affiche du film"
                 />
               </ion-thumbnail>
@@ -33,24 +53,40 @@
             >
               <ion-card>
                 <ion-card-header>
-                  <ion-card-title>{{ screenings?.film?.title }}</ion-card-title>
+                  <ion-card-title>{{ film.title }}</ion-card-title>
                   <ion-card-subtitle>
-                    {{ screenings?.film?.release_date | date:'dd MMMM yyyy' }} |
-                    {{ screenings?.film?.genres }}<br />
-                    Âge minimum : {{ screenings?.film?.age_minimum }}+
+                    {{ film.release_date | date:'dd MMMM yyyy' }} | {{
+                    film.genres }}<br />
+                    Âge minimum : {{ film.age_minimum }}+<br />
+                    <!-- todo : {{ film.note }}/5 -->
                   </ion-card-subtitle>
+                  <br />
+                  <div>
+                    <p class="film-description d-xl-none">
+                      {{ film.description | slice:0:150 }}
+                    </p>
+                    <p class="film-description d-xl-block">
+                      {{ film.description }}
+                    </p>
+                    <a
+                      class="see-more d-xl-none"
+                      (click)="seeFullDescription(film.description)"
+                    >
+                      {{ 'see-more' | translate }}
+                    </a>
+                  </div>
                 </ion-card-header>
                 <ion-card-content>
-                  {{ screenings?.film?.description }}
                   <app-slider
-                    [screenings]="screenings.screenings"
+                    *ngIf="!((!screeningSelected && !screenings) || (filmSelectedId !== film.id))"
+                    [screenings]="screenings"
                     (screeningSelected)="onScreeningSelected($event)"
                   ></app-slider>
                 </ion-card-content>
 
                 <ion-card-content
                   class="screening-selected"
-                  *ngIf="screeningSelected"
+                  *ngIf="filmSelectedId === film.id && screeningSelected?.film_id === film.id"
                 >
                   <h4>{{'screening-current' | translate}} :</h4>
                   <app-screening
@@ -59,17 +95,34 @@
                     [totalPrice]="totalPrice"
                   ></app-screening>
                   <ion-button
+                    *ngIf="!showSeatsScreening && seatsSelected.length==0"
                     type="submit"
-                    [disabled]="seatsSelected.length===0"
-                    (click)="onBookingButton()"
+                    [disabled]="!screeningSelected"
+                    (click)="seeSeatsAvailable()"
+                    >{{'booking-seats-available' | translate}}</ion-button
                   >
-                    {{'booking-screening' | translate}}
+                  <ion-button
+                    color="tertiary"
+                    *ngIf="showSeatsScreening || seatsSelected.length>0"
+                    type="submit"
+                    (click)="validateBooking()"
+                  >
+                    {{ 'booking-validate' | translate }}
+                  </ion-button>
+                </ion-card-content>
+                <ion-card-content>
+                  <ion-button
+                    *ngIf="(!screeningSelected && !screenings) || (filmSelectedId !== film.id)"
+                    class="screenings-button"
+                    (click)="getFilmScreeningsByCinema(film.id, cinemaSelectedId)"
+                  >
+                    {{ 'screenings' | translate }}
                   </ion-button>
                 </ion-card-content>
               </ion-card>
             </ion-col>
           </ion-row>
-          <ion-row>
+          <ion-row *ngIf="showSeatsScreening || seatsSelected.length > 0">
             <ion-col
               size="12"
               size-xl="2"
@@ -78,9 +131,6 @@
               size-sm="4"
               size-xs="6"
             >
-              <ion-card-header>
-                <ion-card-title>Légende</ion-card-title>
-              </ion-card-header>
             </ion-col>
             <ion-col
               size="12"
@@ -90,7 +140,7 @@
               size-sm="8"
               size-xs="6"
             >
-              <ion-card>
+              <ion-card *ngIf="filmSelectedId === film.id && screeningSelected">
                 <ion-card-header>
                   <ion-card-title
                     >{{ 'seat-available' | translate }}</ion-card-title
