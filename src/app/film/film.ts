@@ -24,19 +24,12 @@ export interface GenreResponse {
   name: string;
 }
 
-export interface ScreeningResponse {
+export interface AuditoriumResponse {
   id: number;
-  start_time: Date;
-  end_time: Date;
-  auditorium_name: string;
-  auditorium_seat: number;
-  auditorium_handi_seat: number;
-  auditorium_cinema_id: number;
-  auditorium_quality: string;
-  auditorium_price: number;
-}
-
-export interface ScreeningsFilmResponse {
-  film: FilmResponse;
-  screenings: ScreeningResponse[];
+  name: string;
+  seat: number;
+  handi_seat: number;
+  quality: string;
+  price: number;
+  cinema: CinemaResponse;
 }

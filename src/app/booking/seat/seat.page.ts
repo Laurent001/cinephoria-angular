@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SeatResponse } from '../screening/screening';
+import { SeatResponse } from './seat';
 
 @Component({
   selector: 'app-seat',
@@ -11,20 +11,19 @@ import { SeatResponse } from '../screening/screening';
   imports: [CommonModule, FormsModule],
 })
 export class SeatPage implements OnInit {
-  readonly seat = input<SeatResponse>();
-  readonly isSelected = input<boolean>(false);
+  @Input() seat?: SeatResponse;
+  @Input() isSelected?: boolean;
 
   constructor() {}
 
   ngOnInit() {}
 
   getSeatClass(): string {
-    const seat = this.seat();
-    if (!seat) return '';
+    if (!this.seat) return '';
 
-    return this.isSelected()
+    return this.isSelected
       ? 'selected'
-      : seat.is_available
+      : this.seat.is_available
       ? 'available'
       : 'booked';
   }

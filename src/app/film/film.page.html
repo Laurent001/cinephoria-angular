@@ -6,9 +6,9 @@
           <ion-row>
             <ion-col size="4">
               <ion-select
-                [(ngModel)]="selectedCinema"
-                (ionChange)="onCinemaChange($event)"
-                [placeholder]="'film-select-cinema' | translate"
+                [(ngModel)]="cinemaSelectedId"
+                (ionChange)="onCinemaChange($event.detail.value)"
+                [placeholder]="'film-select-cinema-short' | translate"
               >
                 <ion-select-option
                   *ngFor="let cinema of cinemas"
@@ -20,9 +20,9 @@
             </ion-col>
             <ion-col size="4">
               <ion-select
-                [(ngModel)]="selectedGenre"
+                [(ngModel)]="genreSelectedId"
                 (ionChange)="onGenreChange($event)"
-                [placeholder]="'film-select-genre' | translate"
+                [placeholder]="'film-select-genre-short' | translate"
               >
                 <ion-select-option
                   *ngFor="let genre of genres"
@@ -34,7 +34,7 @@
             </ion-col>
             <ion-col size="4">
               <ion-button (click)="openDatePicker()"
-                >{{ selectedDate || 'film-select-date' | translate
+                >{{ dateSelected || 'film-select-date-short' | translate
                 }}</ion-button
               >
               <ion-modal [isOpen]="isDatePickerOpen">
@@ -93,6 +93,20 @@
                   </ion-card-subtitle>
                 </ion-card-header>
                 <ion-card-content>
+                  <app-slider
+                    *ngIf="filmSelectedId === film.id && screenings"
+                    [screenings]="screenings"
+                    (screeningSelected)="onScreeningSelected($event)"
+                  ></app-slider>
+                  <ion-button
+                    *ngIf="filmSelectedId === film.id && screenings"
+                    type="submit"
+                    [disabled]="!screenings.screeningSelected && !this.booking?.screening"
+                    (click)="onBookingButton()"
+                    >{{'booking-screening' | translate}}</ion-button
+                  >
+                </ion-card-content>
+                <ion-card-content>
                   <div>
                     <p class="film-description d-xl-none">
                       {{ film.description | slice:0:150 }}
@@ -108,8 +122,9 @@
                     </a>
                   </div>
                   <ion-button
-                    class="reservation-button"
-                    [routerLink]="['/booking', film.id]"
+                    *ngIf="!(filmSelectedId === film.id) || !screenings"
+                    class="screenings-button"
+                    (click)="onScreeningsButton(film.id)"
                   >
                     {{ 'screenings' | translate }}
                   </ion-button>
