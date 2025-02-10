@@ -1,13 +1,98 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>incident</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-layout [pageTitle]="'menu-incident' | translate">
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <div class="card">
+              <div class="nb-rows">
+                <label for="itemsPerPage"
+                  >{{ 'incident-nb-page' | translate }}</label
+                >
+                <select
+                  id="itemsPerPage"
+                  [(ngModel)]="itemsPerPage"
+                  (change)="changeItemsPerPage()"
+                >
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="50">50</option>
+                </select>
+              </div>
+              <table
+                style="min-width: 50rem; border-collapse: collapse; width: 100%"
+              >
+                <!-- En-tête du tableau -->
+                <thead>
+                  <tr style="background-color: #f4f4f4">
+                    <th>Auditorium</th>
+                    <th>Material</th>
+                    <th class="description">Description</th>
+                    <th>Date incident</th>
+                    <th>Résolu</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">incident</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+                <!-- Corps du tableau -->
+                <tbody>
+                  <tr *ngFor="let incident of paginatedIncidents">
+                    <td>{{ incident.auditorium.cinema.name }}</td>
+                    <td>{{ incident.material.name }}</td>
+                    <td class="description">{{ incident.description }}</td>
+                    <td>
+                      {{ incident.added_date | date : 'EEE d MMM yyyy' : 'fr-FR'
+                      }}
+                    </td>
+                    <td class="text-center">
+                      <i
+                        [ngClass]="{
+                        'bi-check-circle-fill text-success': incident.is_solved,
+                        'bi-x-circle-fill text-danger': !incident.is_solved
+                      }"
+                        aria-hidden="true"
+                      ></i>
+                    </td>
+                    <td>
+                      <!-- Bouton Update -->
+                      <button
+                        (click)="openEditModal(incident)"
+                        class="action-button"
+                        title="Update"
+                        aria-label="Update"
+                      >
+                        <i class="bi bi-pencil-fill text-primary"></i>
+                      </button>
+
+                      <!-- Bouton Delete -->
+                      <button
+                        (click)="deleteIncident(incident)"
+                        class="action-button"
+                        title="Delete"
+                        aria-label="Delete"
+                      >
+                        <i class="bi bi-trash-fill text-dark"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="pagination">
+                <button (click)="previousPage()" [disabled]="currentPage === 1">
+                  Précédent
+                </button>
+                <span>Page {{ currentPage }} sur {{ totalPages }}</span>
+                <button
+                  (click)="nextPage()"
+                  [disabled]="currentPage === totalPages"
+                >
+                  Suivant
+                </button>
+              </div>
+            </div>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</app-layout>
