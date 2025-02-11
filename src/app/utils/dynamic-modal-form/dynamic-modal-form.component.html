@@ -42,6 +42,19 @@
           "
           readonly
         ></ion-textarea>
+
+        <!-- Select -->
+        <ion-select
+          *ngIf="field.type === 'select'"
+          formControlName="{{ field.name }}"
+        >
+          <ion-select-option
+            *ngFor="let option of field.options"
+            [value]="option.value"
+          >
+            {{ option.label }}
+          </ion-select-option>
+        </ion-select>
       </ion-item>
     </div>
 

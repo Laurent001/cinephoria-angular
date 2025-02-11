@@ -1,6 +1,12 @@
 import { AuditoriumResponse } from '../film/film';
 
 export interface IncidentResponse {
+  incidents: Incident[];
+  materials: MaterialResponse[];
+  auditoriums: AuditoriumResponse[];
+}
+
+export interface Incident {
   id: number;
   description: string;
   added_date: Date;

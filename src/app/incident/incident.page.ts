@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { tap } from 'rxjs';
+import { AuditoriumResponse } from '../film/film';
 import { LayoutComponent } from '../layout/layout.component';
 import { Fields } from '../utils/dynamic-modal-form/dynamic-modal-form';
 import { DynamicModalFormComponent } from '../utils/dynamic-modal-form/dynamic-modal-form.component';
-import { IncidentResponse } from './incident';
+import { Incident, MaterialResponse } from './incident';
 import { IncidentService } from './incident.service';
 
 @Component({
@@ -26,8 +27,10 @@ import { IncidentService } from './incident.service';
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
 })
 export class IncidentPage implements OnInit {
-  incidents!: IncidentResponse[];
-  paginatedIncidents!: IncidentResponse[];
+  incidents!: Incident[];
+  materials!: MaterialResponse[];
+  auditoriums!: AuditoriumResponse[];
+  paginatedIncidents!: Incident[];
   itemsPerPage: number = 10;
   currentPage: number = 1;
   totalPages: number = 1;
@@ -46,10 +49,17 @@ export class IncidentPage implements OnInit {
   }
 
   getIncidents() {
-    this.incidentService.getIncidents().subscribe((incidents) => {
-      this.incidents = incidents;
-      this.updatePagination();
-    });
+    this.incidentService
+      .getIncidents()
+      .pipe(
+        tap((response) => {
+          this.incidents = response.incidents;
+          this.materials = response.materials;
+          this.auditoriums = response.auditoriums;
+          this.updatePagination();
+        })
+      )
+      .subscribe();
   }
 
   updatePagination() {
@@ -91,15 +101,23 @@ export class IncidentPage implements OnInit {
   async openEditModal(incident: any) {
     const fields: Fields[] = [
       {
-        name: 'auditorium_name',
+        name: 'auditorium_id',
         label: 'Auditorium',
-        type: 'text',
+        type: 'select',
+        options: this.auditoriums.map((auditorium) => ({
+          label: auditorium.name,
+          value: auditorium.id,
+        })),
         required: true,
       },
       {
-        name: 'material_name',
+        name: 'material_id',
         label: 'Matériel',
-        type: 'text',
+        type: 'select',
+        options: this.materials.map((material) => ({
+          label: material.name,
+          value: material.id,
+        })),
         required: true,
       },
       {
@@ -113,11 +131,9 @@ export class IncidentPage implements OnInit {
     ];
     const title: string = "Modifier l'incident";
 
-    console.log('incident.is_solved', incident.is_solved);
-
     const initialValues = {
-      auditorium_name: incident.auditorium.name,
-      material_name: incident.material.name,
+      auditorium_id: incident.auditorium.id,
+      material_id: incident.material.id,
       description: incident.description,
       is_solved: incident.is_solved == 1 ? 'true' : 'false',
       added_date: incident.added_date,
@@ -137,15 +153,11 @@ export class IncidentPage implements OnInit {
 
     if (role === 'save') {
       const incidentModified = this.getIncidentReponseModified(incident, data);
-      console.log('Données sauvegardées:', incidentModified);
       this.updateIncident(incidentModified);
     }
   }
 
-  getIncidentReponseModified(
-    incident: IncidentResponse,
-    data: any
-  ): IncidentResponse {
+  getIncidentReponseModified(incident: Incident, data: any): Incident {
     return {
       ...incident,
       description: data.description,
@@ -153,16 +165,16 @@ export class IncidentPage implements OnInit {
       added_date: new Date(data.added_date),
       auditorium: {
         ...incident.auditorium,
-        name: data.auditorium_name,
+        id: data.auditorium_id,
       },
       material: {
         ...incident.material,
-        name: data.material_name,
+        id: data.material_id,
       },
     };
   }
 
-  deleteIncident(incident: IncidentResponse) {
+  deleteIncident(incident: Incident) {
     this.incidentService
       .deleteIncidentById(incident.id)
       .pipe(
@@ -173,9 +185,20 @@ export class IncidentPage implements OnInit {
       .subscribe();
   }
 
-  updateIncident(incident: IncidentResponse) {
+  updateIncident(incident: Incident) {
     this.incidentService
       .setIncident(incident)
+      .pipe(
+        tap(() => {
+          this.getIncidents();
+        })
+      )
+      .subscribe();
+  }
+
+  addIncident(incident: Incident) {
+    this.incidentService
+      .addIncident(incident)
       .pipe(
         tap(() => {
           this.getIncidents();

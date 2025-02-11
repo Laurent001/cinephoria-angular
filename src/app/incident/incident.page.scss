@@ -21,23 +21,41 @@ td {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  i {
+    font-size: 18px;
+  }
 }
 
 .pagination {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   margin: 10px;
 }
 
+.incident-header {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.incident-add {
+  display: flex;
+  align-items: center;
+
+  i {
+    margin-left: 10px;
+    font-size: 25px;
+  }
+}
+
 .nb-rows {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin: 10px;
 
   label {
-    margin: 5px;
+    margin-right: 5px;
   }
 }
 
