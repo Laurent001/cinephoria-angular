@@ -70,19 +70,19 @@ export class AppComponent implements OnInit {
         title: this.translateService.instant('menu-home'),
         url: '/home',
         icon: 'home',
-        roles: ['admin', 'user', 'employee', 'guest'],
+        roles: ['admin', 'user', 'employe', 'guest'],
       },
       {
         title: this.translateService.instant('menu-film'),
         url: '/film',
         icon: 'film',
-        roles: ['admin', 'user', 'employee', 'guest'],
+        roles: ['admin', 'user', 'employe', 'guest'],
       },
       {
         title: this.translateService.instant('menu-booking'),
         url: '/booking',
         icon: 'ticket',
-        roles: ['admin', 'user', 'employee', 'guest'],
+        roles: ['admin', 'user', 'employe', 'guest'],
       },
       {
         title: this.translateService.instant('menu-contact'),
@@ -100,13 +100,13 @@ export class AppComponent implements OnInit {
         title: this.translateService.instant('menu-incident'),
         url: '/incident',
         icon: 'alert',
-        roles: ['admin', 'employee'],
+        roles: ['admin', 'employe'],
       },
       {
         title: this.translateService.instant('menu-intranet'),
         url: '/intranet',
         icon: 'git-network',
-        roles: ['admin', 'employee'],
+        roles: ['admin', 'employe'],
       },
       {
         title: this.translateService.instant('menu-admin'),
@@ -124,7 +124,7 @@ export class AppComponent implements OnInit {
         title: this.translateService.instant('menu-logout'),
         url: '/logout',
         icon: 'log-out',
-        roles: ['admin', 'user', 'employee'],
+        roles: ['admin', 'user', 'employe'],
       },
     ];
 
@@ -176,7 +176,7 @@ export class AppComponent implements OnInit {
           this.showLogout =
             this.roles.includes('admin') ||
             this.roles.includes('user') ||
-            this.roles.includes('employee');
+            this.roles.includes('employe');
         } else {
           this.roles = ['guest'];
           this.updatePages(this.roles);
@@ -190,7 +190,7 @@ export class AppComponent implements OnInit {
       this.showLogout =
         this.roles.includes('admin') ||
         this.roles.includes('user') ||
-        this.roles.includes('employee');
+        this.roles.includes('employe');
     });
   }
 

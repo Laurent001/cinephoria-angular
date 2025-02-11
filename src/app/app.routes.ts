@@ -14,14 +14,14 @@ export const initRoutes = (): Routes => {
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'user', 'guest', 'employee'] },
+    data: { roles: ['admin', 'user', 'guest', 'employe'] },
   });
 
   routes.push({
     path: 'film',
     loadComponent: () => import('./film/film.page').then((m) => m.FilmPage),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'user', 'guest', 'employee'] },
+    data: { roles: ['admin', 'user', 'guest', 'employe'] },
   });
 
   routes.push({
@@ -29,7 +29,7 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./booking/booking.page').then((m) => m.BookingPage),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'user', 'guest', 'employee'] },
+    data: { roles: ['admin', 'user', 'guest', 'employe'] },
   });
 
   routes.push({
@@ -45,7 +45,7 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./incident/incident.page').then((m) => m.IncidentPage),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'employee'] },
+    data: { roles: ['admin', 'employe'] },
   });
 
   routes.push({
@@ -53,7 +53,7 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./intranet/intranet.page').then((m) => m.IntranetPage),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'employee'] },
+    data: { roles: ['admin', 'employe'] },
   });
 
   routes.push({
@@ -82,7 +82,7 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./logout/logout.page').then((m) => m.LogoutPage),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'user', 'employee'] },
+    data: { roles: ['admin', 'user', 'employe'] },
   });
 
   return routes;

@@ -1,0 +1,56 @@
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+th {
+  padding: 10px;
+  text-align: left;
+}
+tr {
+  border-bottom: 1px solid #ddd;
+}
+td {
+  padding: 10px;
+
+  &.description {
+    max-width: 350px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px;
+}
+
+.nb-rows {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+
+  label {
+    margin: 5px;
+  }
+}
+
+::ng-deep {
+  .item-inner {
+    border-style: none !important;
+  }
+
+  ion-item {
+    --inner-border-width: 0 0 0 0 !important;
+  }
+}
+
+ion-row {
+  margin: 50px;
+}

@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Fermer</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div *ngFor="let field of fields">
+      <ion-item>
+        <ion-label position="floating">{{ field.label }}</ion-label>
+
+        <!-- Input text -->
+        <ion-input
+          *ngIf="field.type === 'text'"
+          formControlName="{{ field.name }}"
+          [type]="field.type"
+          readonly
+        ></ion-input>
+
+        <!-- Textarea -->
+        <ion-textarea
+          *ngIf="field.type === 'textarea'"
+          formControlName="{{ field.name }}"
+          autoGrow="true"
+        ></ion-textarea>
+
+        <!-- Toggle -->
+        <ion-toggle
+          *ngIf="field.type === 'toggle'"
+          formControlName="{{ field.name }}"
+        ></ion-toggle>
+
+        <!-- Date -->
+        <ion-textarea
+          *ngIf="field.type === 'date'"
+          [value]="
+            form.get(field.name)?.value | date : 'EEE d MMM yyyy' : 'fr-FR'
+          "
+          readonly
+        ></ion-textarea>
+      </ion-item>
+    </div>
+
+    <!-- Boutons -->
+    <div class="button-group">
+      <button
+        class="btn btn-secondary m-3"
+        type="button"
+        ion-button
+        expand="block"
+        color="light"
+        (click)="cancel()"
+      >
+        Annuler
+      </button>
+      <button
+        class="btn btn-success m-3"
+        type="submit"
+        ion-button
+        expand="block"
+        [disabled]="!form.valid"
+      >
+        Sauvegarder
+      </button>
+    </div>
+  </form>
+</ion-content>
