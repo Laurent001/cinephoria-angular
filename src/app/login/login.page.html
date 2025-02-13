@@ -1,53 +1,137 @@
-<app-layout [pageTitle]="'Connexion'">
-  <ion-content>
-    <ion-segment [(ngModel)]="currentView">
-      <ion-segment-button value="login">
-        <ion-label>Login</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="register">
-        <ion-label>Register</ion-label>
-      </ion-segment-button>
-    </ion-segment>
+<div class="container mt-4">
+  <h1>Connexion</h1>
 
-    <div *ngIf="currentView === 'login'">
-      <ion-list>
-        <ion-item>
-          <ion-label position="floating">Email</ion-label>
-          <ion-input type="email" [(ngModel)]="loginEmail"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Password</ion-label>
-          <ion-input type="password" [(ngModel)]="loginPassword"></ion-input>
-        </ion-item>
-      </ion-list>
-      <ion-button expand="full" (click)="login(loginEmail, loginPassword)"
-        >Login</ion-button
+  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        id="pills-login-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-login"
+        type="button"
+        role="tab"
+        aria-controls="pills-login"
+        aria-selected="true"
       >
-      <ion-button expand="full" fill="clear" (click)="resetPassword()"
-        >Forgot Password?</ion-button
+        Login
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="pills-register-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-register"
+        type="button"
+        role="tab"
+        aria-controls="pills-register"
+        aria-selected="false"
       >
+        Register
+      </button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="pills-tabContent">
+    <div
+      class="tab-pane fade show active"
+      id="pills-login"
+      role="tabpanel"
+      aria-labelledby="pills-login-tab"
+    >
+      <form>
+        <div class="mb-3">
+          <label for="loginEmail" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="loginEmail"
+            [(ngModel)]="loginEmail"
+            name="loginEmail"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="loginPassword" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="loginPassword"
+            [(ngModel)]="loginPassword"
+            name="loginPassword"
+          />
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary w-100 mb-2"
+          (click)="login(loginEmail, loginPassword)"
+        >
+          Login
+        </button>
+        <button
+          type="button"
+          class="btn btn-link w-100"
+          (click)="resetPassword()"
+        >
+          Forgot Password?
+        </button>
+      </form>
     </div>
 
-    <div *ngIf="currentView === 'register'">
-      <ion-list>
-        <ion-item>
-          <ion-label position="floating">First Name</ion-label>
-          <ion-input type="text" [(ngModel)]="registerFirstName"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Last Name</ion-label>
-          <ion-input type="text" [(ngModel)]="registerLastName"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Email</ion-label>
-          <ion-input type="email" [(ngModel)]="registerEmail"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Password</ion-label>
-          <ion-input type="password" [(ngModel)]="registerPassword"></ion-input>
-        </ion-item>
-      </ion-list>
-      <ion-button expand="full" (click)="register()">Register</ion-button>
+    <div
+      class="tab-pane fade"
+      id="pills-register"
+      role="tabpanel"
+      aria-labelledby="pills-register-tab"
+    >
+      <form>
+        <div class="mb-3">
+          <label for="registerFirstName" class="form-label">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="registerFirstName"
+            [(ngModel)]="registerFirstName"
+            name="registerFirstName"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="registerLastName" class="form-label">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="registerLastName"
+            [(ngModel)]="registerLastName"
+            name="registerLastName"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="registerEmail" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="registerEmail"
+            [(ngModel)]="registerEmail"
+            name="registerEmail"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="registerPassword" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="registerPassword"
+            [(ngModel)]="registerPassword"
+            name="registerPassword"
+          />
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary w-100"
+          (click)="register()"
+        >
+          Register
+        </button>
+      </form>
     </div>
-  </ion-content>
-</app-layout>
+  </div>
+</div>

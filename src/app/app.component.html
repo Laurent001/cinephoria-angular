@@ -1,35 +1,51 @@
-<ion-app>
-  <ion-split-pane contentId="main-content">
-    <ion-menu contentId="main-content" type="overlay">
-      <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>cinephoria</ion-list-header>
-          <ion-note>{{ "menu-slogan" | translate }}</ion-note>
-
-          <ion-menu-toggle
-            auto-hide="false"
-            *ngFor="let page of pages$ | async"
-          >
-            <ion-item
-              routerDirection="root"
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <nav
+      id="sidebar"
+      class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
+    >
+      <div class="position-sticky">
+        <h3
+          class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
+        >
+          cinephoria
+        </h3>
+        <p class="px-3 text-muted">{{ "menu-slogan" | translate }}</p>
+        <ul class="nav flex-column">
+          <li class="nav-item" *ngFor="let page of pages$ | async">
+            <a
+              class="nav-link"
               [routerLink]="[page.url]"
-              lines="none"
-              detail="false"
-              routerLinkActive="selected"
+              routerLinkActive="active"
             >
-              <ion-icon
-                aria-hidden="true"
-                slot="start"
-                [ios]="page.icon + '-outline'"
-                [md]="page.icon + '-sharp'"
-              ></ion-icon>
-              <ion-label>{{ page.title }}</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-        </ion-list>
-      </ion-content>
-    </ion-menu>
+              <i class="bi" [ngClass]="'bi-' + page.icon"></i>
+              {{ page.title }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-    <ion-router-outlet id="main-content"> </ion-router-outlet>
-  </ion-split-pane>
-</ion-app>
+    <!-- Main content -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <nav class="navbar navbar-expand-md navbar-light bg-light d-md-none">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">cinephoria</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </nav>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

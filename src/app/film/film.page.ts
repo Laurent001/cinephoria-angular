@@ -2,31 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import {
-  IonButton,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCol,
-  IonContent,
-  IonDatetime,
-  IonGrid,
-  IonItem,
-  IonList,
-  IonModal,
-  IonRow,
-  IonSelect,
-  IonSelectOption,
-  IonThumbnail,
-} from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { filter, Observable, take, tap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Booking } from '../booking/booking';
 import { BookingStateService } from '../booking/bookingState/booking-state.service';
-import { LayoutComponent } from '../layout/layout.component';
 import {
   ScreeningResponse,
   ScreeningsByFilmResponse,
@@ -45,27 +25,9 @@ import { GenreService } from './genre.service';
   styleUrls: ['film.page.scss'],
   standalone: true,
   imports: [
-    IonRow,
-    IonCol,
-    IonGrid,
-    IonThumbnail,
-    IonItem,
-    IonCard,
-    IonCardHeader,
-    IonCardContent,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonList,
-    IonContent,
-    IonSelect,
-    IonSelectOption,
-    IonDatetime,
-    IonButton,
-    IonModal,
     CommonModule,
     FormsModule,
     TranslateModule,
-    LayoutComponent,
     TranslateModule,
     SliderPage,
   ],
@@ -137,8 +99,8 @@ export class FilmPage implements OnInit {
     }
   }
 
-  onCinemaChange(cinemaSelectedId: number) {
-    this.cinemaSelectedId = cinemaSelectedId;
+  onCinemaChange(event: any) {
+    this.cinemaSelectedId = event.detail.value;
 
     if (this.cinemaSelectedId) {
       this.filmsFiltered$ = this.filmService.getFilmsByCinema(

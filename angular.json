@@ -5,12 +5,7 @@
   "projects": {
     "app": {
       "projectType": "application",
-      "schematics": {
-        "@ionic/angular-toolkit:page": {
-          "styleext": "scss",
-          "standalone": true
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -30,7 +25,7 @@
                 "output": "assets"
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss"],
+            "styles": ["src/global.scss"],
             "scripts": [],
             "browser": "src/main.ts"
           },
@@ -106,7 +101,6 @@
             ],
             "styles": [
               "src/global.scss",
-              "src/theme/variables.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
@@ -130,15 +124,9 @@
     }
   },
   "cli": {
-    "schematicCollections": ["@ionic/angular-toolkit"]
+    "schematicCollections": []
   },
   "schematics": {
-    "@ionic/angular-toolkit:component": {
-      "styleext": "scss"
-    },
-    "@ionic/angular-toolkit:page": {
-      "styleext": "scss"
-    },
     "@angular-eslint/schematics:application": {
       "setParserOptionsProject": true
     },

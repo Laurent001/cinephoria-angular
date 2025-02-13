@@ -1,139 +1,99 @@
-<app-layout [pageTitle]="'menu-film' | translate">
-  <ion-content>
-    <ion-list>
-      <ion-item>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="4">
-              <ion-select
-                [(ngModel)]="cinemaSelectedId"
-                (ionChange)="onCinemaChange($event.detail.value)"
-                [placeholder]="'film-select-cinema-short' | translate"
-              >
-                <ion-select-option
-                  *ngFor="let cinema of cinemas"
-                  [value]="cinema.id"
-                >
-                  {{ cinema.name }}
-                </ion-select-option>
-              </ion-select>
-            </ion-col>
-            <ion-col size="4">
-              <ion-select
-                [(ngModel)]="genreSelectedId"
-                (ionChange)="onGenreChange($event)"
-                [placeholder]="'film-select-genre-short' | translate"
-              >
-                <ion-select-option
-                  *ngFor="let genre of genres"
-                  [value]="genre.id"
-                >
-                  {{ genre.name }}
-                </ion-select-option>
-              </ion-select>
-            </ion-col>
-            <ion-col size="4">
-              <ion-button (click)="openDatePicker()"
-                >{{ dateSelected || 'film-select-date-short' | translate
-                }}</ion-button
-              >
-              <ion-modal [isOpen]="isDatePickerOpen">
-                <ng-template>
-                  <ion-datetime
-                    [min]="minDate"
-                    presentation="date"
-                    [showDefaultButtons]="true"
-                    (ionChange)="onDateChange($event)"
-                    (ionCancel)="closeDatePicker()"
-                  ></ion-datetime>
-                </ng-template>
-              </ion-modal>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-    </ion-list>
+<div class="container">
+  <h1>{{ 'menu-film' | translate }}</h1>
 
-    <ion-list>
-      <ion-item *ngFor="let film of filmsFiltered$ | async; let i = index">
-        <ion-grid>
-          <ion-row>
-            <ion-col
-              size="12"
-              size-xl="2"
-              size-lg="3"
-              size-md="3"
-              size-sm="4"
-              size-xs="6"
-            >
-              <ion-thumbnail>
-                <img
-                  class="film-poster"
-                  [src]="film.poster"
-                  alt="Affiche du film"
-                />
-              </ion-thumbnail>
-            </ion-col>
-            <ion-col
-              size="12"
-              size-xl="10"
-              size-lg="9"
-              size-md="9"
-              size-sm="8"
-              size-xs="6"
-            >
-              <ion-card>
-                <ion-card-header>
-                  <ion-card-title>{{ film.title }}</ion-card-title>
-                  <ion-card-subtitle>
-                    {{ film.release_date | date:'dd MMMM yyyy' }} | {{
-                    film.genres }}<br />
-                    Âge minimum : {{ film.age_minimum }}+<br />
-                    <!-- Note : {{ film.note }}/5 -->
-                  </ion-card-subtitle>
-                </ion-card-header>
-                <ion-card-content>
-                  <app-slider
-                    *ngIf="filmSelectedId === film.id && screenings"
-                    [screenings]="screenings"
-                    (screeningSelected)="onScreeningSelected($event)"
-                  ></app-slider>
-                  <ion-button
-                    *ngIf="filmSelectedId === film.id && screenings"
-                    type="submit"
-                    [disabled]="!screenings.screeningSelected && !this.booking?.screening"
-                    (click)="onBookingButton()"
-                    >{{'booking-screening' | translate}}</ion-button
-                  >
-                </ion-card-content>
-                <ion-card-content>
-                  <div>
-                    <p class="film-description d-xl-none">
-                      {{ film.description | slice:0:150 }}
-                    </p>
-                    <p class="film-description d-xl-block">
-                      {{ film.description }}
-                    </p>
-                    <a
-                      class="see-more d-xl-none"
-                      (click)="seeFullDescription(film.description)"
-                    >
-                      {{ 'see-more' | translate }}
-                    </a>
-                  </div>
-                  <ion-button
-                    *ngIf="!(filmSelectedId === film.id) || !screenings"
-                    class="screenings-button"
-                    (click)="onScreeningsButton(film.id)"
-                  >
-                    {{ 'screenings' | translate }}
-                  </ion-button>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-    </ion-list>
-  </ion-content>
-</app-layout>
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <select
+        class="form-select"
+        [(ngModel)]="cinemaSelectedId"
+        (change)="onCinemaChange($event)"
+      >
+        <option value="" disabled selected>
+          {{ 'film-select-cinema-short' | translate }}
+        </option>
+        <option *ngFor="let cinema of cinemas" [value]="cinema.id">
+          {{ cinema.name }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <select
+        class="form-select"
+        [(ngModel)]="genreSelectedId"
+        (change)="onGenreChange($event)"
+      >
+        <option value="" disabled selected>
+          {{ 'film-select-genre-short' | translate }}
+        </option>
+        <option *ngFor="let genre of genres" [value]="genre.id">
+          {{ genre.name }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-primary" (click)="openDatePicker()">
+        {{ dateSelected || 'film-select-date-short' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="list-group">
+    <div
+      class="list-group-item"
+      *ngFor="let film of filmsFiltered$ | async; let i = index"
+    >
+      <div class="row">
+        <div class="col-12 col-sm-4 col-md-3 col-lg-3 col-xl-2 mb-3 mb-sm-0">
+          <img
+            class="img-fluid rounded"
+            [src]="film.poster"
+            alt="Affiche du film"
+          />
+        </div>
+        <div class="col-12 col-sm-8 col-md-9 col-lg-9 col-xl-10">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ film.title }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                {{ film.release_date | date:'dd MMMM yyyy' }} | {{ film.genres
+                }}<br />
+                Âge minimum : {{ film.age_minimum }}+
+              </h6>
+              <div *ngIf="filmSelectedId === film.id && screenings">
+                <app-slider
+                  [screenings]="screenings"
+                  (screeningSelected)="onScreeningSelected($event)"
+                ></app-slider>
+                <button
+                  class="btn btn-primary"
+                  [disabled]="!screenings.screeningSelected && !this.booking?.screening"
+                  (click)="onBookingButton()"
+                >
+                  {{ 'booking-screening' | translate }}
+                </button>
+              </div>
+              <p class="card-text d-none d-xl-block">{{ film.description }}</p>
+              <p class="card-text d-xl-none">
+                {{ film.description | slice:0:150 }}
+              </p>
+              <a
+                href="#"
+                class="card-link d-xl-none"
+                (click)="seeFullDescription(film.description)"
+              >
+                {{ 'see-more' | translate }}
+              </a>
+              <button
+                *ngIf="!(filmSelectedId === film.id) || !screenings"
+                class="btn btn-secondary mt-2"
+                (click)="onScreeningsButton(film.id)"
+              >
+                {{ 'screenings' | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

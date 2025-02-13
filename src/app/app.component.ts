@@ -1,36 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import {
-  IonApp,
-  IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonMenu,
-  IonMenuToggle,
-  IonNote,
-  IonRouterLink,
-  IonRouterOutlet,
-  IonSplitPane,
-} from '@ionic/angular/standalone';
-
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { addIcons } from 'ionicons';
-import {
-  alertSharp,
-  cloudSharp,
-  constructSharp,
-  filmSharp,
-  gitNetworkSharp,
-  homeSharp,
-  logInSharp,
-  logOutSharp,
-  peopleSharp,
-  ticketSharp,
-} from 'ionicons/icons';
 import { BehaviorSubject, switchMap } from 'rxjs';
 import { Page, User } from './app';
 import { AuthService } from './auth/auth.service';
@@ -40,24 +11,7 @@ import { AuthService } from './auth/auth.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [
-    IonApp,
-    IonRouterOutlet,
-    IonSplitPane,
-    IonMenu,
-    IonContent,
-    IonList,
-    IonListHeader,
-    IonMenuToggle,
-    IonItem,
-    IonIcon,
-    IonNote,
-    IonLabel,
-    IonRouterLink,
-    RouterModule,
-    TranslateModule,
-    CommonModule,
-  ],
+  imports: [RouterModule, TranslateModule, CommonModule],
 })
 export class AppComponent implements OnInit {
   public pages$ = new BehaviorSubject<Page[]>([]);
@@ -138,20 +92,7 @@ export class AppComponent implements OnInit {
     private translateService: TranslateService,
     private authService: AuthService,
     private router: Router
-  ) {
-    addIcons({
-      homeSharp,
-      filmSharp,
-      ticketSharp,
-      peopleSharp,
-      logInSharp,
-      logOutSharp,
-      alertSharp,
-      gitNetworkSharp,
-      constructSharp,
-      cloudSharp,
-    });
-  }
+  ) {}
 
   ngOnInit() {
     const lang = 'fr';

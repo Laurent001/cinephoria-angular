@@ -2,11 +2,10 @@ import { CommonModule, registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { tap } from 'rxjs';
 import { AuditoriumResponse } from '../film/film';
-import { LayoutComponent } from '../layout/layout.component';
 import { Fields } from '../utils/dynamic-modal-form/dynamic-modal-form';
 import { DynamicModalFormComponent } from '../utils/dynamic-modal-form/dynamic-modal-form.component';
 import { Incident, IncidentFields, MaterialResponse } from './incident';
@@ -17,13 +16,7 @@ import { IncidentService } from './incident.service';
   templateUrl: './incident.page.html',
   styleUrls: ['./incident.page.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    LayoutComponent,
-    TranslateModule,
-  ],
+  imports: [CommonModule, FormsModule, TranslateModule],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
 })
 export class IncidentPage implements OnInit {
