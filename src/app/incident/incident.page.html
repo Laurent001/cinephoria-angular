@@ -5,19 +5,29 @@
         <ion-grid>
           <ion-row>
             <div class="card">
-              <div class="nb-rows">
-                <label for="itemsPerPage"
-                  >{{ 'incident-nb-page' | translate }}</label
-                >
-                <select
-                  id="itemsPerPage"
-                  [(ngModel)]="itemsPerPage"
-                  (change)="changeItemsPerPage()"
-                >
-                  <option value="5">5</option>
-                  <option value="10">10</option>
-                  <option value="50">50</option>
-                </select>
+              <div class="incident-header">
+                <!-- Bouton Add -->
+                <div class="incident-add">
+                  <div>{{ 'incident-add' | translate }}</div>
+                  <i
+                    class="bi bi-plus-circle-fill text-primary"
+                    (click)="openModal()"
+                  ></i>
+                </div>
+                <div class="nb-rows">
+                  <label for="itemsPerPage"
+                    >{{ 'incident-nb-page' | translate }}</label
+                  >
+                  <select
+                    id="itemsPerPage"
+                    [(ngModel)]="itemsPerPage"
+                    (change)="changeItemsPerPage()"
+                  >
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="50">50</option>
+                  </select>
+                </div>
               </div>
               <table
                 style="min-width: 50rem; border-collapse: collapse; width: 100%"
@@ -37,7 +47,7 @@
                 <!-- Corps du tableau -->
                 <tbody>
                   <tr *ngFor="let incident of paginatedIncidents">
-                    <td>{{ incident.auditorium.cinema.name }}</td>
+                    <td>{{ incident.auditorium.name }}</td>
                     <td>{{ incident.material.name }}</td>
                     <td class="description">{{ incident.description }}</td>
                     <td>
@@ -56,7 +66,7 @@
                     <td>
                       <!-- Bouton Update -->
                       <button
-                        (click)="openEditModal(incident)"
+                        (click)="openModal(incident)"
                         class="action-button"
                         title="Update"
                         aria-label="Update"

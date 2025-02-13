@@ -13,13 +13,46 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonSelect,
+  IonSelectOption,
+  IonTextarea,
+  IonTitle,
+  IonToggle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Fields } from './dynamic-modal-form';
 
 @Component({
   selector: 'app-dynamic-modal',
   standalone: true,
-  imports: [CommonModule, IonicModule, ReactiveFormsModule],
+  imports: [
+    IonHeader,
+    CommonModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    IonItem,
+    IonLabel,
+    IonSelect,
+    IonSelectOption,
+    IonTextarea,
+    IonContent,
+    IonInput,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonButton,
+    IonToggle,
+  ],
   templateUrl: './dynamic-modal-form.component.html',
   styleUrls: ['./dynamic-modal-form.component.scss'],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
@@ -32,7 +65,12 @@ export class DynamicModalFormComponent {
 
   form!: FormGroup;
 
-  constructor(private modalCtrl: ModalController, private fb: FormBuilder) {
+  constructor(
+    private translate: TranslateService,
+    private modalCtrl: ModalController,
+    private fb: FormBuilder
+  ) {
+    this.translate.setDefaultLang('fr');
     registerLocaleData(localeFr);
   }
 
@@ -40,7 +78,7 @@ export class DynamicModalFormComponent {
     const controls: { [key: string]: any } = {};
     this.fields.forEach((field) => {
       controls[field.name] = [
-        this.initialValues[field.name as keyof typeof this.initialValues] || '',
+        this.initialValues[field.name as keyof typeof this.initialValues] ?? '',
         field.required ? Validators.required : [],
       ];
     });
@@ -50,7 +88,10 @@ export class DynamicModalFormComponent {
   onSubmit() {
     if (this.form.valid) {
       this.save.emit(this.form.value);
-      this.modalCtrl.dismiss(this.form.value, 'save');
+      this.modalCtrl.dismiss(
+        { ...this.form.value, isModified: !this.form.pristine },
+        'save'
+      );
     }
   }
 
