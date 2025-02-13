@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
       {
         title: this.translateService.instant('menu-home'),
         url: '/home',
-        icon: 'home',
+        icon: 'house',
         roles: ['admin', 'user', 'employe', 'guest'],
       },
       {
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
       {
         title: this.translateService.instant('menu-booking'),
         url: '/booking',
-        icon: 'ticket',
+        icon: 'ticket-perforated',
         roles: ['admin', 'user', 'employe', 'guest'],
       },
       {
@@ -47,25 +47,25 @@ export class AppComponent implements OnInit {
       {
         title: this.translateService.instant('menu-login'),
         url: '/login',
-        icon: 'log-in',
+        icon: 'box-arrow-in-right',
         roles: ['guest'],
       },
       {
         title: this.translateService.instant('menu-incident'),
         url: '/incident',
-        icon: 'alert',
+        icon: 'exclamation-octagon',
         roles: ['admin', 'employe'],
       },
       {
         title: this.translateService.instant('menu-intranet'),
         url: '/intranet',
-        icon: 'git-network',
+        icon: 'server',
         roles: ['admin', 'employe'],
       },
       {
         title: this.translateService.instant('menu-admin'),
         url: '/admin',
-        icon: 'construct',
+        icon: 'gear',
         roles: ['admin'],
       },
       {
@@ -77,7 +77,7 @@ export class AppComponent implements OnInit {
       {
         title: this.translateService.instant('menu-logout'),
         url: '/logout',
-        icon: 'log-out',
+        icon: 'box-arrow-in-left',
         roles: ['admin', 'user', 'employe'],
       },
     ];
