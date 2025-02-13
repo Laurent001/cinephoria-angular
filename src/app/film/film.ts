@@ -14,7 +14,7 @@ export interface CinemaResponse {
   name: string;
   address: string;
   city: string;
-  postcode: Date;
+  postcode: number;
   phone: number;
   opening_hours: number;
 }

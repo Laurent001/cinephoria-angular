@@ -2,7 +2,9 @@
   <ion-toolbar>
     <ion-title>{{ title }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="cancel()">Fermer</ion-button>
+      <ion-button (click)="cancel()">{{
+        "modal-close-button" | translate
+      }}</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -36,10 +38,8 @@
 
         <!-- Date -->
         <ion-textarea
-          *ngIf="field.type === 'date'"
-          [value]="
-            form.get(field.name)?.value | date : 'EEE d MMM yyyy' : 'fr-FR'
-          "
+          *ngIf="field.type === 'date' && form.get(field.name)?.value"
+          [value]="form.get(field.name)?.value"
           readonly
         ></ion-textarea>
 
@@ -68,7 +68,7 @@
         color="light"
         (click)="cancel()"
       >
-        Annuler
+        {{ "modal-cancel-button" | translate }}
       </button>
       <button
         class="btn btn-success m-3"
@@ -77,7 +77,7 @@
         expand="block"
         [disabled]="!form.valid"
       >
-        Sauvegarder
+        {{ "modal-save-button" | translate }}
       </button>
     </div>
   </form>

@@ -30,5 +30,8 @@
   "incident-nb-page": "Éléments par page",
   "incident-add": "Ajouter un incident",
   "home": "Accueil",
-  "see-more": "Voir plus"
+  "see-more": "Voir plus",
+  "modal-save-button": "Sauver",
+  "modal-cancel-button": "Annuler",
+  "modal-close-button": "Fermer"
 }

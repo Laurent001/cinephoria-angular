@@ -6,9 +6,13 @@
           <ion-row>
             <div class="card">
               <div class="incident-header">
+                <!-- Bouton Add -->
                 <div class="incident-add">
                   <div>{{ 'incident-add' | translate }}</div>
-                  <i class="bi bi-plus-circle-fill text-primary"></i>
+                  <i
+                    class="bi bi-plus-circle-fill text-primary"
+                    (click)="openModal()"
+                  ></i>
                 </div>
                 <div class="nb-rows">
                   <label for="itemsPerPage"
@@ -62,7 +66,7 @@
                     <td>
                       <!-- Bouton Update -->
                       <button
-                        (click)="openEditModal(incident)"
+                        (click)="openModal(incident)"
                         class="action-button"
                         title="Update"
                         aria-label="Update"
