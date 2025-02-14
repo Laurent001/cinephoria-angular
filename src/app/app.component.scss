@@ -1,23 +1,57 @@
-@media (min-width: 768px) {
-  #sidebar {
-    height: 100vh;
-    position: sticky;
-    top: 0;
+.container-fluid {
+  .row {
+    --bs-gutter-x: 0 !important;
   }
-}
 
-.sidebar .nav-link {
-  color: #333;
-}
+  @media (min-width: 992px) {
+    #offcanvasNavbar {
+      position: static; /* Fixe l'offcanvas */
+      width: 250px; /* Ajustez selon vos besoins */
+      max-width: none;
+      flex-shrink: 0; /* Empêche le rétrécissement */
+    }
+  }
 
-.sidebar .nav-link.active {
-  color: #007bff;
-}
+  @media (max-width: 992px) {
+    main {
+      transition: margin-left 0.3s ease-in-out;
 
-.sidebar-heading {
-  font-size: 1.2rem;
-}
+      .navbar {
+        width: 100vw !important;
+        padding: 0;
 
-.bi {
-  margin-right: 8px;
+        .container-fluid {
+          margin: 1rem;
+        }
+      }
+    }
+  }
+
+  #offcanvasNavbar {
+    background-color: var(--bs-gray-100) !important;
+
+    .offcanvas-header {
+      padding-bottom: 0;
+    }
+
+    li.nav-item a {
+      font-size: 1.2rem;
+      color: black;
+
+      i {
+        margin-right: 10px;
+        color: var(--bs-gray-600);
+      }
+    }
+
+    .active {
+      font-weight: bold;
+      font-size: 1.4rem !important;
+      color: #3dc2ff !important;
+
+      i {
+        color: #3dc2ff !important;
+      }
+    }
+  }
 }
