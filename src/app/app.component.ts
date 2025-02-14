@@ -92,7 +92,9 @@ export class AppComponent implements OnInit {
     private translateService: TranslateService,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    this.translateService.setDefaultLang('fr');
+  }
 
   ngOnInit() {
     const lang = 'fr';

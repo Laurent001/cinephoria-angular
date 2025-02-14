@@ -1,2 +1,16 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+
+html {
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  width: 100vw;
+  max-width: 1400px;
+  height: 100vh;
+  border-right: 1px solid var(--bs-gray-200);
+  border-left: 1px solid var(--bs-gray-200);
+}

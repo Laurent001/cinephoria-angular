@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { FilmResponse } from '../film/film';
 import { FilmService } from '../film/film.service';
@@ -16,7 +16,11 @@ import { FilmService } from '../film/film.service';
 export class HomePage {
   protected films$: Observable<FilmResponse[]>;
 
-  constructor(private filmService: FilmService) {
+  constructor(
+    private filmService: FilmService,
+    private translate: TranslateService
+  ) {
+    this.translate.setDefaultLang('fr');
     this.films$ = this.filmService.getFilms();
   }
 }
