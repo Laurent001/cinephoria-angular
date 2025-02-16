@@ -1,39 +1,51 @@
-<div class="container">
-  <h1>{{ 'menu-film' | translate }}</h1>
+<div class="container d-flex flex-column">
+  <h1 class="m-3">{{ 'film-title' | translate }}</h1>
 
-  <div class="row mb-3">
-    <div class="col-md-4">
-      <select
-        class="form-select"
-        [(ngModel)]="cinemaSelectedId"
-        (change)="onCinemaChange($event)"
-      >
-        <option value="" disabled selected>
-          {{ 'film-select-cinema-short' | translate }}
-        </option>
-        <option *ngFor="let cinema of cinemas" [value]="cinema.id">
-          {{ cinema.name }}
-        </option>
-      </select>
+  <div class="row mb-3 align-self-center">
+    <div class="d-flex col-md-4">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ 'film-select-cinema-short' | translate }}</mat-label>
+        <mat-select
+          [(ngModel)]="cinemaSelectedId"
+          (selectionChange)="onCinemaChange($event)"
+        >
+          <mat-option value="" disabled selected>
+            {{ 'film-select-cinema-short' | translate }}
+          </mat-option>
+          <mat-option *ngFor="let cinema of cinemas" [value]="cinema.id">
+            {{ cinema.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-    <div class="col-md-4">
-      <select
-        class="form-select"
-        [(ngModel)]="genreSelectedId"
-        (change)="onGenreChange($event)"
-      >
-        <option value="" disabled selected>
-          {{ 'film-select-genre-short' | translate }}
-        </option>
-        <option *ngFor="let genre of genres" [value]="genre.id">
-          {{ genre.name }}
-        </option>
-      </select>
+    <div class="d-flex col-md-4">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ 'film-select-genre-short' | translate }}</mat-label>
+        <mat-select
+          [(ngModel)]="genreSelectedId"
+          (selectionChange)="onGenreChange($event)"
+        >
+          <mat-option value="" disabled selected>
+            {{ 'film-select-genre-short' | translate }}
+          </mat-option>
+          <mat-option *ngFor="let genre of genres" [value]="genre.id">
+            {{ genre.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-    <div class="col-md-4">
-      <button class="btn btn-primary" (click)="openDatePicker()">
-        {{ dateSelected || 'film-select-date-short' | translate }}
-      </button>
+    <div class="d-flex col-md-4">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ 'film-select-date-short' | translate }}</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="dateSelected"
+          (ngModelChange)="onDateChange($event)"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
     </div>
   </div>
 
@@ -43,16 +55,16 @@
       *ngFor="let film of filmsFiltered$ | async; let i = index"
     >
       <div class="row">
-        <div class="col-12 col-sm-4 col-md-3 col-lg-3 col-xl-2 mb-3 mb-sm-0">
+        <div class="d-flex col-12 col-xl-4 mb-2 mb-lg-0">
           <img
-            class="img-fluid rounded object-fit-cover"
+            class="img-fluid rounded w-100 h-auto object-fit-cover"
             [src]="film.poster"
             alt="Affiche du film"
           />
         </div>
-        <div class="col-12 col-sm-8 col-md-9 col-lg-9 col-xl-10">
+        <div class="d-flex col-12 col-xl-8">
           <div class="card">
-            <div class="card-body">
+            <div class="card-body d-flex flex-column">
               <h5 class="card-title">{{ film.title }}</h5>
               <h6 class="card-subtitle mb-2 text-muted">
                 {{ film.release_date | date:'dd MMMM yyyy' }} | {{ film.genres
@@ -83,13 +95,13 @@
               >
                 {{ 'see-more' | translate }}
               </a>
-              <button
+              <div
                 *ngIf="!(filmSelectedId === film.id) || !screenings"
                 class="btn btn-secondary mt-2"
                 (click)="onScreeningsButton(film.id)"
               >
                 {{ 'screenings' | translate }}
-              </button>
+              </div>
             </div>
           </div>
         </div>

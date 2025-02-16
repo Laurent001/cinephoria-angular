@@ -1,0 +1,41 @@
+@import "../../../node_modules/bootstrap/scss/_functions.scss";
+@import "../../../node_modules/bootstrap/scss/_variables.scss";
+@import "../../../node_modules/bootstrap/scss/mixins/";
+
+.container {
+  h1 {
+    border-bottom: 1px solid var(--bs-gray-400);
+    width: auto;
+    padding: 1rem;
+  }
+
+  .list-group {
+    --bs-list-group-border-width: none;
+    max-width: 100%;
+
+    @include media-breakpoint-up(md) {
+      align-self: center;
+      max-width: 55vw;
+
+      .card {
+        margin-top: 10px;
+        max-width: 55vw;
+      }
+
+      main {
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    @include media-breakpoint-up(xl) {
+      align-self: center;
+      max-width: 100%;
+
+      .card {
+        max-width: 100%;
+        margin-top: 0;
+      }
+    }
+  }
+}
