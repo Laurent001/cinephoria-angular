@@ -4,7 +4,7 @@
   <div class="list-group">
     <div class="list-group-item" *ngFor="let film of films$ | async">
       <div class="row">
-        <div class="col-12 col-xl-4 d-flex mb-2 mb-lg-0">
+        <div class="d-flex col-12 col-xl-4 mb-2 mb-lg-0">
           <img
             class="img-fluid rounded w-100 h-auto object-fit-cover"
             [src]="film.poster"
