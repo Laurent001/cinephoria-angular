@@ -107,7 +107,7 @@ export class BookingPage implements OnInit {
       this.booking = JSON.parse(bookingState) as Booking;
       this.seatsSelected = this.booking.seats;
       this.totalPrice = this.booking.totalPrice;
-      this.cinemaSelectedId = this.booking?.screening?.auditorium.cinema.id;
+      this.cinemaSelectedId = this.booking?.screening?.auditorium?.cinema.id;
       this.filmSelectedId = this.booking.screening?.film_id;
       this.screeningSelected = this.booking.screening;
 
@@ -137,7 +137,7 @@ export class BookingPage implements OnInit {
 
   onCinemaChange(event: any) {
     this.screenings = undefined;
-    this.cinemaSelectedId = event.detail.value;
+    this.cinemaSelectedId = event.target.value;
 
     if (this.cinemaSelectedId) {
       this.filmsFiltered$ = this.filmService.getFilmsByCinema(
@@ -169,6 +169,7 @@ export class BookingPage implements OnInit {
 
     if (this.screeningSelected && this.screeningSelected.film_id != filmId)
       this.screeningSelected = undefined;
+
     this.showSeatsScreening = false;
     this.screeningService
       .getFilmScreeningsByCinema(filmId, cinemaId)

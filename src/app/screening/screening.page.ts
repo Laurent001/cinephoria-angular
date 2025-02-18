@@ -8,9 +8,9 @@ import {
   OnInit,
 } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
-import { SeatResponse, SeatsScreeningResponse } from '../booking/seat/seat';
+import { SeatResponse } from '../booking/seat/seat';
 import { SeatService } from '../booking/seat/seat.service';
+import { RemoveTrailingZerosPipe } from '../utils/pipes/removeTrailingZeros.pipe';
 import { ScreeningResponse } from './screening';
 
 @Component({
@@ -18,7 +18,7 @@ import { ScreeningResponse } from './screening';
   standalone: true,
   templateUrl: './screening.page.html',
   styleUrls: ['./screening.page.scss'],
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, RemoveTrailingZerosPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
 })
@@ -26,7 +26,6 @@ export class ScreeningPage implements OnInit {
   @Input() screening?: ScreeningResponse;
   @Input() seatsSelected?: SeatResponse[] = [];
   @Input() totalPrice?: number = 0;
-  seatsScreening$?: Observable<SeatsScreeningResponse>;
 
   constructor(
     private translate: TranslateService,

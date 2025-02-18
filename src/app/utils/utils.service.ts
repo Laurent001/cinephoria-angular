@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import {} from '../film/film';
 import {
-  ScreeningsByFilmResponse,
   ScreeningResponse,
+  ScreeningsByFilmResponse,
 } from '../screening/screening';
 
 @Injectable({
@@ -28,8 +28,16 @@ export class UtilsService {
     if (screeningIdSelected === undefined || screenings === undefined) {
       return undefined;
     }
-    return screenings.screenings.find(
-      (screening) => screening.id === screeningIdSelected
-    );
+
+    for (const day of screenings.screenings) {
+      const screening = day.screeningsByDay.find(
+        (screening) => screening.id === screeningIdSelected
+      );
+      if (screening) {
+        return screening;
+      }
+    }
+
+    return undefined;
   }
 }

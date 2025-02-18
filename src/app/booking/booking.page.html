@@ -52,43 +52,52 @@
                 {{ 'see-more' | translate }}
               </a>
 
+              <!-- slider -->
               <app-slider
-                *ngIf="!((!screeningSelected && !screenings) || (filmSelectedId !== film.id))"
+                *ngIf="(screeningSelected || screenings) && (filmSelectedId == film.id)"
                 [screenings]="screenings"
                 (screeningSelected)="onScreeningSelected($event)"
               >
               </app-slider>
 
+              <!-- current booking -->
               <div
-                *ngIf="filmSelectedId === film.id && screeningSelected?.film_id === film.id"
                 class="mt-3"
+                *ngIf="filmSelectedId === film.id && screeningSelected?.film_id === film.id"
               >
-                <h4>{{ 'screening-current' | translate }}:</h4>
-                <app-screening
+                <div *ngIf="seatsSelected.length>0">
+                  <h4>{{ 'screening-current' | translate }}:</h4>
+                  <!-- <app-screening
                   [screening]="screeningSelected"
                   [seatsSelected]="seatsSelected"
                   [totalPrice]="totalPrice"
                 >
-                </app-screening>
+                </app-screening> -->
+                </div>
+
+                <!-- bouton seats -->
                 <button
-                  *ngIf="!showSeatsScreening && seatsSelected.length==0"
+                  *ngIf="!showSeatsScreening && screeningSelected"
                   class="btn btn-primary"
-                  [disabled]="!screeningSelected"
                   (click)="seeSeatsAvailable()"
                 >
                   {{ 'booking-seats-available' | translate }}
                 </button>
+
+                <!-- bouton booking validate -->
                 <button
-                  *ngIf="showSeatsScreening || seatsSelected.length>0"
-                  class="btn btn-info"
+                  *ngIf="showSeatsScreening"
+                  [disabled]="seatsSelected.length==0"
+                  class="btn btn-primary"
                   (click)="validateBooking()"
                 >
                   {{ 'booking-validate' | translate }}
                 </button>
               </div>
 
+              <!-- bouton séances -->
               <button
-                *ngIf="(!screeningSelected && !screenings) || (filmSelectedId !== film.id)"
+                *ngIf="!screenings || (filmSelectedId !== film.id)"
                 class="btn btn-secondary mt-2"
                 (click)="getFilmScreeningsByCinema(film.id, cinemaSelectedId)"
               >
@@ -103,11 +112,11 @@
         class="row mt-3"
         *ngIf="showSeatsScreening || seatsSelected.length > 0"
       >
-        <div class="col-12 offset-xl-2 col-xl-10">
-          <div
-            class="card"
-            *ngIf="filmSelectedId === film.id && screeningSelected"
-          >
+        <div
+          *ngIf="filmSelectedId === film.id && screeningSelected"
+          class="col-12 offset-xl-2 col-xl-10"
+        >
+          <div class="card">
             <div class="card-body">
               <h5 class="card-title">{{ 'seat-available' | translate }}</h5>
               <div *ngIf="seats$ | async as seats" class="d-flex flex-wrap">
