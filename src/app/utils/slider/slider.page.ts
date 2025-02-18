@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  LOCALE_ID,
+  Output,
+} from '@angular/core';
 import { addIcons } from 'ionicons';
 import { chevronBackSharp } from 'ionicons/icons';
 import { Booking } from 'src/app/booking/booking';
@@ -17,6 +23,7 @@ import { ScreeningService } from 'src/app/screening/screening.service';
   selector: 'app-slider',
   standalone: true,
   imports: [CommonModule, ScreeningPage],
+  providers: [{ provide: LOCALE_ID, useValue: 'fr' }],
   templateUrl: './slider.page.html',
   styleUrls: ['./slider.page.scss'],
 })
@@ -26,8 +33,11 @@ export class SliderPage {
   selectedScreening?: ScreeningResponse;
   seatsSelected?: SeatResponse[];
   booking?: Booking;
+  visibleDays: Date[] = [];
   currentIndex = 0;
-  visibleScreenings = 3;
+  visibleDaysCount = 3;
+  selectedDayScreenings: ScreeningResponse[] | null = null;
+  selectedDay?: Date;
 
   constructor(
     private screeningService: ScreeningService,
@@ -44,25 +54,50 @@ export class SliderPage {
       this.booking = JSON.parse(bookingState) as Booking;
       this.seatsSelected = this.booking.seats;
     }
+
+    this.updateVisibleDays();
   }
 
-  get totalScreenings() {
-    return this.screenings?.screenings.length || 0;
+  onDayClick(day: Date) {
+    const selectedScreeningByDay = this.screenings?.screenings.find(
+      (screeningByDay) =>
+        new Date(screeningByDay.day).toDateString() === day.toDateString()
+    );
+
+    this.selectedDayScreenings = selectedScreeningByDay
+      ? selectedScreeningByDay.screeningsByDay
+      : null;
+
+    this.selectedDay = day;
+  }
+
+  updateVisibleDays() {
+    if (this.screenings?.screenings) {
+      const uniqueDays = [
+        ...new Set(
+          this.screenings.screenings.map((screeningByDay) => {
+            const date = new Date(screeningByDay.day);
+            return date.toISOString().split('T')[0];
+          })
+        ),
+      ];
+      this.visibleDays = uniqueDays
+        .slice(this.currentIndex, this.currentIndex + this.visibleDaysCount)
+        .map((day) => new Date(day));
+    }
   }
 
   next() {
-    const screenings = this.screenings;
-    if (
-      screenings?.screenings.length &&
-      this.currentIndex < screenings.screenings.length - this.visibleScreenings
-    ) {
+    if (this.hasMoreDays) {
       this.currentIndex++;
+      this.updateVisibleDays();
     }
   }
 
   prev() {
     if (this.currentIndex > 0) {
       this.currentIndex--;
+      this.updateVisibleDays();
     }
   }
 
@@ -77,5 +112,18 @@ export class SliderPage {
     }
 
     this.screeningSelected.emit(screening);
+  }
+
+  get hasMoreDays(): boolean {
+    if (!this.screenings?.screenings) return false;
+    const uniqueDays = [
+      ...new Set(
+        this.screenings.screenings.map((screeningByDay) => {
+          const date = new Date(screeningByDay.day);
+          return date.toISOString().split('T')[0];
+        })
+      ),
+    ];
+    return this.currentIndex + this.visibleDaysCount < uniqueDays.length;
   }
 }

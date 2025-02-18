@@ -14,3 +14,16 @@ body {
   border-right: 1px solid var(--bs-gray-200);
   border-left: 1px solid var(--bs-gray-200);
 }
+
+.btn-primary,
+.bg-primary {
+  background-color: #3dc2ff !important;
+  border-color: #3dc2ff !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: #82d2f7 !important;
+  border-color: #82d2f7 !important;
+}

@@ -10,6 +10,11 @@ export interface ScreeningResponse {
 
 export interface ScreeningsByFilmResponse {
   film: FilmResponse;
-  screenings: ScreeningResponse[];
+  screenings: ScreeningsByDayResponse[];
   screeningSelected?: ScreeningResponse;
+}
+
+export interface ScreeningsByDayResponse {
+  day: Date;
+  screeningsByDay: ScreeningResponse[];
 }

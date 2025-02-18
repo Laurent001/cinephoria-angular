@@ -110,7 +110,6 @@ export class FilmPage implements OnInit {
   }
 
   onCinemaChange(event: any) {
-    console.log('event', event);
     this.cinemaSelectedId = event.value;
 
     if (this.cinemaSelectedId) {
