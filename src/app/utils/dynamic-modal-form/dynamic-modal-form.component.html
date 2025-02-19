@@ -1,84 +1,80 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>{{ title }}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="cancel()">{{
-        "modal-close-button" | translate
-      }}</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<div class="modal-overlay">
+  <div class="modal-content">
+    <h2 mat-dialog-title>{{ title }}</h2>
+    <mat-dialog-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div *ngFor="let field of fields">
+          <ng-container [ngSwitch]="field.type">
+            <!-- Toggle -->
+            <mat-slide-toggle
+              *ngSwitchCase="'toggle'"
+              [formControlName]="field.name"
+            >
+              {{ field.label }}
+            </mat-slide-toggle>
 
-<ion-content class="ion-padding">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div *ngFor="let field of fields">
-      <ion-item>
-        <ion-label position="floating">{{ field.label }}</ion-label>
+            <!-- Other field types -->
+            <mat-form-field *ngSwitchDefault appearance="fill" class="w-100">
+              <mat-label>{{ field.label }}</mat-label>
 
-        <!-- Input text -->
-        <ion-input
-          *ngIf="field.type === 'text'"
-          formControlName="{{ field.name }}"
-          [type]="field.type"
-          readonly
-        ></ion-input>
+              <!-- Input text -->
+              <input
+                matInput
+                *ngIf="field.type === 'text'"
+                [formControlName]="field.name"
+                [readonly]="true"
+              />
 
-        <!-- Textarea -->
-        <ion-textarea
-          *ngIf="field.type === 'textarea'"
-          formControlName="{{ field.name }}"
-          autoGrow="true"
-        ></ion-textarea>
+              <!-- Textarea -->
+              <textarea
+                matInput
+                *ngIf="field.type === 'textarea'"
+                [formControlName]="field.name"
+              ></textarea>
 
-        <!-- Toggle -->
-        <ion-toggle
-          *ngIf="field.type === 'toggle'"
-          formControlName="{{ field.name }}"
-        ></ion-toggle>
+              <!-- Date -->
+              <ng-container *ngIf="field.type === 'date'">
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  [formControlName]="field.name"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </ng-container>
 
-        <!-- Date -->
-        <ion-textarea
-          *ngIf="field.type === 'date' && form.get(field.name)?.value"
-          [value]="form.get(field.name)?.value"
-          readonly
-        ></ion-textarea>
-
-        <!-- Select -->
-        <ion-select
-          *ngIf="field.type === 'select'"
-          formControlName="{{ field.name }}"
-        >
-          <ion-select-option
-            *ngFor="let option of field.options"
-            [value]="option.value"
-          >
-            {{ option.label }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-    </div>
-
-    <!-- Boutons -->
-    <div class="button-group">
-      <button
-        class="btn btn-secondary m-3"
-        type="button"
-        ion-button
-        expand="block"
-        color="light"
-        (click)="cancel()"
-      >
+              <!-- Select -->
+              <mat-select
+                *ngIf="field.type === 'select'"
+                [formControlName]="field.name"
+              >
+                <mat-option
+                  *ngFor="let option of field.options"
+                  [value]="option.value"
+                >
+                  {{ option.label }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ng-container>
+        </div>
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="cancel()">
         {{ "modal-cancel-button" | translate }}
       </button>
       <button
-        class="btn btn-success m-3"
-        type="submit"
-        ion-button
-        expand="block"
+        mat-button
+        color="primary"
         [disabled]="!form.valid"
+        (click)="onSubmit()"
       >
         {{ "modal-save-button" | translate }}
       </button>
-    </div>
-  </form>
-</ion-content>
+    </mat-dialog-actions>
+  </div>
+</div>

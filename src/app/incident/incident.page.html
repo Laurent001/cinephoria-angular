@@ -1,15 +1,14 @@
 <div class="container">
-  <h1>{{ 'menu-incident' | translate }}</h1>
+  <h1>
+    {{ 'menu-incident' | translate }}
+    <i
+      class="bi bi-plus-circle-fill text-primary ms-3"
+      (click)="openModal()"
+    ></i>
+  </h1>
 
   <div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <div class="d-flex align-items-center">
-        <span>{{ 'incident-add' | translate }}</span>
-        <i
-          class="bi bi-plus-circle-fill text-primary ms-2"
-          (click)="openModal()"
-        ></i>
-      </div>
+    <div class="card-header d-flex">
       <div class="form-inline">
         <label for="itemsPerPage" class="me-2"
           >{{ 'incident-nb-page' | translate }}</label
@@ -56,7 +55,7 @@
             <td>
               <button
                 (click)="openModal(incident)"
-                class="btn btn-sm btn-outline-primary me-2"
+                class="btn btn-sm btn-primary me-2"
                 title="Update"
                 aria-label="Update"
               >
@@ -64,7 +63,7 @@
               </button>
               <button
                 (click)="deleteIncident(incident)"
-                class="btn btn-sm btn-outline-danger"
+                class="btn btn-sm btn-danger"
                 title="Delete"
                 aria-label="Delete"
               >
@@ -94,4 +93,13 @@
       </button>
     </div>
   </div>
+
+  <!-- modal -->
+  <app-dynamic-modal
+    *ngIf="showModal"
+    [title]="title"
+    [fields]="fields"
+    [initialValues]="initialValues"
+    (closeModal)="onModalClose($event)"
+  ></app-dynamic-modal>
 </div>

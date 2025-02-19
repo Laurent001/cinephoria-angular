@@ -55,14 +55,14 @@
       *ngFor="let film of filmsFiltered$ | async; let i = index"
     >
       <div class="row">
-        <div class="d-flex col-12 col-xl-4 mb-2 mb-lg-0">
+        <div class="d-flex col-12 col-xl-5 mb-2 mb-lg-0">
           <img
             class="img-fluid rounded w-100 h-auto object-fit-cover"
             [src]="film.poster"
             alt="Affiche du film"
           />
         </div>
-        <div class="d-flex col-12 col-xl-8">
+        <div class="d-flex col-12 col-xl-7">
           <div class="card">
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">{{ film.title }}</h5>
@@ -71,11 +71,15 @@
                 }}<br />
                 Âge minimum : {{ film.age_minimum }}+
               </h6>
+              <p class="card-text d-xl-block">{{ film.description }}</p>
               <div *ngIf="filmSelectedId === film.id && screenings">
+                <!-- slider -->
                 <app-slider
                   [screenings]="screenings"
                   (screeningSelected)="onScreeningSelected($event)"
                 ></app-slider>
+
+                <!-- bouton réserver -->
                 <button
                   class="btn btn-primary"
                   [disabled]="!screenings.screeningSelected && !this.booking?.screening"
@@ -84,17 +88,8 @@
                   {{ 'booking-screening' | translate }}
                 </button>
               </div>
-              <p class="card-text d-none d-xl-block">{{ film.description }}</p>
-              <p class="card-text d-xl-none">
-                {{ film.description | slice:0:150 }}
-              </p>
-              <a
-                href="#"
-                class="card-link d-xl-none"
-                (click)="seeFullDescription(film.description)"
-              >
-                {{ 'see-more' | translate }}
-              </a>
+
+              <!-- bouton séances -->
               <div
                 *ngIf="!(filmSelectedId === film.id) || !screenings"
                 class="btn btn-secondary mt-2"

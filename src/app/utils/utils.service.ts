@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {} from '../film/film';
 import {
   ScreeningResponse,
@@ -10,15 +10,38 @@ import {
   providedIn: 'root',
 })
 export class UtilsService {
-  constructor(private alertController: AlertController) {}
+  constructor(private snackBar: MatSnackBar) {}
 
-  async presentAlert(header: string, message: string, buttons: string[]) {
-    const alert = await this.alertController.create({
-      header: header,
-      message: message,
-      buttons: buttons,
+  presentAlert(
+    header: string,
+    message: string,
+    buttons: string[],
+    type?: 'success' | 'error' | 'warn'
+  ) {
+    const fullMessage = header ? `${header}: ${message}` : message;
+    const action = buttons && buttons.length > 0 ? buttons[0] : 'OK';
+
+    let panelClass: string[];
+    switch (type) {
+      case 'success':
+        panelClass = ['snackbar-success'];
+        break;
+      case 'error':
+        panelClass = ['snackbar-error'];
+        break;
+      case 'warn':
+        panelClass = ['snackbar-warn'];
+        break;
+      default:
+        panelClass = ['snackbar-success'];
+    }
+
+    this.snackBar.open(fullMessage, action, {
+      duration: 5000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      panelClass: panelClass,
     });
-    await alert.present();
   }
 
   findScreeningById(

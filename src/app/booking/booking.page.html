@@ -1,20 +1,22 @@
-<div class="container">
-  <h1>{{ 'menu-film' | translate }}</h1>
+<div class="container d-flex flex-column">
+  <h1 class="m-3">{{ 'menu-booking' | translate }}</h1>
 
-  <div class="row mb-3">
-    <div class="col-md-4">
-      <select
-        class="form-select"
-        [(ngModel)]="cinemaSelectedId"
-        (change)="onCinemaChange($event)"
-      >
-        <option value="" disabled selected>
-          {{ 'film-select-cinema' | translate }}
-        </option>
-        <option *ngFor="let cinema of cinemas" [value]="cinema.id">
-          {{ cinema.name }}
-        </option>
-      </select>
+  <div class="row mb-3 align-self-center">
+    <div class="d-flex col-md-4">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ 'film-select-cinema-short' | translate }}</mat-label>
+        <mat-select
+          [(ngModel)]="cinemaSelectedId"
+          (selectionChange)="onCinemaChange($event)"
+        >
+          <mat-option value="" disabled selected>
+            {{ 'film-select-cinema-short' | translate }}
+          </mat-option>
+          <mat-option *ngFor="let cinema of cinemas" [value]="cinema.id">
+            {{ cinema.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
 
@@ -24,14 +26,14 @@
       *ngFor="let film of filmsFiltered$ | async; let i = index"
     >
       <div class="row">
-        <div class="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-2 mb-3 mb-sm-0">
+        <div class="d-flex justify-content-center col-xl-5 mb-3 mb-xl-0">
           <img
             class="img-fluid rounded"
             [src]="film.poster"
             alt="Affiche du film"
           />
         </div>
-        <div class="col-6 col-sm-8 col-md-9 col-lg-9 col-xl-10">
+        <div class="d-flex col-12 col-xl-7">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">{{ film.title }}</h5>
@@ -40,17 +42,7 @@
                 }}<br />
                 Âge minimum : {{ film.age_minimum }}+
               </h6>
-              <p class="card-text d-none d-xl-block">{{ film.description }}</p>
-              <p class="card-text d-xl-none">
-                {{ film.description | slice:0:150 }}
-              </p>
-              <a
-                href="#"
-                class="card-link d-xl-none"
-                (click)="seeFullDescription(film.description)"
-              >
-                {{ 'see-more' | translate }}
-              </a>
+              <p class="card-text mt-3">{{ film.description }}</p>
 
               <!-- slider -->
               <app-slider
@@ -65,37 +57,52 @@
                 class="mt-3"
                 *ngIf="filmSelectedId === film.id && screeningSelected?.film_id === film.id"
               >
-                <div *ngIf="seatsSelected.length>0">
-                  <h4>{{ 'screening-current' | translate }}:</h4>
-                  <!-- <app-screening
-                  [screening]="screeningSelected"
-                  [seatsSelected]="seatsSelected"
-                  [totalPrice]="totalPrice"
-                >
-                </app-screening> -->
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <h5 class="mb-3">{{ 'screening-current' | translate }}:</h5>
+                    <h6>
+                      {{'booking-price' | translate}} :
+                      <b>{{ totalPrice }} €</b>
+                    </h6>
+                    <h6>
+                      {{'booking-seats' | translate}} :
+                      <ng-container
+                        *ngIf="seatsSelected.length > 0; else noSeats"
+                      >
+                        <span *ngFor="let seat of seatsSelected; let i = index">
+                          <b>
+                            {{i !== 0 ? ', ' : ''}}{{ seat.number }} {{
+                            seat.is_handi ? '(handi)' : ''}}
+                          </b>
+                        </span>
+                      </ng-container>
+                      <ng-template #noSeats>
+                        <span><b>aucune</b></span>
+                      </ng-template>
+                    </h6>
+                  </div>
+                  <!-- bouton booking validate -->
+                  <button
+                    *ngIf="showSeatsScreening"
+                    [disabled]="seatsSelected.length==0"
+                    class="btn btn-primary booking-validate align-self-end"
+                    (click)="validateBooking()"
+                  >
+                    {{ 'booking-validate' | translate }}
+                  </button>
+
+                  <!-- bouton seats -->
+                  <button
+                    *ngIf="!showSeatsScreening && screeningSelected"
+                    class="btn btn-primary booking-seat align-self-end"
+                    (click)="seeSeatsAvailable()"
+                  >
+                    {{ 'booking-seats-available' | translate }}
+                  </button>
                 </div>
 
-                <!-- bouton seats -->
-                <button
-                  *ngIf="!showSeatsScreening && screeningSelected"
-                  class="btn btn-primary"
-                  (click)="seeSeatsAvailable()"
-                >
-                  {{ 'booking-seats-available' | translate }}
-                </button>
-
-                <!-- bouton booking validate -->
-                <button
-                  *ngIf="showSeatsScreening"
-                  [disabled]="seatsSelected.length==0"
-                  class="btn btn-primary"
-                  (click)="validateBooking()"
-                >
-                  {{ 'booking-validate' | translate }}
-                </button>
+                <!-- bouton séances -->
               </div>
-
-              <!-- bouton séances -->
               <button
                 *ngIf="!screenings || (filmSelectedId !== film.id)"
                 class="btn btn-secondary mt-2"
@@ -106,28 +113,33 @@
             </div>
           </div>
         </div>
-      </div>
 
-      <div
-        class="row mt-3"
-        *ngIf="showSeatsScreening || seatsSelected.length > 0"
-      >
         <div
-          *ngIf="filmSelectedId === film.id && screeningSelected"
-          class="col-12 offset-xl-2 col-xl-10"
+          class="row mt-3 m-0"
+          *ngIf="showSeatsScreening || seatsSelected.length > 0"
         >
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">{{ 'seat-available' | translate }}</h5>
-              <div *ngIf="seats$ | async as seats" class="d-flex flex-wrap">
-                <app-seat
-                  *ngFor="let seat of seats.seats"
-                  [seat]="seat"
-                  [isSelected]="isSeatSelected(seat)"
-                  class="m-1"
-                  (click)="onSeatSelected(seat)"
-                >
-                </app-seat>
+          <div
+            *ngIf="filmSelectedId === film.id && screeningSelected"
+            class="col-12 p-0"
+          >
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{ 'seat-available' | translate }}</h5>
+                <div *ngIf="seats$ | async as seats" class="seats-container">
+                  <div
+                    *ngFor="let row of createRows(seats.seats)"
+                    class="seat-row w-100"
+                  >
+                    <app-seat
+                      *ngFor="let seat of row"
+                      [seat]="seat"
+                      [isSelected]="isSeatSelected(seat)"
+                      class="seat-item"
+                      (click)="onSeatSelected(seat)"
+                    >
+                    </app-seat>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

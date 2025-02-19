@@ -181,10 +181,6 @@ export class FilmPage implements OnInit {
     this.isDatePickerOpen = false;
   }
 
-  async seeFullDescription(description: string) {
-    await this.utilsService.presentAlert('Pitch', description, ['OK']);
-  }
-
   onScreeningSelected(screening: ScreeningResponse) {
     this.screenings.screeningSelected = screening;
   }

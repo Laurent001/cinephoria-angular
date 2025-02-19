@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, of, switchMap, tap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
@@ -11,7 +15,6 @@ import {
   ScreeningResponse,
   ScreeningsByFilmResponse,
 } from '../screening/screening';
-import { ScreeningPage } from '../screening/screening.page';
 import { ScreeningService } from '../screening/screening.service';
 import { SliderPage } from '../utils/slider/slider.page';
 import { UtilsService } from '../utils/utils.service';
@@ -32,8 +35,11 @@ import { SeatService } from './seat/seat.service';
     TranslateModule,
     TranslateModule,
     SliderPage,
-    ScreeningPage,
     SeatPage,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatInputModule,
   ],
 })
 export class BookingPage implements OnInit {
@@ -137,7 +143,7 @@ export class BookingPage implements OnInit {
 
   onCinemaChange(event: any) {
     this.screenings = undefined;
-    this.cinemaSelectedId = event.target.value;
+    this.cinemaSelectedId = event.value;
 
     if (this.cinemaSelectedId) {
       this.filmsFiltered$ = this.filmService.getFilmsByCinema(
@@ -188,10 +194,6 @@ export class BookingPage implements OnInit {
 
   closeDatePicker() {
     this.isDatePickerOpen = false;
-  }
-
-  async seeFullDescription(description: string) {
-    await this.utilsService.presentAlert('Pitch', description, ['OK']);
   }
 
   seeSeatsAvailable() {
@@ -317,5 +319,13 @@ export class BookingPage implements OnInit {
         ['Cancel']
       );
     }
+  }
+
+  createRows(seats: SeatResponse[]): SeatResponse[][] {
+    const rows: SeatResponse[][] = [];
+    for (let i = 0; i < seats.length; i += 10) {
+      rows.push(seats.slice(i, i + 10));
+    }
+    return rows;
   }
 }

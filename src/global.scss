@@ -1,6 +1,8 @@
+// Importer les fichiers CSS et SCSS nécessaires
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+@import "../src/styles/variables";
 
 html {
   display: flex;
@@ -17,13 +19,44 @@ body {
 
 .btn-primary,
 .bg-primary {
-  background-color: #3dc2ff !important;
-  border-color: #3dc2ff !important;
+  background-color: $primary !important;
+  border-color: $primary !important;
 }
 
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
-  background-color: #82d2f7 !important;
-  border-color: #82d2f7 !important;
+  background-color: lighten($primary, 10%) !important;
+  border-color: lighten($primary, 10%) !important;
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active {
+  background-color: lighten($danger, 10%) !important;
+  border-color: lighten($danger, 10%) !important;
+}
+
+.btn-danger,
+.bg-danger {
+  background-color: $danger !important;
+  border-color: $danger !important;
+}
+
+.snackbar-success {
+  --mdc-snackbar-container-color: #22c579;
+  --mat-sys-inverse-on-surface: white;
+  --mat-sys-inverse-primary: white;
+}
+
+.snackbar-error {
+  --mdc-snackbar-container-color: #e03042c0;
+  --mat-sys-inverse-on-surface: white;
+  --mat-sys-inverse-primary: white;
+}
+
+.snackbar-warn {
+  --mdc-snackbar-container-color: #ffc107;
+  --mat-sys-inverse-on-surface: black;
+  --mat-sys-inverse-primary: black;
 }

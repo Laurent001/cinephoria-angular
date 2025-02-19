@@ -25,12 +25,8 @@ import { ScreeningResponse } from './screening';
 export class ScreeningPage implements OnInit {
   @Input() screening?: ScreeningResponse;
   @Input() seatsSelected?: SeatResponse[] = [];
-  @Input() totalPrice?: number = 0;
 
-  constructor(
-    private translate: TranslateService,
-    private seatService: SeatService
-  ) {
+  constructor(private translate: TranslateService) {
     this.translate.setDefaultLang('fr');
     registerLocaleData(localeFr);
   }
