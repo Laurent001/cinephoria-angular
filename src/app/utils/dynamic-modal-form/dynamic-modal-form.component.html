@@ -5,10 +5,20 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div *ngFor="let field of fields">
           <ng-container [ngSwitch]="field.type">
+            <!-- Input masked -->
+            <input
+              matInput
+              *ngSwitchCase="'masked'"
+              [formControlName]="field.name"
+              [readonly]="true"
+              hidden
+            />
+
             <!-- Toggle -->
             <mat-slide-toggle
               *ngSwitchCase="'toggle'"
               [formControlName]="field.name"
+              class="mb-3"
             >
               {{ field.label }}
             </mat-slide-toggle>
@@ -16,15 +26,6 @@
             <!-- Other field types -->
             <mat-form-field *ngSwitchDefault appearance="fill" class="w-100">
               <mat-label>{{ field.label }}</mat-label>
-
-              <!-- Input masked -->
-              <input
-                matInput
-                *ngIf="field.type === 'masked'"
-                [formControlName]="field.name"
-                [readonly]="true"
-                hidden
-              />
 
               <!-- Input text -->
               <input
