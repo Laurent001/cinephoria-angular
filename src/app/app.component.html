@@ -12,6 +12,7 @@
           type="button"
           class="btn-close"
           data-bs-dismiss="offcanvas"
+          data-bs-target="#offcanvasNavbar"
           aria-label="Close"
         ></button>
       </div>
@@ -27,6 +28,7 @@
               [routerLink]="[page.url]"
               routerLinkActive="active"
               data-bs-dismiss="offcanvas"
+              data-bs-target="#offcanvasNavbar"
             >
               <i class="bi" [ngClass]="'bi-' + page.icon"></i>
               {{ page.title }}
