@@ -109,8 +109,8 @@ export class IncidentComponent implements OnInit {
     }
   }
 
-  getFields(): Fields[] {
-    return [
+  getFields(isEmptyIncident?: boolean): Fields[] {
+    const fields: Fields[] = [
       {
         name: 'auditorium_id',
         label: 'Auditorium',
@@ -138,9 +138,14 @@ export class IncidentComponent implements OnInit {
         required: true,
       },
       { name: 'is_solved', label: 'Résolu', type: 'toggle' },
-      { name: 'added_date', label: 'Ajouté le', type: 'date' },
-      { name: 'id', label: 'id', type: 'textarea' },
+      { name: 'id', label: 'id', type: 'masked' },
     ];
+
+    if (!isEmptyIncident) {
+      fields.push({ name: 'added_date', label: 'Ajouté le', type: 'date' });
+    }
+
+    return fields;
   }
 
   getInitialValues(incident: Incident): IncidentFields {
@@ -191,9 +196,12 @@ export class IncidentComponent implements OnInit {
   }
 
   openModal(incident?: Incident) {
-    this.fields = this.getFields();
     if (!incident) {
+      const newIncident = true;
+      this.fields = this.getFields(newIncident);
       incident = this.getEmptyIncident();
+    } else {
+      this.fields = this.getFields();
     }
     this.initialValues = this.getInitialValues(incident);
     this.showModal = true;
