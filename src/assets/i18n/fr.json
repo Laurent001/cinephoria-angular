@@ -1,6 +1,9 @@
 {
+  "home-title": "Accueil",
+  "home-subtitle": "En ce moment dans nos cinémas :",
+  "menu-app-title": "Cinephoria",
   "menu-home": "Accueil",
-  "menu-slogan": "Venez vivre l'émotion sur grand écran !",
+  "menu-slogan": "L'émotion sur grand écran !",
   "menu-film": "Films",
   "menu-booking": "Réservation",
   "menu-contact": "Contact",
@@ -12,6 +15,7 @@
   "menu-space": "Mon espace",
   "auditorium-quality": "qualité : ",
   "auditorium-price": "prix de la place : ",
+  "film-title": "Films",
   "film-select-cinema": "Choisissez votre cinéma",
   "film-select-cinema-short": "Cinéma",
   "film-select-genre-short": "Genre",

@@ -1,37 +1,37 @@
-<div class="slider-container">
-  <button
+<div class="slider-container mb-3">
+  <i
     (click)="prev()"
-    class="btn"
-    [ngClass]="{
-      'btn-primary': currentIndex !== 0,
-      'btn-secondary': currentIndex === 0
-    }"
-  >
-    Précédent
-  </button>
+    class="bi bi-chevron-left"
+    [ngClass]="{'text-primary': currentIndex > 0, 'text-secondary': currentIndex === 0}"
+  ></i>
+
   <div class="slides">
-    <app-screening
-      *ngFor="let screening of screenings?.screenings; let i = index"
-      [screening]="screening"
-      [ngClass]="{
-        'd-none': i < currentIndex || i >= currentIndex + visibleScreenings,
-        'd-block': i >= currentIndex && i < currentIndex + visibleScreenings,
-        'bg-success text-white': (selectedScreening?.id || booking?.screening?.id) === screening.id
-      }"
-      (click)="selectScreening(screening)"
+    <span
+      *ngFor="let day of visibleDays"
+      (click)="onDayClick(day)"
+      [ngClass]="{'bg-primary text-white': day === selectedDay}"
     >
-    </app-screening>
+      {{ day | date:'EEE d MMM' }}
+    </span>
   </div>
 
-  <button
+  <i
     (click)="next()"
-    class="btn"
-    [ngClass]="{
-      'btn-primary': currentIndex < (totalScreenings - visibleScreenings),
-      'btn-secondary': currentIndex >= (totalScreenings - visibleScreenings)
-    }"
-    [disabled]="currentIndex >= (totalScreenings - visibleScreenings) && !booking?.screening?.id"
-  >
-    Suivant
-  </button>
+    class="bi bi-chevron-right"
+    [ngClass]="{'text-primary': hasMoreDays, 'text-secondary': !hasMoreDays}"
+  ></i>
+</div>
+
+<div *ngIf="selectedDayScreenings" class="d-flex justify-content-center">
+  <ng-container *ngFor="let screening of selectedDayScreenings">
+    <app-screening
+      *ngIf="isScreeningVisible(screening)"
+      [screening]="screening"
+      (click)="selectScreening(screening)"
+      [ngClass]="{
+        'bg-primary text-white screening': (selectedScreening?.id || booking?.screening?.id) === screening.id
+      }"
+    >
+    </app-screening>
+  </ng-container>
 </div>

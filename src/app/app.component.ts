@@ -1,36 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import {
-  IonApp,
-  IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonMenu,
-  IonMenuToggle,
-  IonNote,
-  IonRouterLink,
-  IonRouterOutlet,
-  IonSplitPane,
-} from '@ionic/angular/standalone';
-
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { addIcons } from 'ionicons';
-import {
-  alertSharp,
-  cloudSharp,
-  constructSharp,
-  filmSharp,
-  gitNetworkSharp,
-  homeSharp,
-  logInSharp,
-  logOutSharp,
-  peopleSharp,
-  ticketSharp,
-} from 'ionicons/icons';
 import { BehaviorSubject, switchMap } from 'rxjs';
 import { Page, User } from './app';
 import { AuthService } from './auth/auth.service';
@@ -40,24 +11,7 @@ import { AuthService } from './auth/auth.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [
-    IonApp,
-    IonRouterOutlet,
-    IonSplitPane,
-    IonMenu,
-    IonContent,
-    IonList,
-    IonListHeader,
-    IonMenuToggle,
-    IonItem,
-    IonIcon,
-    IonNote,
-    IonLabel,
-    IonRouterLink,
-    RouterModule,
-    TranslateModule,
-    CommonModule,
-  ],
+  imports: [RouterModule, TranslateModule, CommonModule],
 })
 export class AppComponent implements OnInit {
   public pages$ = new BehaviorSubject<Page[]>([]);
@@ -69,7 +23,7 @@ export class AppComponent implements OnInit {
       {
         title: this.translateService.instant('menu-home'),
         url: '/home',
-        icon: 'home',
+        icon: 'house',
         roles: ['admin', 'user', 'employe', 'guest'],
       },
       {
@@ -81,7 +35,7 @@ export class AppComponent implements OnInit {
       {
         title: this.translateService.instant('menu-booking'),
         url: '/booking',
-        icon: 'ticket',
+        icon: 'ticket-perforated',
         roles: ['admin', 'user', 'employe', 'guest'],
       },
       {
@@ -93,25 +47,25 @@ export class AppComponent implements OnInit {
       {
         title: this.translateService.instant('menu-login'),
         url: '/login',
-        icon: 'log-in',
+        icon: 'box-arrow-in-right',
         roles: ['guest'],
       },
       {
         title: this.translateService.instant('menu-incident'),
         url: '/incident',
-        icon: 'alert',
+        icon: 'exclamation-octagon',
         roles: ['admin', 'employe'],
       },
       {
         title: this.translateService.instant('menu-intranet'),
         url: '/intranet',
-        icon: 'git-network',
+        icon: 'server',
         roles: ['admin', 'employe'],
       },
       {
         title: this.translateService.instant('menu-admin'),
         url: '/admin',
-        icon: 'construct',
+        icon: 'gear',
         roles: ['admin'],
       },
       {
@@ -123,7 +77,7 @@ export class AppComponent implements OnInit {
       {
         title: this.translateService.instant('menu-logout'),
         url: '/logout',
-        icon: 'log-out',
+        icon: 'box-arrow-in-left',
         roles: ['admin', 'user', 'employe'],
       },
     ];
@@ -139,18 +93,7 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private router: Router
   ) {
-    addIcons({
-      homeSharp,
-      filmSharp,
-      ticketSharp,
-      peopleSharp,
-      logInSharp,
-      logOutSharp,
-      alertSharp,
-      gitNetworkSharp,
-      constructSharp,
-      cloudSharp,
-    });
+    this.translateService.setDefaultLang('fr');
   }
 
   ngOnInit() {

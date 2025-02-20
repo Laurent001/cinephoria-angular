@@ -1,32 +1,16 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
-import {
-  IonButton,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCol,
-  IonContent,
-  IonDatetime,
-  IonGrid,
-  IonItem,
-  IonList,
-  IonModal,
-  IonRow,
-  IonSelect,
-  IonSelectOption,
-  IonThumbnail,
-} from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { filter, Observable, take, tap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Booking } from '../booking/booking';
 import { BookingStateService } from '../booking/bookingState/booking-state.service';
-import { LayoutComponent } from '../layout/layout.component';
 import {
   ScreeningResponse,
   ScreeningsByFilmResponse,
@@ -45,29 +29,16 @@ import { GenreService } from './genre.service';
   styleUrls: ['film.page.scss'],
   standalone: true,
   imports: [
-    IonRow,
-    IonCol,
-    IonGrid,
-    IonThumbnail,
-    IonItem,
-    IonCard,
-    IonCardHeader,
-    IonCardContent,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonList,
-    IonContent,
-    IonSelect,
-    IonSelectOption,
-    IonDatetime,
-    IonButton,
-    IonModal,
     CommonModule,
     FormsModule,
     TranslateModule,
-    LayoutComponent,
     TranslateModule,
     SliderPage,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatInputModule,
+    DatePipe,
   ],
 })
 export class FilmPage implements OnInit {
@@ -75,10 +46,11 @@ export class FilmPage implements OnInit {
   protected filmsFiltered$?: Observable<FilmResponse[]>;
   protected cinemas?: CinemaResponse[];
   protected genres?: GenreResponse[];
+  private datePipe = new DatePipe('en-US'); // Instanciation manuelle
   filmSelectedId?: number;
   cinemaSelectedId?: number;
   genreSelectedId?: number;
-  dateSelected?: string;
+  dateSelected: string | null = null;
   isDatePickerOpen = false;
   minDate: string = new Date().toISOString();
   booking?: Booking;
@@ -137,42 +109,33 @@ export class FilmPage implements OnInit {
     }
   }
 
-  onCinemaChange(cinemaSelectedId: number) {
-    this.cinemaSelectedId = cinemaSelectedId;
+  onCinemaChange(event: any) {
+    this.cinemaSelectedId = event.value;
 
     if (this.cinemaSelectedId) {
       this.filmsFiltered$ = this.filmService.getFilmsByCinema(
         this.cinemaSelectedId
       );
 
-      if (this.filmSelectedId) {
-        this.screeningService
-          .getFilmScreeningsByCinema(this.filmSelectedId, this.cinemaSelectedId)
-          .pipe(
-            tap((screenings) => {
-              this.screeningService.setScreenings(screenings);
-            })
-          )
-          .subscribe();
-      }
-
       this.genreSelectedId = undefined;
-      this.dateSelected = undefined;
+      this.dateSelected = null;
     }
   }
 
   onGenreChange(event: any) {
-    const selectedGenreId = event.detail.value;
+    console.log('event', event);
+
+    const selectedGenreId = event.value;
     if (this.genreSelectedId) {
       this.filmsFiltered$ = this.filmService.getFilmsByGenre(selectedGenreId);
       this.cinemaSelectedId = undefined;
-      this.dateSelected = undefined;
+      this.dateSelected = null;
     }
   }
 
-  onDateChange(event: any) {
-    const selectedDate = new Date(event.detail.value);
-    this.dateSelected = selectedDate.toISOString().split('T')[0];
+  onDateChange(dateSelected: any) {
+    this.dateSelected = this.datePipe.transform(dateSelected, 'yyyy-MM-dd');
+
     if (this.dateSelected) {
       this.filmsFiltered$ = this.filmService.getFilmsByDate(this.dateSelected);
       this.cinemaSelectedId = undefined;
@@ -216,10 +179,6 @@ export class FilmPage implements OnInit {
 
   closeDatePicker() {
     this.isDatePickerOpen = false;
-  }
-
-  async seeFullDescription(description: string) {
-    await this.utilsService.presentAlert('Pitch', description, ['OK']);
   }
 
   onScreeningSelected(screening: ScreeningResponse) {

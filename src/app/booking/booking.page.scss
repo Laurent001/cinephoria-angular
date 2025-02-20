@@ -1,3 +1,13 @@
+h1 {
+  border-bottom: 1px solid var(--bs-gray-400);
+  width: auto;
+  padding: 1rem;
+}
+
+mat-form-field {
+  min-width: auto;
+}
+
 .slider-container {
   width: 100%;
   overflow: hidden;
@@ -10,32 +20,6 @@
   padding: 20px;
 }
 
-ion-content {
-  --background: #f8f8f8;
-}
-
-ion-title {
-  margin-top: 20px;
-}
-
-ion-select {
-  padding-inline: 6px;
-}
-
-ion-item {
-  --background: #fff;
-  margin: 10px 0;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-ion-thumbnail {
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
 .film-poster {
   width: 100%;
   height: 100%;
@@ -43,42 +27,9 @@ ion-thumbnail {
   border-radius: 8px;
 }
 
-ion-card {
-  margin: 0;
-  padding: 10px;
-  height: 97%;
-}
-
-ion-card-header {
-  display: flex;
-  flex-direction: column;
-}
-
-ion-card-title {
-  font-size: 1.2em;
-  font-weight: bold;
-}
-
-ion-card-subtitle {
-  font-size: 0.9em;
-  color: #666;
-}
-
-ion-card-content {
-  padding-top: 10px;
-}
-
-ion-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  z-index: 10;
-}
-
-ion-col {
-  min-width: calc(
-    10 * (20px + 10px)
-  ); /* 20px pour la largeur minimale du siège + 10px pour les marges */
+button.booking-validate,
+button.booking-seat {
+  height: fit-content;
 }
 
 .seats-container {
@@ -120,8 +71,22 @@ ion-col {
   padding: 0 15px;
 }
 
-@media (max-width: 768px) {
-  ion-col {
-    min-width: 100%;
-  }
+.seats-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.seat-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px; // Espace entre les rangées
+}
+
+.seat-item {
+  margin: 0 5px; // Marge horizontale entre les sièges
+}
+
+.list-group {
+  --bs-list-group-border-width: none;
 }

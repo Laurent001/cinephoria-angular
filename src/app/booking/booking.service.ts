@@ -39,7 +39,8 @@ export class BookingService {
       this.utilsService.presentAlert(
         'Attention',
         'Vous devez être connecté pour effectuer une réservation',
-        ['OK']
+        ['OK'],
+        'warn'
       );
       return of(null);
     }

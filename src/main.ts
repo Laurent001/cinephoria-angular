@@ -1,26 +1,25 @@
+import { registerLocaleData } from '@angular/common';
 import {
   HttpClient,
   provideHttpClient,
   withInterceptors,
 } from '@angular/common/http';
+import localeFr from '@angular/common/locales/fr';
+import '@angular/common/locales/global/fr';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import {
-  RouteReuseStrategy,
-  provideRouter,
-  withHashLocation,
-} from '@angular/router';
-import {
-  IonicRouteStrategy,
-  provideIonicAngular,
-} from '@ionic/angular/standalone';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideRouter, withHashLocation } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import 'bootstrap';
 import { AppComponent } from './app/app.component';
 import { initRoutes } from './app/app.routes';
 import { authInterceptor } from './app/config/auth.interceptor';
 import { environment } from './environments/environment.dev';
+
+registerLocaleData(localeFr);
 
 if (environment.production) {
   enableProdMode();
@@ -32,8 +31,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideIonicAngular(),
     provideRouter(initRoutes(), withHashLocation()),
     provideAnimations(),
     provideHttpClient(withInterceptors([authInterceptor])),
@@ -46,5 +43,6 @@ bootstrapApplication(AppComponent, {
         },
       })
     ),
+    provideAnimationsAsync(),
   ],
 }).catch((err) => console.error(err));

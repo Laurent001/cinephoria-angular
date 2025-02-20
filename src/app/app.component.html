@@ -1,35 +1,57 @@
-<ion-app>
-  <ion-split-pane contentId="main-content">
-    <ion-menu contentId="main-content" type="overlay">
-      <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>cinephoria</ion-list-header>
-          <ion-note>{{ "menu-slogan" | translate }}</ion-note>
-
-          <ion-menu-toggle
-            auto-hide="false"
-            *ngFor="let page of pages$ | async"
-          >
-            <ion-item
-              routerDirection="root"
+<div class="container-fluid p-0">
+  <div class="row">
+    <!-- Offcanvas Sidebar -->
+    <div
+      class="offcanvas-lg offcanvas-start"
+      tabindex="-1"
+      id="offcanvasNavbar"
+      aria-labelledby="offcanvasNavbarLabel"
+    >
+      <div class="offcanvas-header d-lg-none">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body flex-column pt-0 mt-4">
+        <h5 class="offcanvas-title ms-3" id="offcanvasNavbarLabel">
+          {{ "menu-app-title" | translate }}
+        </h5>
+        <div class="text-muted ms-3 mb-3">{{ "menu-slogan" | translate }}</div>
+        <ul class="nav flex-column">
+          <li class="nav-item" *ngFor="let page of pages$ | async">
+            <a
+              class="nav-link"
               [routerLink]="[page.url]"
-              lines="none"
-              detail="false"
-              routerLinkActive="selected"
+              routerLinkActive="active"
+              data-bs-dismiss="#offcanvas"
             >
-              <ion-icon
-                aria-hidden="true"
-                slot="start"
-                [ios]="page.icon + '-outline'"
-                [md]="page.icon + '-sharp'"
-              ></ion-icon>
-              <ion-label>{{ page.title }}</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-        </ion-list>
-      </ion-content>
-    </ion-menu>
+              <i class="bi" [ngClass]="'bi-' + page.icon"></i>
+              {{ page.title }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-    <ion-router-outlet id="main-content"> </ion-router-outlet>
-  </ion-split-pane>
-</ion-app>
+    <!-- Main Content -->
+    <main class="col m-0">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light d-lg-none">
+        <div class="container-fluid">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNavbar"
+            aria-controls="offcanvasNavbar"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </nav>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

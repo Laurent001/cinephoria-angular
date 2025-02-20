@@ -1,108 +1,105 @@
-<app-layout [pageTitle]="'menu-incident' | translate">
-  <ion-content>
-    <ion-list>
-      <ion-item>
-        <ion-grid>
-          <ion-row>
-            <div class="card">
-              <div class="incident-header">
-                <!-- Bouton Add -->
-                <div class="incident-add">
-                  <div>{{ 'incident-add' | translate }}</div>
-                  <i
-                    class="bi bi-plus-circle-fill text-primary"
-                    (click)="openModal()"
-                  ></i>
-                </div>
-                <div class="nb-rows">
-                  <label for="itemsPerPage"
-                    >{{ 'incident-nb-page' | translate }}</label
-                  >
-                  <select
-                    id="itemsPerPage"
-                    [(ngModel)]="itemsPerPage"
-                    (change)="changeItemsPerPage()"
-                  >
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="50">50</option>
-                  </select>
-                </div>
-              </div>
-              <table
-                style="min-width: 50rem; border-collapse: collapse; width: 100%"
+<div class="container">
+  <h1>
+    {{ 'menu-incident' | translate }}
+    <i
+      class="bi bi-plus-circle-fill text-primary ms-3"
+      (click)="openModal()"
+    ></i>
+  </h1>
+
+  <div class="card">
+    <div class="card-header d-flex">
+      <div class="form-inline">
+        <label for="itemsPerPage" class="me-2"
+          >{{ 'incident-nb-page' | translate }}</label
+        >
+        <select
+          class="form-select form-select-sm"
+          id="itemsPerPage"
+          [(ngModel)]="itemsPerPage"
+          (change)="changeItemsPerPage()"
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Auditorium</th>
+            <th>Material</th>
+            <th class="description">Description</th>
+            <th>Date incident</th>
+            <th>Résolu</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let incident of paginatedIncidents">
+            <td>{{ incident.auditorium.name }}</td>
+            <td>{{ incident.material.name }}</td>
+            <td class="description">{{ incident.description }}</td>
+            <td>
+              {{ incident.added_date | date : 'EEE d MMM yyyy' : 'fr-FR' }}
+            </td>
+            <td class="text-center">
+              <i
+                [ngClass]="{'bi-check-circle-fill text-success': incident.is_solved, 'bi-x-circle-fill text-danger': !incident.is_solved}"
+                aria-hidden="true"
+              ></i>
+            </td>
+            <td>
+              <button
+                (click)="openModal(incident)"
+                class="btn btn-sm btn-primary me-2"
+                title="Update"
+                aria-label="Update"
               >
-                <!-- En-tête du tableau -->
-                <thead>
-                  <tr style="background-color: #f4f4f4">
-                    <th>Auditorium</th>
-                    <th>Material</th>
-                    <th class="description">Description</th>
-                    <th>Date incident</th>
-                    <th>Résolu</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
+                <i class="bi bi-pencil-fill"></i>
+              </button>
+              <button
+                (click)="deleteIncident(incident)"
+                class="btn btn-sm btn-danger"
+                title="Delete"
+                aria-label="Delete"
+              >
+                <i class="bi bi-trash-fill"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-                <!-- Corps du tableau -->
-                <tbody>
-                  <tr *ngFor="let incident of paginatedIncidents">
-                    <td>{{ incident.auditorium.name }}</td>
-                    <td>{{ incident.material.name }}</td>
-                    <td class="description">{{ incident.description }}</td>
-                    <td>
-                      {{ incident.added_date | date : 'EEE d MMM yyyy' : 'fr-FR'
-                      }}
-                    </td>
-                    <td class="text-center">
-                      <i
-                        [ngClass]="{
-                        'bi-check-circle-fill text-success': incident.is_solved,
-                        'bi-x-circle-fill text-danger': !incident.is_solved
-                      }"
-                        aria-hidden="true"
-                      ></i>
-                    </td>
-                    <td>
-                      <!-- Bouton Update -->
-                      <button
-                        (click)="openModal(incident)"
-                        class="action-button"
-                        title="Update"
-                        aria-label="Update"
-                      >
-                        <i class="bi bi-pencil-fill text-primary"></i>
-                      </button>
+    <div class="card-footer d-flex justify-content-between align-items-center">
+      <button
+        class="btn btn-outline-secondary"
+        (click)="previousPage()"
+        [disabled]="currentPage === 1"
+      >
+        Précédent
+      </button>
+      <span>Page {{ currentPage }} sur {{ totalPages }}</span>
+      <button
+        class="btn btn-outline-secondary"
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+      >
+        Suivant
+      </button>
+    </div>
+  </div>
 
-                      <!-- Bouton Delete -->
-                      <button
-                        (click)="deleteIncident(incident)"
-                        class="action-button"
-                        title="Delete"
-                        aria-label="Delete"
-                      >
-                        <i class="bi bi-trash-fill text-dark"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="pagination">
-                <button (click)="previousPage()" [disabled]="currentPage === 1">
-                  Précédent
-                </button>
-                <span>Page {{ currentPage }} sur {{ totalPages }}</span>
-                <button
-                  (click)="nextPage()"
-                  [disabled]="currentPage === totalPages"
-                >
-                  Suivant
-                </button>
-              </div>
-            </div>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-    </ion-list>
-  </ion-content>
-</app-layout>
+  <!-- modal -->
+  <app-dynamic-modal
+    *ngIf="showModal"
+    [title]="title"
+    [fields]="fields"
+    [initialValues]="initialValues"
+    (closeModal)="onModalClose($event)"
+  ></app-dynamic-modal>
+</div>
