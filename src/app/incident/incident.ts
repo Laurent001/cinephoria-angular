@@ -22,6 +22,7 @@ export interface MaterialResponse {
 }
 
 export interface IncidentFields {
+  id?: number;
   auditorium_id: number;
   material_id: number;
   description: string;
