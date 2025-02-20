@@ -1,6 +1,6 @@
 <div class="container">
   <h1>
-    {{ 'menu-incident' | translate }}
+    {{ "menu-incident" | translate }}
     <i
       class="bi bi-plus-circle-fill text-primary ms-3"
       (click)="openModal()"
@@ -10,9 +10,9 @@
   <div class="card">
     <div class="card-header d-flex">
       <div class="form-inline">
-        <label for="itemsPerPage" class="me-2"
-          >{{ 'incident-nb-page' | translate }}</label
-        >
+        <label for="itemsPerPage" class="me-2">{{
+          "incident-nb-page" | translate
+        }}</label>
         <select
           class="form-select form-select-sm"
           id="itemsPerPage"
@@ -44,11 +44,14 @@
             <td>{{ incident.material.name }}</td>
             <td class="description">{{ incident.description }}</td>
             <td>
-              {{ incident.added_date | date : 'EEE d MMM yyyy' : 'fr-FR' }}
+              {{ incident.added_date | date : "EEE d MMM yyyy" : "fr-FR" }}
             </td>
             <td class="text-center">
               <i
-                [ngClass]="{'bi-check-circle-fill text-success': incident.is_solved, 'bi-x-circle-fill text-danger': !incident.is_solved}"
+                [ngClass]="{
+                  'bi-check-circle-fill text-success': incident.is_solved,
+                  'bi-x-circle-fill text-danger': !incident.is_solved
+                }"
                 aria-hidden="true"
               ></i>
             </td>

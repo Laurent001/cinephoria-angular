@@ -17,6 +17,15 @@
             <mat-form-field *ngSwitchDefault appearance="fill" class="w-100">
               <mat-label>{{ field.label }}</mat-label>
 
+              <!-- Input masked -->
+              <input
+                matInput
+                *ngIf="field.type === 'masked'"
+                [formControlName]="field.name"
+                [readonly]="true"
+                hidden
+              />
+
               <!-- Input text -->
               <input
                 matInput
