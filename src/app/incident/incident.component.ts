@@ -46,6 +46,7 @@ export class IncidentComponent implements OnInit {
     registerLocaleData(localeFr);
 
     this.initialValues = {
+      id: 0,
       auditorium_id: 0,
       material_id: 0,
       description: '',
@@ -138,6 +139,7 @@ export class IncidentComponent implements OnInit {
       },
       { name: 'is_solved', label: 'Résolu', type: 'toggle' },
       { name: 'added_date', label: 'Ajouté le', type: 'date' },
+      { name: 'id', label: 'id', type: 'textarea' },
     ];
   }
 
@@ -147,6 +149,7 @@ export class IncidentComponent implements OnInit {
       material_id: incident.material.id,
       description: incident.description,
       is_solved: incident.is_solved,
+      id: incident.id,
     };
 
     if (incident.added_date) {
@@ -215,6 +218,7 @@ export class IncidentComponent implements OnInit {
   getIncidentReponseModified(incident: Incident, data: any): Incident {
     return {
       ...incident,
+      id: data.id,
       description: data.description,
       is_solved: data.is_solved,
       added_date: new Date(data.added_date),
