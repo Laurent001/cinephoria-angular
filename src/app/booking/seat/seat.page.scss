@@ -1,26 +1,25 @@
+@import "../../../../src/styles/variables";
+
 .seat {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid grey;
   min-width: 20px;
-  max-width: 50px;
-  min-height: 30px;
-  max-height: 50px;
-  margin: 5px;
+  min-height: 20px;
+  border: 1px solid grey;
   color: white;
 
   &.available {
-    background-color: green;
+    background-color: $success;
   }
 
   &.booked {
-    background-color: rgb(187, 40, 40);
+    background-color: $danger;
   }
 
   &.selected {
-    background-color: orange;
+    background-color: $warning;
   }
 
   i {

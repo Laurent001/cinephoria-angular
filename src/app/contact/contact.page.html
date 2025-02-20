@@ -1,63 +1,77 @@
-<app-layout [pageTitle]="'Contact'">
-  <ion-content>
-    <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
-      <ion-list>
-        <ion-item>
-          <ion-label position="floating">Titre</ion-label>
-          <ion-input
-            type="text"
-            name="name"
-            [(ngModel)]="contact.titre"
-            required
-          ></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Nom</ion-label>
-          <ion-input
-            type="text"
-            name="name"
-            [(ngModel)]="contact.name"
-            required
-          ></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Email</ion-label>
-          <ion-input
-            type="email"
-            name="email"
-            [(ngModel)]="contact.email"
-            required
-          ></ion-input>
-          <div
-            *ngIf="!isValidEmail(contact.email) && contactForm.controls['email']?.touched"
-          >
-            Veuillez entrer une adresse e-mail valide.
-          </div>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Sujet</ion-label>
-          <ion-input
-            type="text"
-            name="subject"
-            [(ngModel)]="contact.subject"
-            required
-          ></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Message</ion-label>
-          <ion-textarea
-            name="message"
-            [(ngModel)]="contact.message"
-            required
-          ></ion-textarea>
-        </ion-item>
-      </ion-list>
-      <ion-button
-        expand="full"
-        type="submit"
-        [disabled]="!contactForm.form.valid"
-        >Envoyer</ion-button
+<div class="container mt-4">
+  <h1>Contact</h1>
+  <form
+    (ngSubmit)="onSubmit()"
+    #contactForm="ngForm"
+    class="needs-validation"
+    novalidate
+  >
+    <div class="mb-3">
+      <label for="titre" class="form-label">Titre</label>
+      <input
+        type="text"
+        class="form-control"
+        id="titre"
+        name="titre"
+        [(ngModel)]="contact.titre"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="name" class="form-label">Nom</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        [(ngModel)]="contact.name"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        [(ngModel)]="contact.email"
+        required
+      />
+      <div
+        class="invalid-feedback"
+        *ngIf="!isValidEmail(contact.email) && contactForm.controls['email']?.touched"
       >
-    </form>
-  </ion-content>
-</app-layout>
+        Veuillez entrer une adresse e-mail valide.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="subject" class="form-label">Sujet</label>
+      <input
+        type="text"
+        class="form-control"
+        id="subject"
+        name="subject"
+        [(ngModel)]="contact.subject"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="message" class="form-label">Message</label>
+      <textarea
+        class="form-control"
+        id="message"
+        name="message"
+        [(ngModel)]="contact.message"
+        required
+      ></textarea>
+    </div>
+    <button
+      type="submit"
+      class="btn btn-primary w-100"
+      [disabled]="!contactForm.form.valid"
+    >
+      Envoyer
+    </button>
+  </form>
+</div>

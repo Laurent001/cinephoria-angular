@@ -1,10 +1,10 @@
-import { CommonModule, registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
   Input,
   LOCALE_ID,
+  OnInit,
   Output,
 } from '@angular/core';
 import {
@@ -13,22 +13,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
-import {
-  IonButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonSelect,
-  IonSelectOption,
-  IonTextarea,
-  IonTitle,
-  IonToggle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
+import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Fields } from './dynamic-modal-form';
 
@@ -36,49 +28,39 @@ import { Fields } from './dynamic-modal-form';
   selector: 'app-dynamic-modal',
   standalone: true,
   imports: [
-    IonHeader,
     CommonModule,
     ReactiveFormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSlideToggleModule,
+    MatButtonModule,
     TranslateModule,
-    IonItem,
-    IonLabel,
-    IonSelect,
-    IonSelectOption,
-    IonTextarea,
-    IonContent,
-    IonInput,
-    IonToolbar,
-    IonTitle,
-    IonButtons,
-    IonButton,
-    IonToggle,
   ],
   templateUrl: './dynamic-modal-form.component.html',
   styleUrls: ['./dynamic-modal-form.component.scss'],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
 })
-export class DynamicModalFormComponent {
-  @Input() title = 'Modifier';
-  @Input() fields: Fields[] = [];
-  @Input() initialValues: any = {};
-  @Output() save = new EventEmitter<any>();
+export class DynamicModalFormComponent implements OnInit {
+  @Input() title!: string;
+  @Input() fields!: Fields[];
+  @Input() initialValues!: any;
+  @Output() closeModal = new EventEmitter<any>();
 
   form!: FormGroup;
 
-  constructor(
-    private translate: TranslateService,
-    private modalCtrl: ModalController,
-    private fb: FormBuilder
-  ) {
+  constructor(private fb: FormBuilder, private translate: TranslateService) {
     this.translate.setDefaultLang('fr');
-    registerLocaleData(localeFr);
   }
 
   ngOnInit() {
     const controls: { [key: string]: any } = {};
     this.fields.forEach((field) => {
       controls[field.name] = [
-        this.initialValues[field.name as keyof typeof this.initialValues] ?? '',
+        this.initialValues[field.name] ?? '',
         field.required ? Validators.required : [],
       ];
     });
@@ -87,15 +69,14 @@ export class DynamicModalFormComponent {
 
   onSubmit() {
     if (this.form.valid) {
-      this.save.emit(this.form.value);
-      this.modalCtrl.dismiss(
-        { ...this.form.value, isModified: !this.form.pristine },
-        'save'
-      );
+      this.closeModal.emit({
+        ...this.form.value,
+        isModified: !this.form.pristine,
+      });
     }
   }
 
   cancel() {
-    this.modalCtrl.dismiss(null, 'cancel');
+    this.closeModal.emit();
   }
 }

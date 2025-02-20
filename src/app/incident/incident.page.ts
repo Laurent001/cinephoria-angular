@@ -2,11 +2,10 @@ import { CommonModule, registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { tap } from 'rxjs';
 import { AuditoriumResponse } from '../film/film';
-import { LayoutComponent } from '../layout/layout.component';
 import { Fields } from '../utils/dynamic-modal-form/dynamic-modal-form';
 import { DynamicModalFormComponent } from '../utils/dynamic-modal-form/dynamic-modal-form.component';
 import { Incident, IncidentFields, MaterialResponse } from './incident';
@@ -20,9 +19,9 @@ import { IncidentService } from './incident.service';
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
-    LayoutComponent,
     TranslateModule,
+    MatDialogModule,
+    DynamicModalFormComponent,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
 })
@@ -30,6 +29,7 @@ export class IncidentPage implements OnInit {
   incidents!: Incident[];
   materials!: MaterialResponse[];
   auditoriums!: AuditoriumResponse[];
+  showModal: boolean = false;
   title: string = "Modifier l'incident";
   fields: Fields[] = [];
   initialValues: IncidentFields;
@@ -40,8 +40,7 @@ export class IncidentPage implements OnInit {
 
   constructor(
     private translate: TranslateService,
-    private incidentService: IncidentService,
-    private modalCtrl: ModalController
+    private incidentService: IncidentService //private dialog: MatDialog
   ) {
     this.translate.setDefaultLang('fr');
     registerLocaleData(localeFr);
@@ -188,27 +187,22 @@ export class IncidentPage implements OnInit {
     };
   }
 
-  async openModal(incident?: Incident) {
+  openModal(incident?: Incident) {
     this.fields = this.getFields();
     if (!incident) {
       incident = this.getEmptyIncident();
     }
     this.initialValues = this.getInitialValues(incident);
+    this.showModal = true;
+  }
 
-    const modal = await this.modalCtrl.create({
-      component: DynamicModalFormComponent,
-      componentProps: {
-        title: this.title,
-        fields: this.fields,
-        initialValues: this.initialValues,
-      },
-    });
-
-    await modal.present();
-    const { data, role } = await modal.onWillDismiss();
-
-    if (role === 'save') {
-      const incidentModified = this.getIncidentReponseModified(incident, data);
+  onModalClose(incident?: Incident) {
+    this.showModal = false;
+    if (incident) {
+      const incidentModified = this.getIncidentReponseModified(
+        this.getEmptyIncident(),
+        incident
+      );
 
       if (incidentModified.id === 0) {
         this.addIncident(incidentModified);

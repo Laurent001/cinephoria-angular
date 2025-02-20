@@ -1,74 +1,85 @@
-button {
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  margin-left: 8px;
-}
+@import "../../../src/styles/variables";
 
-th {
-  padding: 10px;
-  text-align: left;
-}
-tr {
-  border-bottom: 1px solid #ddd;
-}
-td {
-  padding: 10px;
-
-  &.description {
-    max-width: 350px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.container {
+  h1 {
+    display: inline-block;
+    i {
+      font-size: 30px;
+      color: $primary !important;
+    }
   }
 
-  i {
-    font-size: 18px;
-  }
-}
-
-.pagination {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  margin: 10px;
-}
-
-.incident-header {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.incident-add {
-  display: flex;
-  align-items: center;
-
-  i {
-    margin-left: 10px;
-    font-size: 25px;
-  }
-}
-
-.nb-rows {
-  display: flex;
-  align-items: center;
-
-  label {
-    margin-right: 5px;
-  }
-}
-
-::ng-deep {
-  .item-inner {
-    border-style: none !important;
+  button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-left: 8px;
   }
 
-  ion-item {
-    --inner-border-width: 0 0 0 0 !important;
+  .card-header {
+    flex-direction: row-reverse;
   }
-}
 
-ion-row {
-  margin: 50px;
+  th {
+    padding: 10px;
+    text-align: left;
+  }
+  tr {
+    border-bottom: 1px solid #ddd;
+  }
+  td {
+    padding: 10px;
+
+    &.description {
+      max-width: 350px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    i {
+      font-size: 18px;
+    }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 10px;
+  }
+
+  .incident-header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .incident-add {
+    display: flex;
+    align-items: center;
+  }
+
+  .nb-rows {
+    display: flex;
+    align-items: center;
+
+    label {
+      margin-right: 5px;
+    }
+  }
+
+  ::ng-deep {
+    .item-inner {
+      border-style: none !important;
+    }
+
+    ion-item {
+      --inner-border-width: 0 0 0 0 !important;
+    }
+  }
+
+  ion-row {
+    margin: 50px;
+  }
 }

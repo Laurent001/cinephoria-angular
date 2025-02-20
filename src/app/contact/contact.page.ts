@@ -1,16 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  IonButton,
-  IonContent,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonTextarea,
-} from '@ionic/angular/standalone';
-import { LayoutComponent } from '../layout/layout.component';
 import { Email } from '../utils/mailer/mailer';
 import { MailerService } from '../utils/mailer/mailer.service';
 import { UtilsService } from '../utils/utils.service';
@@ -20,18 +10,7 @@ import { UtilsService } from '../utils/utils.service';
   templateUrl: './contact.page.html',
   styleUrls: ['./contact.page.scss'],
   standalone: true,
-  imports: [
-    IonList,
-    IonLabel,
-    IonInput,
-    IonItem,
-    IonContent,
-    IonTextarea,
-    IonButton,
-    CommonModule,
-    FormsModule,
-    LayoutComponent,
-  ],
+  imports: [CommonModule, FormsModule],
 })
 export class ContactPage implements OnInit {
   contact: Email = {

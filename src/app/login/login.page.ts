@@ -2,18 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import {
-  IonButton,
-  IonContent,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonSegment,
-  IonSegmentButton,
-} from '@ionic/angular/standalone';
 import { AuthService } from '../auth/auth.service';
-import { LayoutComponent } from '../layout/layout.component';
 import { UtilsService } from '../utils/utils.service';
 import { LoginService } from './login.service';
 
@@ -22,19 +11,7 @@ import { LoginService } from './login.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [
-    IonSegment,
-    IonSegmentButton,
-    IonButton,
-    IonInput,
-    IonItem,
-    IonList,
-    IonLabel,
-    IonContent,
-    CommonModule,
-    FormsModule,
-    LayoutComponent,
-  ],
+  imports: [CommonModule, FormsModule],
 })
 export class LoginPage implements OnInit {
   currentView = 'login';

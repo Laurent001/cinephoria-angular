@@ -1,29 +1,16 @@
-<div class="screening">
-  <p>
-    <b>{{ screening?.start_time | date:'EEEE d MMMM y' }}</b>
-  </p>
-  <p>{{ screening?.auditorium?.name }}</p>
-  <p>
+<div
+  class="screening d-flex flex-column align-items-center justify-content-evenly"
+>
+  <div>
     {{ screening?.start_time | date:'HH:mm' }} - {{ screening?.end_time |
     date:'HH:mm' }}
-  </p>
-  <p>
-    {{'auditorium-quality' | translate}} {{ screening?.auditorium?.quality }}
-  </p>
-  <p>{{'auditorium-price' | translate}} {{ screening?.auditorium?.price }} €</p>
-  <p *ngIf="seatsSelected && seatsSelected.length > 0">
-    {{'booking-seats' | translate}} :
-    <ng-container>
-      <span *ngFor="let seat of seatsSelected; let i = index"
-        ><b>
-          {{i !== 0 ? ', ' : ''}}{{ seat.number }} {{ seat.is_handi ? '(handi)'
-          : ''}}
-        </b></span
-      >
-    </ng-container>
-    <!-- <ng-template #noSeats> {{ 'booking-no-seat' | translate }} </ng-template> -->
-  </p>
-  <p *ngIf="totalPrice">
-    <b>{{'booking-price' | translate}} : {{ totalPrice }} €</b>
-  </p>
+  </div>
+  <div>{{ screening?.auditorium?.name }}</div>
+  <div class="d-flex w-100 justify-content-around auditorium">
+    <div>VF</div>
+    <div>{{ screening?.auditorium?.quality }}</div>
+  </div>
+  <div class="price">
+    {{ screening?.auditorium?.price | removeTrailingZeros }} €
+  </div>
 </div>

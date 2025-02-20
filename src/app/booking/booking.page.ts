@@ -1,35 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  IonButton,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCol,
-  IonContent,
-  IonGrid,
-  IonItem,
-  IonList,
-  IonRow,
-  IonSelect,
-  IonSelectOption,
-  IonThumbnail,
-} from '@ionic/angular/standalone';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, of, switchMap, tap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { CinemaService } from '../film/cinema.service';
 import { CinemaResponse, FilmResponse } from '../film/film';
 import { FilmService } from '../film/film.service';
-import { LayoutComponent } from '../layout/layout.component';
 import {
   ScreeningResponse,
   ScreeningsByFilmResponse,
 } from '../screening/screening';
-import { ScreeningPage } from '../screening/screening.page';
 import { ScreeningService } from '../screening/screening.service';
 import { SliderPage } from '../utils/slider/slider.page';
 import { UtilsService } from '../utils/utils.service';
@@ -45,29 +30,16 @@ import { SeatService } from './seat/seat.service';
   styleUrls: ['booking.page.scss'],
   standalone: true,
   imports: [
-    IonRow,
-    IonCol,
-    IonGrid,
-    IonThumbnail,
-    IonItem,
-    IonCard,
-    IonCardHeader,
-    IonCardContent,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonList,
-    IonContent,
-    IonSelect,
-    IonSelectOption,
-    IonButton,
     CommonModule,
     FormsModule,
     TranslateModule,
-    LayoutComponent,
     TranslateModule,
     SliderPage,
-    ScreeningPage,
     SeatPage,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatInputModule,
   ],
 })
 export class BookingPage implements OnInit {
@@ -141,7 +113,7 @@ export class BookingPage implements OnInit {
       this.booking = JSON.parse(bookingState) as Booking;
       this.seatsSelected = this.booking.seats;
       this.totalPrice = this.booking.totalPrice;
-      this.cinemaSelectedId = this.booking?.screening?.auditorium.cinema.id;
+      this.cinemaSelectedId = this.booking?.screening?.auditorium?.cinema.id;
       this.filmSelectedId = this.booking.screening?.film_id;
       this.screeningSelected = this.booking.screening;
 
@@ -169,9 +141,9 @@ export class BookingPage implements OnInit {
     }
   }
 
-  onCinemaChange(cinemaId: number) {
+  onCinemaChange(event: any) {
     this.screenings = undefined;
-    this.cinemaSelectedId = cinemaId;
+    this.cinemaSelectedId = event.value;
 
     if (this.cinemaSelectedId) {
       this.filmsFiltered$ = this.filmService.getFilmsByCinema(
@@ -203,6 +175,7 @@ export class BookingPage implements OnInit {
 
     if (this.screeningSelected && this.screeningSelected.film_id != filmId)
       this.screeningSelected = undefined;
+
     this.showSeatsScreening = false;
     this.screeningService
       .getFilmScreeningsByCinema(filmId, cinemaId)
@@ -221,10 +194,6 @@ export class BookingPage implements OnInit {
 
   closeDatePicker() {
     this.isDatePickerOpen = false;
-  }
-
-  async seeFullDescription(description: string) {
-    await this.utilsService.presentAlert('Pitch', description, ['OK']);
   }
 
   seeSeatsAvailable() {
@@ -350,5 +319,13 @@ export class BookingPage implements OnInit {
         ['Cancel']
       );
     }
+  }
+
+  createRows(seats: SeatResponse[]): SeatResponse[][] {
+    const rows: SeatResponse[][] = [];
+    for (let i = 0; i < seats.length; i += 10) {
+      rows.push(seats.slice(i, i + 10));
+    }
+    return rows;
   }
 }
