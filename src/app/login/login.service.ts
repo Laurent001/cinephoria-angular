@@ -22,13 +22,15 @@ export class LoginService {
     email: string,
     password: string,
     firstName: string,
-    lastName: string
+    lastName: string,
+    role: string
   ): Observable<any> {
     const data = {
       email,
       password,
       firstName,
       lastName,
+      role,
     };
     return this.http.post(`${environment.url}/api/register`, data);
   }

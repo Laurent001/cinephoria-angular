@@ -34,14 +34,16 @@ export class ContactComponent implements OnInit {
           this.utilsService.presentAlert(
             'Information',
             'Votre message a bien été envoyé',
-            ['OK']
+            ['OK'],
+            'success'
           );
         },
         error: (error) => {
           this.utilsService.presentAlert(
             'Attention',
             "Un problème est survenu lors de l'envoi de votre message",
-            ['OK']
+            ['OK'],
+            'error'
           );
         },
       });
