@@ -1,4 +1,5 @@
 {
+  "home": "Accueil",
   "home-title": "Accueil",
   "home-subtitle": "En ce moment dans nos cinémas :",
   "menu-app-title": "Cinephoria",
@@ -33,9 +34,14 @@
   "booking-no-seat": "Aucune",
   "incident-nb-page": "Éléments par page",
   "incident-add": "Ajouter un incident",
-  "home": "Accueil",
-  "see-more": "Voir plus",
   "modal-save-button": "Sauver",
   "modal-cancel-button": "Annuler",
-  "modal-close-button": "Fermer"
+  "modal-close-button": "Fermer",
+  "login": "Se connecter",
+  "login-password": "Mot de passe",
+  "login-password-forgot": "Mot de passe oublié",
+  "login-email": "Email",
+  "login-register": "S'enregistrer",
+  "login-firstname": "Prénom",
+  "login-last-name": "Nom"
 }

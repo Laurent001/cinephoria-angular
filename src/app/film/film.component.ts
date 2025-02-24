@@ -31,7 +31,6 @@ import { GenreService } from './genre.service';
     CommonModule,
     FormsModule,
     TranslateModule,
-    TranslateModule,
     SliderComponent,
     MatDatepickerModule,
     MatNativeDateModule,
