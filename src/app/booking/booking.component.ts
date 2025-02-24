@@ -168,7 +168,8 @@ export class BookingComponent implements OnInit {
       this.utilsService.presentAlert(
         'Attention',
         'veuillez sélectionner un cinéma',
-        ['OK']
+        ['OK'],
+        'warn'
       );
       return;
     }
@@ -232,7 +233,8 @@ export class BookingComponent implements OnInit {
         await this.utilsService.presentAlert(
           'Attention',
           'Ce siège est déjà pris.',
-          ['OK']
+          ['OK'],
+          'warn'
         );
       }
 
@@ -299,8 +301,8 @@ export class BookingComponent implements OnInit {
           tap((response) => {
             if (response)
               this.utilsService.presentAlert('Information', response.message, [
-                'OK',
-              ]);
+                'OK'
+              ], 'success');
           })
         )
         .subscribe((response) => {
@@ -316,7 +318,8 @@ export class BookingComponent implements OnInit {
       this.utilsService.presentAlert(
         'Non réservé',
         'Votre booking ne contient pas de place',
-        ['Cancel']
+        ['Cancel'],
+        'warn'
       );
     }
   }

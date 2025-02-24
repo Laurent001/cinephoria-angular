@@ -1,7 +1,0 @@
-{
-  "name": "cinephoria",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}
