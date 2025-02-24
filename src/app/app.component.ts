@@ -121,7 +121,7 @@ export class AppComponent implements OnInit {
         roles: ['admin'],
       },
       {
-        title: this.translateService.instant('menu-espace'),
+        title: this.translateService.instant('menu-space'),
         url: '/space',
         icon: 'cloud',
         roles: ['user'],

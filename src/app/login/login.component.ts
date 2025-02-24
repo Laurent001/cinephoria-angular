@@ -17,14 +17,15 @@ export class LoginComponent implements OnInit {
   currentView = 'login';
 
   // Login form
-  loginEmail: string = 'email.laurent@gmail.com';
-  loginPassword: string = 'laurent';
+  loginEmail: string = '';
+  loginPassword: string = '';
 
   // Register form
   registerFirstName: string = '';
   registerLastName: string = '';
   registerEmail: string = '';
   registerPassword: string = '';
+  registerRole: string = 'user';
 
   constructor(
     private router: Router,
@@ -41,11 +42,10 @@ export class LoginComponent implements OnInit {
         this.authService.setUser(data.user);
         this.authService.setToken(data.token);
         this.router.navigate(['/home']);
-        this.utilsService.presentAlert(
-          'Attention',
-          'Vous êtes désormais connecté',
-          ['OK']
-        );
+        this.utilsService.presentAlert('info', 'Vous êtes désormais connecté', [
+          'OK',
+          'success',
+        ]);
       },
       error: (error) => {
         console.error('Login error', error);
@@ -53,26 +53,33 @@ export class LoginComponent implements OnInit {
           this.utilsService.presentAlert(
             'Attention',
             'Identifiants invalides',
-            ['OK']
+            ['OK'],
+            'error'
           );
         } else {
           this.utilsService.presentAlert(
             'Attention',
             'Une erreur est survenue lors de la connexion',
-            ['OK']
+            ['OK'],
+            'error'
           );
         }
       },
     });
   }
 
-  register() {
+  register(role?: string) {
+    if (role) {
+      this.registerRole = role;
+    }
+
     this.loginService
       .register(
         this.registerEmail,
         this.registerPassword,
         this.registerFirstName,
-        this.registerLastName
+        this.registerLastName,
+        this.registerRole
       )
       .subscribe({
         next: (response) => {
@@ -84,7 +91,8 @@ export class LoginComponent implements OnInit {
           this.utilsService.presentAlert(
             'Attention',
             "Une erreur pendant l'enregistrement s'est produite",
-            ['OK']
+            ['OK'],
+            'error'
           );
         },
       });
