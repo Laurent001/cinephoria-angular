@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../auth/auth.service';
 import { UtilsService } from '../utils/utils.service';
 import { LoginService } from './login.service';
@@ -11,7 +12,7 @@ import { LoginService } from './login.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
 })
 export class LoginComponent implements OnInit {
   currentView = 'login';
@@ -31,8 +32,11 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private loginService: LoginService,
     private authService: AuthService,
-    private utilsService: UtilsService
-  ) {}
+    private utilsService: UtilsService,
+    private translate: TranslateService
+  ) {
+    this.translate.setDefaultLang('fr');
+  }
 
   ngOnInit() {}
 

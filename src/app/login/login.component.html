@@ -13,7 +13,7 @@
         aria-controls="pills-login"
         aria-selected="true"
       >
-        Login
+        {{ "login" | translate }}
       </button>
     </li>
     <li class="nav-item" role="presentation">
@@ -27,7 +27,7 @@
         aria-controls="pills-register"
         aria-selected="false"
       >
-        Register
+        {{ "login-register" | translate }}
       </button>
     </li>
   </ul>
@@ -41,7 +41,9 @@
     >
       <form>
         <div class="mb-3">
-          <label for="loginEmail" class="form-label">Email</label>
+          <label for="loginEmail" class="form-label">{{
+            "login-email" | translate
+          }}</label>
           <input
             type="email"
             class="form-control"
@@ -51,7 +53,9 @@
           />
         </div>
         <div class="mb-3">
-          <label for="loginPassword" class="form-label">Password</label>
+          <label for="loginPassword" class="form-label">{{
+            "login-password" | translate
+          }}</label>
           <input
             type="password"
             class="form-control"
@@ -72,7 +76,7 @@
           class="btn btn-link w-100"
           (click)="resetPassword()"
         >
-          Forgot Password?
+          {{ "login-password-forgot" | translate }}
         </button>
       </form>
     </div>
@@ -85,7 +89,9 @@
     >
       <form>
         <div class="mb-3">
-          <label for="registerFirstName" class="form-label">First Name</label>
+          <label for="registerFirstName" class="form-label">{{
+            "login-firstname" | translate
+          }}</label>
           <input
             type="text"
             class="form-control"
@@ -95,7 +101,9 @@
           />
         </div>
         <div class="mb-3">
-          <label for="registerLastName" class="form-label">Last Name</label>
+          <label for="registerLastName" class="form-label">{{
+            "login-last-name" | translate
+          }}</label>
           <input
             type="text"
             class="form-control"
@@ -105,7 +113,9 @@
           />
         </div>
         <div class="mb-3">
-          <label for="registerEmail" class="form-label">Email</label>
+          <label for="registerEmail" class="form-label">{{
+            "login-email" | translate
+          }}</label>
           <input
             type="email"
             class="form-control"
@@ -115,7 +125,9 @@
           />
         </div>
         <div class="mb-3">
-          <label for="registerPassword" class="form-label">Password</label>
+          <label for="registerPassword" class="form-label">{{
+            "login-password" | translate
+          }}</label>
           <input
             type="password"
             class="form-control"
@@ -129,7 +141,7 @@
           class="btn btn-primary w-100"
           (click)="register()"
         >
-          Register
+          {{ "login-register" | translate }}
         </button>
       </form>
     </div>
