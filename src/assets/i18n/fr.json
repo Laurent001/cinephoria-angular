@@ -43,5 +43,22 @@
   "login-email": "Email",
   "login-register": "S'enregistrer",
   "login-firstname": "Prénom",
-  "login-last-name": "Nom"
+  "login-last-name": "Nom",
+  "auth-password": "Mot de passe",
+  "auth-password-request-title": "Réinitialisation du mot de passe",
+  "auth-password-request-subtitle": "Entrez votre adresse e-mail pour recevoir un lien de réinitialisation.",
+  "auth-password-email": "Email",
+  "auth-password-email-placeholder": "Email",
+  "auth-password-email-send": "Envoyer la demande",
+  "auth-password-email-invalid": "email invalide",
+  "auth-password-email-required": "email requis",
+  "auth-password-reset-length-error": "Le mot de passe doit avoir au moins {{ minLength }} caractères.",
+  "auth-password-reset-uppercase-error": "Le mot de passe doit contenir au moins une majuscule.",
+  "auth-password-reset-lowercase-error": "Le mot de passe doit contenir au moins une minuscule.",
+  "auth-password-reset-specialchar-error": "Le mot de passe doit contenir au moins un caractère spécial.",
+  "auth-password-reset-required-error": "Le mot de passe est requis.",
+  "auth-password-reset-title": "Changement de mot de passe",
+  "auth-password-reset-subtitle": "Changement de mot de passe",
+  "auth-password-reset-placeholder": "Nouveau mot de passe",
+  "auth-password-reset-submit": "Soumettre"
 }
