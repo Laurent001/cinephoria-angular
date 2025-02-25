@@ -75,6 +75,26 @@ export const initRoutes = (): Routes => {
   });
 
   routes.push({
+    path: 'password-reset-request',
+    loadComponent: () =>
+      import(
+        './auth/password-reset-request/password-reset-request.component'
+      ).then((m) => m.PasswordResetRequestComponent),
+    canActivate: [AuthGuard],
+    data: { roles: ['guest'] },
+  });
+
+  routes.push({
+    path: 'password-reset/:token',
+    loadComponent: () =>
+      import('./auth/password-reset/password-reset.component').then(
+        (m) => m.PasswordResetComponent
+      ),
+    canActivate: [AuthGuard],
+    data: { roles: ['guest'] },
+  });
+
+  routes.push({
     path: 'login',
     loadComponent: () =>
       import('./login/login.component').then((m) => m.LoginComponent),

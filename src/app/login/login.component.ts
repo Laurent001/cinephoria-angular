@@ -104,5 +104,6 @@ export class LoginComponent implements OnInit {
 
   resetPassword() {
     console.log('reset password for: ', this.loginEmail);
+    this.router.navigate(['/password-reset-request']);
   }
 }
