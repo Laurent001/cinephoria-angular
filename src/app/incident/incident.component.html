@@ -1,108 +1,12 @@
-<div class="container">
-  <h1>
-    {{ "menu-incident" | translate }}
-    <i
-      class="bi bi-plus-circle-fill text-primary ms-3"
-      (click)="openModal()"
-    ></i>
-  </h1>
-
-  <div class="card">
-    <div class="card-header d-flex">
-      <div class="form-inline">
-        <label for="itemsPerPage" class="me-2">{{
-          "incident-nb-page" | translate
-        }}</label>
-        <select
-          class="form-select form-select-sm"
-          id="itemsPerPage"
-          [(ngModel)]="itemsPerPage"
-          (change)="changeItemsPerPage()"
-        >
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="50">50</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Auditorium</th>
-            <th>Material</th>
-            <th class="description">Description</th>
-            <th>Date incident</th>
-            <th>Résolu</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let incident of paginatedIncidents">
-            <td>{{ incident.auditorium.name }}</td>
-            <td>{{ incident.material.name }}</td>
-            <td class="description">{{ incident.description }}</td>
-            <td>
-              {{ incident.added_date | date : "EEE d MMM yyyy" : "fr-FR" }}
-            </td>
-            <td class="text-center">
-              <i
-                [ngClass]="{
-                  'bi-check-circle-fill text-success': incident.is_solved,
-                  'bi-x-circle-fill text-danger': !incident.is_solved
-                }"
-                aria-hidden="true"
-              ></i>
-            </td>
-            <td>
-              <button
-                (click)="openModal(incident)"
-                class="btn btn-sm btn-primary me-2"
-                title="Update"
-                aria-label="Update"
-              >
-                <i class="bi bi-pencil-fill"></i>
-              </button>
-              <button
-                (click)="deleteIncident(incident)"
-                class="btn btn-sm btn-danger"
-                title="Delete"
-                aria-label="Delete"
-              >
-                <i class="bi bi-trash-fill"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="card-footer d-flex justify-content-between align-items-center">
-      <button
-        class="btn btn-outline-secondary"
-        (click)="previousPage()"
-        [disabled]="currentPage === 1"
-      >
-        Précédent
-      </button>
-      <span>Page {{ currentPage }} sur {{ totalPages }}</span>
-      <button
-        class="btn btn-outline-secondary"
-        (click)="nextPage()"
-        [disabled]="currentPage === totalPages"
-      >
-        Suivant
-      </button>
-    </div>
-  </div>
-
-  <!-- modal -->
-  <app-dynamic-modal
-    *ngIf="showModal"
-    [title]="title"
-    [fields]="fields"
-    [initialValues]="initialValues"
-    (closeModal)="onModalClose($event)"
-  ></app-dynamic-modal>
-</div>
+<app-generic-crud-table
+  [title]="'Modifier l\'incident'"
+  [items]="incidents"
+  [fields]="fields"
+  [emptyItem]="getEmptyIncident()"
+  [columnsToDisplay]="columnsToDisplay"
+  [columnLabels]="columnLabels"
+  [booleanLabels]="booleanLabels"
+  (addItem)="onAddIncident($event)"
+  (updateItem)="onUpdateIncident($event)"
+  (deleteItem)="onDeleteIncident($event)"
+></app-generic-crud-table>

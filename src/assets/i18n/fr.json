@@ -60,5 +60,7 @@
   "auth-password-reset-title": "Changement de mot de passe",
   "auth-password-reset-subtitle": "Changement de mot de passe",
   "auth-password-reset-placeholder": "Nouveau mot de passe",
-  "auth-password-reset-submit": "Soumettre"
+  "auth-password-reset-submit": "Soumettre",
+  "intranet-cinema": "Cinémas",
+  "intranet-opinion": "Avis"
 }

@@ -25,7 +25,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Fields } from './dynamic-modal-form';
 
 @Component({
-  selector: 'app-dynamic-modal',
+  selector: 'app-dynamic-modal-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -59,8 +59,15 @@ export class DynamicModalFormComponent implements OnInit {
   ngOnInit() {
     const controls: { [key: string]: any } = {};
     this.fields.forEach((field) => {
+      let initialValue = this.initialValues[field.name];
+
+      if (field.type === 'select' && typeof initialValue === 'object') {
+        const nestedField = field.name;
+        initialValue = this.initialValues[nestedField]?.id;
+      }
+
       controls[field.name] = [
-        this.initialValues[field.name] ?? '',
+        initialValue ?? '',
         field.required ? Validators.required : [],
       ];
     });
