@@ -14,7 +14,7 @@ export class IncidentService {
     return this.http.get<IncidentResponse>(`${environment.url}/api/incident`);
   }
 
-  setIncident(incident: Incident): Observable<IncidentResponse> {
+  updateIncident(incident: Incident): Observable<IncidentResponse> {
     const data = { incident, locale: 'Europe/Paris' };
     return this.http.post<IncidentResponse>(
       `${environment.url}/api/incident/update`,

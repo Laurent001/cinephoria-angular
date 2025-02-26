@@ -157,7 +157,7 @@ export class IncidentComponent implements OnInit {
       incident
     );
     this.incidentService
-      .setIncident(incidentModified)
+      .updateIncident(incidentModified)
       .pipe(
         tap((response) => {
           this.incidents = response.incidents;
