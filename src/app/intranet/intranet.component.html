@@ -1,0 +1,56 @@
+<div class="container mt-4">
+  <h1>Connexion</h1>
+
+  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        id="pills-cinema-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-cinema"
+        type="button"
+        role="tab"
+        aria-controls="pills-cinema"
+        aria-selected="true"
+      >
+        {{ "intranet-cinema" | translate }}
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="pills-opinion-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-opinion"
+        type="button"
+        role="tab"
+        aria-controls="pills-opinion"
+        aria-selected="false"
+      >
+        {{ "intranet-opinion" | translate }}
+      </button>
+    </li>
+  </ul>
+
+  <!-- cinema-->
+  <div class="tab-content" id="pills-tabContent">
+    <div
+      class="tab-pane fade show active"
+      id="pills-cinema"
+      role="tabpanel"
+      aria-labelledby="pills-cinema-tab"
+    >
+      cinema
+    </div>
+  </div>
+
+  <!-- opinion-->
+  <div
+    class="tab-pane fade"
+    id="pills-opinion"
+    role="tabpanel"
+    aria-labelledby="pills-opinion-tab"
+  >
+    opinion
+  </div>
+</div>

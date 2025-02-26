@@ -1,0 +1,6 @@
+@import "../../../src/styles/variables";
+
+.nav-link.active {
+  background-color: $primary !important;
+  border-color: $primary !important;
+}

@@ -17,6 +17,10 @@ body {
   border-left: 1px solid var(--bs-gray-200);
 }
 
+.text-primary {
+  color: $primary !important;
+}
+
 .btn-primary,
 .bg-primary {
   background-color: $primary !important;
