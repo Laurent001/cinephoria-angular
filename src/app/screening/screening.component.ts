@@ -9,9 +9,8 @@ import {
 } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SeatResponse } from '../booking/seat/seat';
-import { SeatService } from '../booking/seat/seat.service';
 import { RemoveTrailingZerosPipe } from '../utils/pipes/removeTrailingZeros.pipe';
-import { ScreeningResponse } from './screening';
+import { Screening } from './screening';
 
 @Component({
   selector: 'app-screening',
@@ -23,7 +22,7 @@ import { ScreeningResponse } from './screening';
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
 })
 export class ScreeningComponent implements OnInit {
-  @Input() screening?: ScreeningResponse;
+  @Input() screening?: Screening;
   @Input() seatsSelected?: SeatResponse[] = [];
 
   constructor(private translate: TranslateService) {

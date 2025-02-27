@@ -66,6 +66,10 @@ export class DynamicModalFormComponent implements OnInit {
         initialValue = this.initialValues[nestedField]?.id;
       }
 
+      if (field.type === 'datetime' && initialValue) {
+        initialValue = this.formatDateTimeForInput(initialValue);
+      }
+
       controls[field.name] = [
         initialValue ?? '',
         field.required ? Validators.required : [],
@@ -85,5 +89,17 @@ export class DynamicModalFormComponent implements OnInit {
 
   cancel() {
     this.closeModal.emit();
+  }
+
+  formatDateTimeForInput(initialValue: string): string {
+    const dateObj = new Date(initialValue);
+
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    const hours = String(dateObj.getHours()).padStart(2, '0');
+    const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
 }

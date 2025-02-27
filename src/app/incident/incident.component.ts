@@ -25,14 +25,14 @@ export class IncidentComponent implements OnInit {
   columnsToDisplay = [
     { name: 'id', type: 'number' },
     { name: 'description', type: 'string' },
-    { name: 'added_date', type: 'Date' },
+    { name: 'added_date', type: 'datetime' },
     { name: 'is_solved', type: 'boolean' },
     { name: 'material.name', type: 'string' },
     { name: 'auditorium.name', type: 'string' },
   ];
   columnLabels: Record<string, string> = {
     id: '#',
-    'auditorium.name': 'Auditorium',
+    'auditorium.name': 'Salle',
     'material.name': 'Matériel',
     description: 'Description',
     is_solved: 'Statut',
@@ -73,7 +73,7 @@ export class IncidentComponent implements OnInit {
     return [
       {
         name: 'auditorium',
-        label: 'Auditorium',
+        label: 'Salle',
         type: 'select',
         options: this.auditoriums.map((auditorium) => ({
           label: auditorium.name,
@@ -99,7 +99,12 @@ export class IncidentComponent implements OnInit {
       },
       { name: 'is_solved', label: 'Résolu', type: 'toggle' },
       { name: 'id', label: 'id', type: 'masked' },
-      { name: 'added_date', label: 'Ajouté le', type: 'date' },
+      {
+        name: 'added_date',
+        label: 'Ajouté le',
+        type: 'datetime',
+        readonly: true,
+      },
     ];
   }
 
@@ -187,7 +192,7 @@ export class IncidentComponent implements OnInit {
       id: data.id,
       description: data.description,
       is_solved: data.is_solved,
-      added_date: new Date(data.added_date),
+      added_date: data.added_date,
       auditorium: {
         ...incident.auditorium,
         id: data.auditorium,

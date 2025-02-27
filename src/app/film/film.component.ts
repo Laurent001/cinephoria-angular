@@ -11,10 +11,7 @@ import { filter, Observable, take, tap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Booking } from '../booking/booking';
 import { BookingStateService } from '../booking/bookingState/booking-state.service';
-import {
-  ScreeningResponse,
-  ScreeningsByFilmResponse,
-} from '../screening/screening';
+import { Screening, ScreeningsByFilmResponse } from '../screening/screening';
 import { ScreeningService } from '../screening/screening.service';
 import { SliderComponent } from '../utils/slider/slider.component';
 import { CinemaService } from './cinema.service';
@@ -83,7 +80,7 @@ export class FilmComponent implements OnInit {
     if (bookingState) {
       this.booking = JSON.parse(bookingState) as Booking;
       this.cinemaSelectedId = this.booking?.screening?.auditorium.cinema.id;
-      this.filmSelectedId = this.booking.screening?.film_id;
+      this.filmSelectedId = this.booking.screening?.film.id;
 
       if (this.cinemaSelectedId) {
         this.filmsFiltered$ = this.filmService.getFilmsByCinema(
@@ -178,7 +175,7 @@ export class FilmComponent implements OnInit {
     this.isDatePickerOpen = false;
   }
 
-  onScreeningSelected(screening: ScreeningResponse) {
+  onScreeningSelected(screening: Screening) {
     this.screenings.screeningSelected = screening;
   }
 

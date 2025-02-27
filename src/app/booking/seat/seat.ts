@@ -1,4 +1,4 @@
-import { ScreeningResponse } from 'src/app/screening/screening';
+import { Screening } from 'src/app/screening/screening';
 
 export interface SeatResponse {
   id: number;
@@ -8,6 +8,6 @@ export interface SeatResponse {
 }
 
 export interface SeatsScreeningResponse {
-  screening: ScreeningResponse;
+  screening: Screening;
   seats: SeatResponse[];
 }

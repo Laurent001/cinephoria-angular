@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {} from '../film/film';
-import {
-  ScreeningResponse,
-  ScreeningsByFilmResponse,
-} from '../screening/screening';
+import { Screening, ScreeningsByFilmResponse } from '../screening/screening';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +44,7 @@ export class UtilsService {
   findScreeningById(
     screeningIdSelected?: number,
     screenings?: ScreeningsByFilmResponse
-  ): ScreeningResponse | undefined {
+  ): Screening | undefined {
     if (screeningIdSelected === undefined || screenings === undefined) {
       return undefined;
     }
