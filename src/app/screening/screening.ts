@@ -4,6 +4,8 @@ export interface Screening {
   id: number;
   start_time: Date;
   end_time: Date;
+  remaining_seat: number;
+  remaining_handi_seat: number;
   film: FilmResponse;
   auditorium: AuditoriumResponse;
 }

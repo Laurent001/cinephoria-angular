@@ -28,6 +28,8 @@ export class ScreeningsComponent implements OnInit {
     { name: 'film.title', type: 'string' },
     { name: 'start_time', type: 'datetime' },
     { name: 'end_time', type: 'datetime' },
+    { name: 'remaining_seat', type: 'string' },
+    { name: 'remaining_handi_seat', type: 'string' },
   ];
   columnLabels: Record<string, string> = {
     id: '#',
@@ -35,6 +37,8 @@ export class ScreeningsComponent implements OnInit {
     'film.title': 'Film',
     start_time: 'Début',
     end_time: 'Fin',
+    remaining_seat: 'Places',
+    remaining_handi_seat: 'Places handi',
   };
 
   constructor(
@@ -67,8 +71,6 @@ export class ScreeningsComponent implements OnInit {
   getFields(): Fields[] {
     return [
       { name: 'id', label: 'id', type: 'masked' },
-      { name: 'start_time', label: 'Début', type: 'datetime', readonly: false },
-      { name: 'end_time', label: 'Fin', type: 'datetime', readonly: false },
       {
         name: 'auditorium',
         label: 'Salle',
@@ -89,6 +91,18 @@ export class ScreeningsComponent implements OnInit {
         })),
         required: true,
       },
+      { name: 'start_time', label: 'Début', type: 'datetime', readonly: false },
+      { name: 'end_time', label: 'Fin', type: 'datetime', readonly: false },
+      {
+        name: 'remaining_seat',
+        label: 'Places',
+        type: 'text',
+      },
+      {
+        name: 'remaining_handi_seat',
+        label: 'Places handi',
+        type: 'text',
+      },
     ];
   }
 
@@ -97,6 +111,8 @@ export class ScreeningsComponent implements OnInit {
       id: 0,
       start_time: new Date(),
       end_time: new Date(),
+      remaining_seat: 0,
+      remaining_handi_seat: 0,
       film: {
         id: 0,
         poster: '',
@@ -180,6 +196,8 @@ export class ScreeningsComponent implements OnInit {
       id: data.id,
       start_time: data.start_time,
       end_time: data.end_time,
+      remaining_seat: data.remaining_seat,
+      remaining_handi_seat: data.remaining_handi_seat,
       auditorium: {
         ...screening.auditorium,
         id: data.auditorium,
