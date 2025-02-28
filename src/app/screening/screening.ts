@@ -1,13 +1,13 @@
 import { AuditoriumResponse, FilmResponse } from '../film/film';
 
 export interface Screening {
-  id: number;
+  id?: number;
   start_time: Date;
   end_time: Date;
-  remaining_seat: number;
-  remaining_handi_seat: number;
-  film: FilmResponse;
-  auditorium: AuditoriumResponse;
+  remaining_seat?: number;
+  remaining_handi_seat?: number;
+  film?: FilmResponse;
+  auditorium?: AuditoriumResponse;
 }
 
 export interface ScreeningResponse {

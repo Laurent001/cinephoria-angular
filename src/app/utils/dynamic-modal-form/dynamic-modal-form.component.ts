@@ -76,6 +76,10 @@ export class DynamicModalFormComponent implements OnInit {
       ];
     });
     this.form = this.fb.group(controls);
+    console.log('this.form : ', this.form);
+    console.log('this.form.valid : ', this.form.valid);
+    console.log(this.form.controls['auditorium'].value); // Vérifiez la valeur initiale du champ 'auditorium'
+    console.log(this.form.controls['film'].value);
   }
 
   onSubmit() {

@@ -8,6 +8,7 @@ import { Fields } from '../utils/dynamic-modal-form/dynamic-modal-form';
 import { GenericCrudTableComponent } from '../utils/generic-crud-table/generic-crud-table.component';
 import { Incident, MaterialResponse } from './incident';
 import { IncidentService } from './incident.service';
+import { UtilsService } from '../utils/utils.service';
 
 @Component({
   selector: 'app-incident',
@@ -45,7 +46,8 @@ export class IncidentComponent implements OnInit {
 
   constructor(
     private translate: TranslateService,
-    private incidentService: IncidentService
+    private incidentService: IncidentService,
+    private utilsService: UtilsService
   ) {
     this.translate.setDefaultLang('fr');
     registerLocaleData(localeFr);
@@ -151,6 +153,13 @@ export class IncidentComponent implements OnInit {
           this.incidents = response.incidents;
           this.materials = response.materials;
           this.auditoriums = response.auditoriums;
+
+          this.utilsService.presentAlert(
+            'Création réussie',
+            "L'incident' a été ajouté",
+            ['OK'],
+            'success'
+          );
         })
       )
       .subscribe();

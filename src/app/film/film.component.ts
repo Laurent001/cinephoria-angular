@@ -79,8 +79,8 @@ export class FilmComponent implements OnInit {
     const bookingState = localStorage.getItem('bookingState');
     if (bookingState) {
       this.booking = JSON.parse(bookingState) as Booking;
-      this.cinemaSelectedId = this.booking?.screening?.auditorium.cinema.id;
-      this.filmSelectedId = this.booking.screening?.film.id;
+      this.cinemaSelectedId = this.booking?.screening?.auditorium?.cinema.id;
+      this.filmSelectedId = this.booking.screening?.film?.id;
 
       if (this.cinemaSelectedId) {
         this.filmsFiltered$ = this.filmService.getFilmsByCinema(

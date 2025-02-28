@@ -93,53 +93,18 @@ export class ScreeningsComponent implements OnInit {
       },
       { name: 'start_time', label: 'Début', type: 'datetime', readonly: false },
       { name: 'end_time', label: 'Fin', type: 'datetime', readonly: false },
-      {
-        name: 'remaining_seat',
-        label: 'Places',
-        type: 'text',
-      },
-      {
-        name: 'remaining_handi_seat',
-        label: 'Places handi',
-        type: 'text',
-      },
     ];
   }
 
   getEmptyScreening(): Screening {
     return {
-      id: 0,
+      id: undefined,
       start_time: new Date(),
       end_time: new Date(),
       remaining_seat: 0,
       remaining_handi_seat: 0,
-      film: {
-        id: 0,
-        poster: '',
-        title: '',
-        favorite: 0,
-        age_minimum: 0,
-        description: '',
-        release_date: new Date(),
-      },
-      auditorium: {
-        id: 0,
-        name: '',
-        seat: 0,
-        handi_seat: 0,
-        quality: '',
-        quality_id: 0,
-        price: 0,
-        cinema: {
-          id: 0,
-          name: '',
-          address: '',
-          city: '',
-          postcode: 0,
-          phone: 0,
-          opening_hours: 0,
-        },
-      },
+      film: undefined,
+      auditorium: undefined,
     };
   }
 
@@ -155,6 +120,13 @@ export class ScreeningsComponent implements OnInit {
           this.screenings = response.screenings;
           this.films = response.films;
           this.auditoriums = response.auditoriums;
+
+          this.utilsService.presentAlert(
+            'Création réussie',
+            'La séance a été ajoutée',
+            ['OK'],
+            'success'
+          );
         })
       )
       .subscribe();
@@ -172,40 +144,52 @@ export class ScreeningsComponent implements OnInit {
           this.screenings = response.screenings;
           this.films = response.films;
           this.auditoriums = response.auditoriums;
+
+          this.utilsService.presentAlert(
+            'Mise à jour réussie',
+            'La séance a été mise à jour',
+            ['OK'],
+            'success'
+          );
         })
       )
       .subscribe();
   }
 
   onDeleteScreening(screening: Screening) {
-    this.screeningsService
-      .deletescreeningById(screening.id)
-      .pipe(
-        tap((response) => {
-          this.screenings = response.screenings;
-          this.films = response.films;
-          this.auditoriums = response.auditoriums;
-        })
-      )
-      .subscribe();
+    if (screening.id)
+      this.screeningsService
+        .deletescreeningById(screening.id)
+        .pipe(
+          tap((response) => {
+            this.screenings = response.screenings;
+            this.films = response.films;
+            this.auditoriums = response.auditoriums;
+          })
+        )
+        .subscribe();
   }
 
   getScreeningReponseModified(screening: Screening, data: any): Screening {
     return {
       ...screening,
-      id: data.id,
+      id: data.id !== '' ? data.id : undefined,
       start_time: data.start_time,
       end_time: data.end_time,
       remaining_seat: data.remaining_seat,
       remaining_handi_seat: data.remaining_handi_seat,
       auditorium: {
-        ...screening.auditorium,
         id: data.auditorium,
-      },
+        name: '',
+        seat: 0,
+        handi_seat: 0,
+        ...(screening.auditorium || {}),
+      } as AuditoriumResponse,
       film: {
-        ...screening.film,
         id: data.film,
-      },
+        title: '',
+        ...(screening.film || {}),
+      } as FilmResponse,
     };
   }
 }
