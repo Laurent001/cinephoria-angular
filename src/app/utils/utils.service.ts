@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {} from '../film/film';
-import {
-  ScreeningResponse,
-  ScreeningsByFilmResponse,
-} from '../screening/screening';
+import { Observable } from 'rxjs';
+import { Screening, ScreeningsByFilmResponse } from '../screening/screening';
+import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilsService {
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar, private modal: MatDialog) {}
 
   presentAlert(
     header: string,
@@ -44,10 +43,22 @@ export class UtilsService {
     });
   }
 
+  openConfirmModal(
+    header: string,
+    message: string,
+    buttons: string[]
+  ): Observable<boolean> {
+    const modalRef = this.modal.open(ConfirmModalComponent, {
+      data: { header, message, buttons },
+    });
+
+    return modalRef.afterClosed();
+  }
+
   findScreeningById(
     screeningIdSelected?: number,
     screenings?: ScreeningsByFilmResponse
-  ): ScreeningResponse | undefined {
+  ): Screening | undefined {
     if (screeningIdSelected === undefined || screenings === undefined) {
       return undefined;
     }

@@ -11,7 +11,7 @@ import { BookingStateService } from 'src/app/booking/bookingState/booking-state.
 import { SeatResponse } from 'src/app/booking/seat/seat';
 import {} from 'src/app/film/film';
 import {
-  ScreeningResponse,
+  Screening,
   ScreeningsByDayResponse,
   ScreeningsByFilmResponse,
 } from 'src/app/screening/screening';
@@ -28,14 +28,14 @@ import { ScreeningService } from 'src/app/screening/screening.service';
 })
 export class SliderComponent {
   @Input() screenings?: ScreeningsByFilmResponse;
-  @Output() screeningSelected = new EventEmitter<ScreeningResponse>();
-  selectedScreening?: ScreeningResponse;
+  @Output() screeningSelected = new EventEmitter<Screening>();
+  selectedScreening?: Screening;
   seatsSelected?: SeatResponse[];
   booking?: Booking;
   visibleDays: Date[] = [];
   currentIndex = 0;
   visibleDaysCount = 3;
-  selectedDayScreenings: ScreeningResponse[] | null = null;
+  selectedDayScreenings: Screening[] | null = null;
   selectedDay?: Date;
 
   constructor(
@@ -64,12 +64,10 @@ export class SliderComponent {
         new Set(
           screeningsResponse.screenings.flatMap(
             (screeningByDay: ScreeningsByDayResponse) =>
-              screeningByDay.screeningsByDay.map(
-                (screening: ScreeningResponse) => {
-                  const date = new Date(screening.start_time);
-                  return date.toISOString().split('T')[0];
-                }
-              )
+              screeningByDay.screeningsByDay.map((screening: Screening) => {
+                const date = new Date(screening.start_time);
+                return date.toISOString().split('T')[0];
+              })
           )
         )
       ).sort();
@@ -82,7 +80,7 @@ export class SliderComponent {
     this.onDayClick(this.visibleDays[0]);
   }
 
-  isScreeningVisible(screening: ScreeningResponse): boolean {
+  isScreeningVisible(screening: Screening): boolean {
     if (!this.selectedDay) return false;
     const screeningDate = new Date(screening.start_time);
     return this.visibleDays.some(
@@ -159,7 +157,7 @@ export class SliderComponent {
     }
   }
 
-  selectScreening(screening: ScreeningResponse) {
+  selectScreening(screening: Screening) {
     if (this.booking) {
       this.booking.screening = screening;
       this.bookingStateService.setBookingState(this.booking);

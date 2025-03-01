@@ -1,0 +1,11 @@
+<app-generic-crud-table
+  [title]="'Séance'"
+  [items]="screenings"
+  [fields]="fields"
+  [emptyItem]="getEmptyScreening()"
+  [columnsToDisplay]="columnsToDisplay"
+  [columnLabels]="columnLabels"
+  (addItem)="onAddScreening($event)"
+  (updateItem)="onUpdateScreening($event)"
+  (deleteItem)="onDeleteScreening($event)"
+></app-generic-crud-table>

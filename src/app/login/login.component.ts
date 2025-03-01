@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -14,7 +14,7 @@ import { LoginService } from './login.service';
   standalone: true,
   imports: [CommonModule, FormsModule, TranslateModule],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   currentView = 'login';
 
   // Login form
@@ -37,8 +37,6 @@ export class LoginComponent implements OnInit {
   ) {
     this.translate.setDefaultLang('fr');
   }
-
-  ngOnInit() {}
 
   login(email: string, password: string) {
     this.loginService.login(email, password).subscribe({
@@ -103,7 +101,6 @@ export class LoginComponent implements OnInit {
   }
 
   resetPassword() {
-    console.log('reset password for: ', this.loginEmail);
     this.router.navigate(['/password-reset-request']);
   }
 }

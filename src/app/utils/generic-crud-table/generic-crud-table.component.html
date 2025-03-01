@@ -39,7 +39,7 @@
               </ng-container>
               <!-- date -->
               <ng-container *ngIf="isDate(item[getColumnName(column)], column)">
-                {{ item[getColumnName(column)] | date : "dd/MM/yyy" }}
+                {{ formatDate(item[getColumnName(column)]) }}
               </ng-container>
               <!-- autres -->
               <ng-container

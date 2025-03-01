@@ -1,10 +1,12 @@
 <div class="container mt-4">
-  <h1>Connexion</h1>
-
-  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-    <li class="nav-item" role="presentation">
+  <ul
+    class="nav nav-pills mb-3 d-flex justify-content-center"
+    id="pills-tab"
+    role="tablist"
+  >
+    <li class="nav-item w-50 d-flex justify-content-end" role="presentation">
       <button
-        class="nav-link active"
+        class="nav-link active w-50 border-0"
         id="pills-cinema-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-cinema"
@@ -16,9 +18,9 @@
         {{ "intranet-cinema" | translate }}
       </button>
     </li>
-    <li class="nav-item" role="presentation">
+    <li class="nav-item w-50" role="presentation">
       <button
-        class="nav-link"
+        class="nav-link w-50"
         id="pills-opinion-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-opinion"
@@ -40,7 +42,7 @@
       role="tabpanel"
       aria-labelledby="pills-cinema-tab"
     >
-      cinema
+      <app-screenings></app-screenings>
     </div>
   </div>
 

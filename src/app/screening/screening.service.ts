@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import {} from 'src/app/film/film';
 import { environment } from 'src/environments/environment.dev';
-import { ScreeningResponse, ScreeningsByFilmResponse } from './screening';
+import { Screening, ScreeningsByFilmResponse } from './screening';
 
 @Injectable({
   providedIn: 'root',
@@ -23,10 +22,8 @@ export class ScreeningService {
     return this.screeningsSubject.value;
   }
 
-  getScreeningById(id: number): Observable<ScreeningResponse> {
-    return this.http.get<ScreeningResponse>(
-      `${environment.url}/api/screening/${id}`
-    );
+  getScreeningById(id: number): Observable<Screening> {
+    return this.http.get<Screening>(`${environment.url}/api/screening/${id}`);
   }
 
   getScreeningsByFilmId(id: number): Observable<ScreeningsByFilmResponse> {
