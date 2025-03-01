@@ -7,12 +7,12 @@ export interface IncidentResponse {
 }
 
 export interface Incident {
-  id: number;
+  id?: number;
   description: string;
   added_date?: Date;
   is_solved: boolean;
-  material: MaterialResponse;
-  auditorium: AuditoriumResponse;
+  material?: MaterialResponse;
+  auditorium?: AuditoriumResponse;
 }
 
 export interface MaterialResponse {
