@@ -156,6 +156,13 @@ export class IncidentComponent implements OnInit {
           this.incidents = response.incidents;
           this.materials = response.materials;
           this.auditoriums = response.auditoriums;
+
+          this.utilsService.presentAlert(
+            'Mise à jour réussie',
+            "L'incident a été mise à jour",
+            ['OK'],
+            'success'
+          );
         })
       )
       .subscribe();
