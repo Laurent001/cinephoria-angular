@@ -22,7 +22,7 @@ export class ScreeningsService {
     );
   }
 
-  deletescreeningById(screeningId: number): Observable<ScreeningResponse> {
+  deleteScreeningById(screeningId: number): Observable<ScreeningResponse> {
     return this.http.delete<ScreeningResponse>(
       `${environment.url}/api/screening/delete/${screeningId}`
     );

@@ -7,6 +7,7 @@ import { AuditoriumResponse, FilmResponse } from 'src/app/film/film';
 import { Screening } from 'src/app/screening/screening';
 import { Fields } from 'src/app/utils/dynamic-modal-form/dynamic-modal-form';
 import { GenericCrudTableComponent } from 'src/app/utils/generic-crud-table/generic-crud-table.component';
+import { UtilsService } from 'src/app/utils/utils.service';
 import { ScreeningsService } from './screenings.service';
 
 @Component({
@@ -43,7 +44,8 @@ export class ScreeningsComponent implements OnInit {
 
   constructor(
     private translate: TranslateService,
-    private screeningsService: ScreeningsService
+    private screeningsService: ScreeningsService,
+    private utilsService: UtilsService
   ) {
     this.translate.setDefaultLang('fr');
     registerLocaleData(localeFr);
@@ -159,12 +161,19 @@ export class ScreeningsComponent implements OnInit {
   onDeleteScreening(screening: Screening) {
     if (screening.id)
       this.screeningsService
-        .deletescreeningById(screening.id)
+        .deleteScreeningById(screening.id)
         .pipe(
           tap((response) => {
             this.screenings = response.screenings;
             this.films = response.films;
             this.auditoriums = response.auditoriums;
+
+            this.utilsService.presentAlert(
+              'Suppression réussie',
+              'La séance a été supprimée',
+              ['OK'],
+              'success'
+            );
           })
         )
         .subscribe();
