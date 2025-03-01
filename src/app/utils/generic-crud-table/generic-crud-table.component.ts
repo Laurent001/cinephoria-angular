@@ -137,7 +137,6 @@ export class GenericCrudTableComponent implements OnInit {
 
   onModalClose(result?: any) {
     this.showModal = false;
-    console.log('result : ', result);
 
     if (result) {
       if (result.id === undefined || result.id === '') {
