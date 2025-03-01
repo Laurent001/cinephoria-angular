@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.dev';
-import { ScreeningResponse } from '../screening/screening';
+import { Screening } from '../screening/screening';
 import { CinemaResponse } from './film';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class CinemaService {
     return this.http.get<CinemaResponse[]>(`${environment.url}/api/cinema`);
   }
 
-  getCinemaByScreening(screening: ScreeningResponse) {
+  getCinemaByScreening(screening: Screening) {
     return this.http.get<CinemaResponse>(
       `${environment.url}/api/cinema/screening/${screening}`
     );

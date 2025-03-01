@@ -1,5 +1,5 @@
 import { User } from '../app';
-import { ScreeningResponse } from '../screening/screening';
+import { Screening } from '../screening/screening';
 import { SeatResponse } from './seat/seat';
 
 export interface BookingResponse {
@@ -16,6 +16,6 @@ export interface BookingValidateResponse {
 export interface Booking {
   user?: User;
   totalPrice: number;
-  screening?: ScreeningResponse;
+  screening?: Screening;
   seats: SeatResponse[];
 }

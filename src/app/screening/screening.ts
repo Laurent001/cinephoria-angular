@@ -1,20 +1,28 @@
 import { AuditoriumResponse, FilmResponse } from '../film/film';
 
-export interface ScreeningResponse {
-  id: number;
-  film_id: number;
+export interface Screening {
+  id?: number;
   start_time: Date;
   end_time: Date;
-  auditorium: AuditoriumResponse;
+  remaining_seat?: number;
+  remaining_handi_seat?: number;
+  film?: FilmResponse;
+  auditorium?: AuditoriumResponse;
+}
+
+export interface ScreeningResponse {
+  screenings: Screening[];
+  films: FilmResponse[];
+  auditoriums: AuditoriumResponse[];
 }
 
 export interface ScreeningsByFilmResponse {
   film: FilmResponse;
   screenings: ScreeningsByDayResponse[];
-  screeningSelected?: ScreeningResponse;
+  screeningSelected?: Screening;
 }
 
 export interface ScreeningsByDayResponse {
   day: Date;
-  screeningsByDay: ScreeningResponse[];
+  screeningsByDay: Screening[];
 }

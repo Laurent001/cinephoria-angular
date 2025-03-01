@@ -11,10 +11,7 @@ import { AuthService } from '../auth/auth.service';
 import { CinemaService } from '../film/cinema.service';
 import { CinemaResponse, FilmResponse } from '../film/film';
 import { FilmService } from '../film/film.service';
-import {
-  ScreeningResponse,
-  ScreeningsByFilmResponse,
-} from '../screening/screening';
+import { Screening, ScreeningsByFilmResponse } from '../screening/screening';
 import { ScreeningService } from '../screening/screening.service';
 import { SliderComponent } from '../utils/slider/slider.component';
 import { UtilsService } from '../utils/utils.service';
@@ -56,7 +53,7 @@ export class BookingComponent implements OnInit {
   isDatePickerOpen = false;
   totalPrice: number = 0;
   seatsSelected: SeatResponse[] = [];
-  screeningSelected?: ScreeningResponse;
+  screeningSelected?: Screening;
 
   constructor(
     private filmService: FilmService,
@@ -114,7 +111,7 @@ export class BookingComponent implements OnInit {
       this.seatsSelected = this.booking.seats;
       this.totalPrice = this.booking.totalPrice;
       this.cinemaSelectedId = this.booking?.screening?.auditorium?.cinema.id;
-      this.filmSelectedId = this.booking.screening?.film_id;
+      this.filmSelectedId = this.booking.screening?.film?.id;
       this.screeningSelected = this.booking.screening;
 
       if (this.cinemaSelectedId) {
@@ -174,7 +171,7 @@ export class BookingComponent implements OnInit {
       return;
     }
 
-    if (this.screeningSelected && this.screeningSelected.film_id != filmId)
+    if (this.screeningSelected && this.screeningSelected.film?.id != filmId)
       this.screeningSelected = undefined;
 
     this.showSeatsScreening = false;
@@ -201,16 +198,17 @@ export class BookingComponent implements OnInit {
     this.showSeatsScreening = true;
   }
 
-  onScreeningSelected(screening: ScreeningResponse) {
+  onScreeningSelected(screening: Screening) {
     this.seatsSelected = [];
     this.totalPrice = 0;
     if (this.screenings) {
       //this.screenings.screeningSelected = screening;
       this.screeningSelected = screening;
 
-      this.seats$ = this.seatService.getSeatsByScreeningId(
-        this.screeningSelected.id
-      );
+      if (this.screeningSelected.id)
+        this.seats$ = this.seatService.getSeatsByScreeningId(
+          this.screeningSelected.id
+        );
     }
     if (this.booking) {
       this.booking.seats = [];
@@ -223,10 +221,10 @@ export class BookingComponent implements OnInit {
     if (this.screeningSelected) {
       if (this.isSeatSelected(seat)) {
         this.removeSeatSelected(seat);
-        this.totalPrice -= Number(this.screeningSelected.auditorium.price);
+        this.totalPrice -= Number(this.screeningSelected.auditorium?.price);
         if (this.booking) this.booking.totalPrice = this.totalPrice;
       } else if (seat.is_available) {
-        this.totalPrice += Number(this.screeningSelected.auditorium.price);
+        this.totalPrice += Number(this.screeningSelected.auditorium?.price);
         if (this.booking) this.booking.totalPrice = this.totalPrice;
         this.addSeatSelected(seat);
       } else {
@@ -300,13 +298,16 @@ export class BookingComponent implements OnInit {
         ?.pipe(
           tap((response) => {
             if (response)
-              this.utilsService.presentAlert('Information', response.message, [
-                'OK'
-              ], 'success');
+              this.utilsService.presentAlert(
+                'Information',
+                response.message,
+                ['OK'],
+                'success'
+              );
           })
         )
         .subscribe((response) => {
-          if (this.screeningSelected) {
+          if (this.screeningSelected && this.screeningSelected.id) {
             this.seats$ = this.seatService.getSeatsByScreeningId(
               this.screeningSelected.id
             );

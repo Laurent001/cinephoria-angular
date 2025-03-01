@@ -14,6 +14,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Fields } from '../dynamic-modal-form/dynamic-modal-form';
 import { DynamicModalFormComponent } from '../dynamic-modal-form/dynamic-modal-form.component';
+import { UtilsService } from '../utils.service';
 
 @Component({
   selector: 'app-generic-crud-table',
@@ -37,10 +38,8 @@ export class GenericCrudTableComponent implements OnInit {
   @Input() columnsToDisplay: Array<string | { name: string; type: string }> =
     [];
   @Input() columnLabels: Record<string, string> = {};
-
-  // Nouvelles entrées pour personnaliser les libellés des valeurs booléennes
-  @Input() booleanLabels: Record<string, { true: string; false: string }> = {};
-  @Input() defaultBooleanLabels: { true: string; false: string } = {
+  @Input() booleanLabels?: Record<string, { true: string; false: string }> = {};
+  @Input() defaultBooleanLabels?: { true: string; false: string } = {
     true: 'Oui',
     false: 'Non',
   };
@@ -56,7 +55,10 @@ export class GenericCrudTableComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 1;
 
-  constructor(private translate: TranslateService) {
+  constructor(
+    private translate: TranslateService,
+    private utilsService: UtilsService
+  ) {
     this.translate.setDefaultLang('fr');
     registerLocaleData(localeFr);
   }
@@ -135,9 +137,10 @@ export class GenericCrudTableComponent implements OnInit {
 
   onModalClose(result?: any) {
     this.showModal = false;
+    console.log('result : ', result);
 
     if (result) {
-      if (result.id === 0) {
+      if (result.id === undefined || result.id === '') {
         this.addItem.emit(result);
       } else {
         this.updateItem.emit(result);
@@ -146,7 +149,17 @@ export class GenericCrudTableComponent implements OnInit {
   }
 
   onDeleteItem(item: any) {
-    this.deleteItem.emit(item);
+    this.utilsService
+      .openConfirmModal(
+        'Confirmation',
+        'Cela va supprimer toutes les sièges de cette séance ainsi que les bookings associés à cette séance. Êtes-vous sûr de vouloir supprimer cette entrée ?',
+        ['Confirmer', 'Annuler']
+      )
+      .subscribe((response) => {
+        if (response) {
+          this.deleteItem.emit(item);
+        }
+      });
   }
 
   getColumnName(column: string | { name: string; type: string }): string {
@@ -172,10 +185,13 @@ export class GenericCrudTableComponent implements OnInit {
 
   isDate(value: any, column: string | { name: string; type: string }): boolean {
     const columnType = this.getColumnType(column);
-    if (columnType === 'Date') {
+    if (columnType === 'datetime') {
       return true;
     }
-    return value instanceof Date;
+    return (
+      value instanceof Date ||
+      (typeof value === 'string' && !isNaN(Date.parse(value)))
+    );
   }
 
   // Valeur d'affichage suivant son type
@@ -183,8 +199,6 @@ export class GenericCrudTableComponent implements OnInit {
     value: any,
     column: string | { name: string; type: string }
   ): string {
-    const columnName = typeof column === 'string' ? column : column.name;
-
     if (this.isBoolean(value, column)) {
       return value ? 'true' : 'false';
     }
@@ -200,5 +214,17 @@ export class GenericCrudTableComponent implements OnInit {
         (obj, key) => (obj && obj[key] !== undefined ? obj[key] : ''),
         item
       );
+  }
+
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+    };
+    return date.toLocaleDateString('fr-FR', options);
   }
 }
