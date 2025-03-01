@@ -149,17 +149,7 @@ export class GenericCrudTableComponent implements OnInit {
   }
 
   onDeleteItem(item: any) {
-    this.utilsService
-      .openConfirmModal(
-        'Confirmation',
-        'Cela va supprimer toutes les sièges de cette séance ainsi que les bookings associés à cette séance. Êtes-vous sûr de vouloir supprimer cette entrée ?',
-        ['Confirmer', 'Annuler']
-      )
-      .subscribe((response) => {
-        if (response) {
-          this.deleteItem.emit(item);
-        }
-      });
+    this.deleteItem.emit(item);
   }
 
   getColumnName(column: string | { name: string; type: string }): string {

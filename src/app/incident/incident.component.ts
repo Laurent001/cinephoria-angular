@@ -2,7 +2,7 @@ import { CommonModule, registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { tap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
 import { AuditoriumResponse } from '../film/film';
 import { Fields } from '../utils/dynamic-modal-form/dynamic-modal-form';
 import { GenericCrudTableComponent } from '../utils/generic-crud-table/generic-crud-table.component';
@@ -162,17 +162,34 @@ export class IncidentComponent implements OnInit {
   }
 
   onDeleteIncident(incident: Incident) {
-    if (incident.id)
-      this.incidentService
-        .deleteIncidentById(incident.id)
-        .pipe(
-          tap((response) => {
-            this.incidents = response.incidents;
-            this.materials = response.materials;
-            this.auditoriums = response.auditoriums;
-          })
-        )
-        .subscribe();
+    this.utilsService
+      .openConfirmModal(
+        'Confirmation',
+        'Êtes-vous sûr de vouloir supprimer cet incident ?',
+        ['Confirmer', 'Annuler']
+      )
+      .pipe(
+        switchMap((response) => {
+          if (response && incident.id) {
+            return this.incidentService.deleteIncidentById(incident.id).pipe(
+              tap((deleteResponse) => {
+                this.incidents = deleteResponse.incidents;
+                this.materials = deleteResponse.materials;
+                this.auditoriums = deleteResponse.auditoriums;
+
+                this.utilsService.presentAlert(
+                  'Suppression réussie',
+                  "L'incident a été supprimée",
+                  ['OK'],
+                  'success'
+                );
+              })
+            );
+          }
+          return [];
+        })
+      )
+      .subscribe();
   }
 
   getIncidentReponseModified(incident: Incident, data: any): Incident {

@@ -2,7 +2,7 @@ import { CommonModule, registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { tap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
 import { AuditoriumResponse, FilmResponse } from 'src/app/film/film';
 import { Screening } from 'src/app/screening/screening';
 import { Fields } from 'src/app/utils/dynamic-modal-form/dynamic-modal-form';
@@ -159,24 +159,36 @@ export class ScreeningsComponent implements OnInit {
   }
 
   onDeleteScreening(screening: Screening) {
-    if (screening.id)
-      this.screeningsService
-        .deleteScreeningById(screening.id)
-        .pipe(
-          tap((response) => {
-            this.screenings = response.screenings;
-            this.films = response.films;
-            this.auditoriums = response.auditoriums;
+    this.utilsService
+      .openConfirmModal(
+        'Confirmation',
+        'Cela va supprimer toutes les sièges et réservations associés à cette séance. Êtes-vous sûr de vouloir supprimer cette séance ?',
+        ['Confirmer', 'Annuler']
+      )
+      .pipe(
+        switchMap((response) => {
+          if (response && screening.id) {
+            return this.screeningsService
+              .deleteScreeningById(screening.id)
+              .pipe(
+                tap((deleteResponse) => {
+                  this.screenings = deleteResponse.screenings;
+                  this.films = deleteResponse.films;
+                  this.auditoriums = deleteResponse.auditoriums;
 
-            this.utilsService.presentAlert(
-              'Suppression réussie',
-              'La séance a été supprimée',
-              ['OK'],
-              'success'
-            );
-          })
-        )
-        .subscribe();
+                  this.utilsService.presentAlert(
+                    'Suppression réussie',
+                    'La séance a été supprimée',
+                    ['OK'],
+                    'success'
+                  );
+                })
+              );
+          }
+          return [];
+        })
+      )
+      .subscribe();
   }
 
   getScreeningReponseModified(screening: Screening, data: any): Screening {
