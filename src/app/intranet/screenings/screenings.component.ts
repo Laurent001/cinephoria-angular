@@ -189,14 +189,10 @@ export class ScreeningsComponent implements OnInit {
       remaining_handi_seat: data.remaining_handi_seat,
       auditorium: {
         id: data.auditorium,
-        name: '',
-        seat: 0,
-        handi_seat: 0,
         ...(screening.auditorium || {}),
       } as AuditoriumResponse,
       film: {
         id: data.film,
-        title: '',
         ...(screening.film || {}),
       } as FilmResponse,
     };

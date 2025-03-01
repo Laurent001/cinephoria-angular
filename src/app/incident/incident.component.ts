@@ -6,9 +6,9 @@ import { tap } from 'rxjs';
 import { AuditoriumResponse } from '../film/film';
 import { Fields } from '../utils/dynamic-modal-form/dynamic-modal-form';
 import { GenericCrudTableComponent } from '../utils/generic-crud-table/generic-crud-table.component';
+import { UtilsService } from '../utils/utils.service';
 import { Incident, MaterialResponse } from './incident';
 import { IncidentService } from './incident.service';
-import { UtilsService } from '../utils/utils.service';
 
 @Component({
   selector: 'app-incident',
@@ -112,32 +112,11 @@ export class IncidentComponent implements OnInit {
 
   getEmptyIncident(): Incident {
     return {
-      id: 0,
+      id: undefined,
       description: '',
       is_solved: false,
-      material: {
-        id: 0,
-        name: '',
-        description: '',
-      },
-      auditorium: {
-        id: 0,
-        name: '',
-        seat: 0,
-        handi_seat: 0,
-        quality: '',
-        quality_id: 0,
-        price: 0,
-        cinema: {
-          id: 0,
-          name: '',
-          address: '',
-          city: '',
-          postcode: 0,
-          phone: 0,
-          opening_hours: 0,
-        },
-      },
+      material: undefined,
+      auditorium: undefined,
     };
   }
 
@@ -183,33 +162,34 @@ export class IncidentComponent implements OnInit {
   }
 
   onDeleteIncident(incident: Incident) {
-    this.incidentService
-      .deleteIncidentById(incident.id)
-      .pipe(
-        tap((response) => {
-          this.incidents = response.incidents;
-          this.materials = response.materials;
-          this.auditoriums = response.auditoriums;
-        })
-      )
-      .subscribe();
+    if (incident.id)
+      this.incidentService
+        .deleteIncidentById(incident.id)
+        .pipe(
+          tap((response) => {
+            this.incidents = response.incidents;
+            this.materials = response.materials;
+            this.auditoriums = response.auditoriums;
+          })
+        )
+        .subscribe();
   }
 
   getIncidentReponseModified(incident: Incident, data: any): Incident {
     return {
       ...incident,
-      id: data.id,
+      id: data.id !== '' ? data.id : undefined,
       description: data.description,
       is_solved: data.is_solved,
       added_date: data.added_date,
       auditorium: {
-        ...incident.auditorium,
         id: data.auditorium,
-      },
+        ...(incident.auditorium || {}),
+      } as AuditoriumResponse,
       material: {
-        ...incident.material,
         id: data.material,
-      },
+        ...(incident.material || {}),
+      } as MaterialResponse,
     };
   }
 }
