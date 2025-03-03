@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, of, switchMap, tap } from 'rxjs';
+import { environment } from 'src/environments/environment.dev';
 import { AuthService } from '../auth/auth.service';
 import { CinemaService } from '../film/cinema.service';
 import { CinemaResponse, FilmResponse } from '../film/film';
@@ -21,6 +22,7 @@ import { BookingStateService } from './bookingState/booking-state.service';
 import { SeatResponse, SeatsScreeningResponse } from './seat/seat';
 import { SeatComponent } from './seat/seat.component';
 import { SeatService } from './seat/seat.service';
+
 @Component({
   selector: 'app-booking',
   templateUrl: 'booking.component.html',
@@ -40,6 +42,7 @@ import { SeatService } from './seat/seat.service';
   ],
 })
 export class BookingComponent implements OnInit {
+  environment = environment;
   screenings$?: Observable<ScreeningsByFilmResponse>;
   screenings?: ScreeningsByFilmResponse;
   filmsFiltered$?: Observable<FilmResponse[]>;

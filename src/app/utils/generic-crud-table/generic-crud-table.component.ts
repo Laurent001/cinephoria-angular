@@ -12,6 +12,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment.dev';
 import { Fields } from '../dynamic-modal-form/dynamic-modal-form';
 import { DynamicModalFormComponent } from '../dynamic-modal-form/dynamic-modal-form.component';
 import { UtilsService } from '../utils.service';
@@ -48,6 +49,7 @@ export class GenericCrudTableComponent implements OnInit {
   @Output() updateItem = new EventEmitter<any>();
   @Output() deleteItem = new EventEmitter<any>();
 
+  environment = environment;
   showModal: boolean = false;
   initialValues: any;
   paginatedItems: any[] = [];

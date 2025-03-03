@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment.dev';
 import { Fields } from './dynamic-modal-form';
 
 @Component({
@@ -50,6 +51,7 @@ export class DynamicModalFormComponent implements OnInit {
   @Input() initialValues!: any;
   @Output() closeModal = new EventEmitter<any>();
 
+  environment = environment;
   form!: FormGroup;
 
   constructor(private fb: FormBuilder, private translate: TranslateService) {

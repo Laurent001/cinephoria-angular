@@ -5,6 +5,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { FilmResponse } from '../film/film';
 import { FilmService } from '../film/film.service';
+import { environment } from 'src/environments/environment.dev';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,7 @@ import { FilmService } from '../film/film.service';
 })
 export class HomeComponent {
   protected films$: Observable<FilmResponse[]>;
+  environment = environment;
 
   constructor(
     private filmService: FilmService,
