@@ -171,6 +171,7 @@ export class BookingComponent implements OnInit {
       return;
     }
 
+    this.loadBookingStateFromLocalStorage();
     if (this.screeningSelected && this.screeningSelected.film?.id != filmId)
       this.screeningSelected = undefined;
 
