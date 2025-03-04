@@ -1,16 +1,16 @@
 <div class="container d-flex flex-column">
-  <h1 class="m-3">{{ 'film-title' | translate }}</h1>
+  <h1 class="m-3">{{ "film-title" | translate }}</h1>
 
   <div class="row mb-3 align-self-center">
     <div class="d-flex col-md-4">
       <mat-form-field appearance="fill">
-        <mat-label>{{ 'film-select-cinema-short' | translate }}</mat-label>
+        <mat-label>{{ "film-select-cinema-short" | translate }}</mat-label>
         <mat-select
           [(ngModel)]="cinemaSelectedId"
           (selectionChange)="onCinemaChange($event)"
         >
           <mat-option value="" disabled selected>
-            {{ 'film-select-cinema-short' | translate }}
+            {{ "film-select-cinema-short" | translate }}
           </mat-option>
           <mat-option *ngFor="let cinema of cinemas" [value]="cinema.id">
             {{ cinema.name }}
@@ -20,13 +20,13 @@
     </div>
     <div class="d-flex col-md-4">
       <mat-form-field appearance="fill">
-        <mat-label>{{ 'film-select-genre-short' | translate }}</mat-label>
+        <mat-label>{{ "film-select-genre-short" | translate }}</mat-label>
         <mat-select
           [(ngModel)]="genreSelectedId"
           (selectionChange)="onGenreChange($event)"
         >
           <mat-option value="" disabled selected>
-            {{ 'film-select-genre-short' | translate }}
+            {{ "film-select-genre-short" | translate }}
           </mat-option>
           <mat-option *ngFor="let genre of genres" [value]="genre.id">
             {{ genre.name }}
@@ -36,7 +36,7 @@
     </div>
     <div class="d-flex col-md-4">
       <mat-form-field appearance="fill">
-        <mat-label>{{ 'film-select-date-short' | translate }}</mat-label>
+        <mat-label>{{ "film-select-date-short" | translate }}</mat-label>
         <input
           matInput
           [matDatepicker]="picker"
@@ -58,7 +58,7 @@
         <div class="d-flex col-12 col-xl-5 mb-2 mb-lg-0">
           <img
             class="img-fluid rounded w-100 h-auto object-fit-cover"
-            [src]="environment.url + '/' + film.poster"
+            [src]="imagesPath + film.poster"
             alt="Affiche du film"
           />
         </div>
@@ -67,8 +67,8 @@
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">{{ film.title }}</h5>
               <h6 class="card-subtitle mb-2 text-muted">
-                {{ film.release_date | date:'dd MMMM yyyy' }} | {{ film.genres
-                }}<br />
+                {{ film.release_date | date : "dd MMMM yyyy" }} |
+                {{ film.genres }}<br />
                 Âge minimum : {{ film.age_minimum }}+
               </h6>
               <p class="card-text d-xl-block">{{ film.description }}</p>
@@ -82,20 +82,24 @@
                 <!-- bouton réserver -->
                 <button
                   class="btn btn-primary"
-                  [disabled]="!screenings.screeningSelected && !this.booking?.screening"
+                  [disabled]="
+                    !screenings.screeningSelected && !this.booking?.screening
+                  "
                   (click)="onBookingButton()"
                 >
-                  {{ 'booking-screening' | translate }}
+                  {{ "booking-screening" | translate }}
                 </button>
               </div>
 
               <!-- bouton séances -->
               <div
-                *ngIf="!(filmSelectedId === film.id) || !screenings"
+                *ngIf="
+                  film.id && (!(filmSelectedId === film.id) || !screenings)
+                "
                 class="btn btn-secondary mt-2"
                 (click)="onScreeningsButton(film.id)"
               >
-                {{ 'screenings' | translate }}
+                {{ "screenings" | translate }}
               </div>
             </div>
           </div>

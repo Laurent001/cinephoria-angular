@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { FilmService } from 'src/app/film/film.service';
 import { environment } from 'src/environments/environment.dev';
 import { Fields } from './dynamic-modal-form';
 
@@ -51,10 +52,15 @@ export class DynamicModalFormComponent implements OnInit {
   @Input() initialValues!: any;
   @Output() closeModal = new EventEmitter<any>();
 
-  environment = environment;
+  imagesPath = environment.url + '/images/';
   form!: FormGroup;
+  selectedFile: File | null = null;
 
-  constructor(private fb: FormBuilder, private translate: TranslateService) {
+  constructor(
+    private fb: FormBuilder,
+    private translate: TranslateService,
+    private filmservice: FilmService
+  ) {
     this.translate.setDefaultLang('fr');
   }
 
@@ -82,8 +88,18 @@ export class DynamicModalFormComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
+      const formData = { ...this.form.value };
+
+      // Parcourir pour traiter les fichiers
+      Object.keys(this.form.controls).forEach((key) => {
+        const control = this.form.get(key);
+        if (control?.value && control.value.file instanceof File) {
+          formData[key] = control.value.file;
+        }
+      });
+
       this.closeModal.emit({
-        ...this.form.value,
+        ...formData,
         isModified: !this.form.pristine,
       });
     }
@@ -103,5 +119,31 @@ export class DynamicModalFormComponent implements OnInit {
     const minutes = String(dateObj.getMinutes()).padStart(2, '0');
 
     return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
+  onFileChange(event: any, fieldFile: string, fieldName: string) {
+    const file = event.target.files[0];
+    if (file) {
+      const fileName = file.name;
+
+      if (!this.form.contains(fieldFile)) {
+        this.form.addControl(
+          fieldFile,
+          this.fb.control({ file: null, preview: null })
+        );
+      }
+
+      this.form.get(fieldName)?.setValue(fileName);
+
+      // URL temporaire pour l'image
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.form.get(fieldFile)?.setValue({
+          file: file, // référence temp
+          preview: e.target.result, // URL de données pour l'aperçu
+        });
+      };
+      reader.readAsDataURL(file);
+    }
   }
 }

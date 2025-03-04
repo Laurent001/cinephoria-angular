@@ -39,6 +39,7 @@ import { GenreService } from './genre.service';
 })
 export class FilmComponent implements OnInit {
   environment = environment;
+  imagesPath = environment.url + '/images/';
   screenings!: ScreeningsByFilmResponse;
   protected filmsFiltered$?: Observable<FilmResponse[]>;
   protected cinemas?: CinemaResponse[];

@@ -43,6 +43,7 @@ import { SeatService } from './seat/seat.service';
 })
 export class BookingComponent implements OnInit {
   environment = environment;
+  imagesPath = environment.url + '/images/';
   screenings$?: Observable<ScreeningsByFilmResponse>;
   screenings?: ScreeningsByFilmResponse;
   filmsFiltered$?: Observable<FilmResponse[]>;

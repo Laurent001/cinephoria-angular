@@ -60,7 +60,6 @@ export class ScreeningsComponent implements OnInit {
       .getScreenings()
       .pipe(
         tap((response) => {
-          console.log('response : ', response);
           this.screenings = response.screenings;
           this.auditoriums = response.auditoriums;
           this.films = response.films;
@@ -89,7 +88,7 @@ export class ScreeningsComponent implements OnInit {
         type: 'select',
         options: this.films.map((film) => ({
           label: film.title,
-          value: film.id,
+          value: film.id ?? 0,
         })),
         required: true,
       },
@@ -111,7 +110,7 @@ export class ScreeningsComponent implements OnInit {
   }
 
   onAddScreening(screening: Screening) {
-    const screeningModified = this.getScreeningReponseModified(
+    const screeningModified = this.getScreeningResponseModified(
       this.getEmptyScreening(),
       screening
     );
@@ -135,7 +134,7 @@ export class ScreeningsComponent implements OnInit {
   }
 
   onUpdateScreening(screening: Screening) {
-    const ScreeningModified = this.getScreeningReponseModified(
+    const ScreeningModified = this.getScreeningResponseModified(
       this.getEmptyScreening(),
       screening
     );
@@ -191,7 +190,7 @@ export class ScreeningsComponent implements OnInit {
       .subscribe();
   }
 
-  getScreeningReponseModified(screening: Screening, data: any): Screening {
+  getScreeningResponseModified(screening: Screening, data: any): Screening {
     return {
       ...screening,
       id: data.id !== '' ? data.id : undefined,

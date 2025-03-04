@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ScreeningsComponent } from './screenings.component';
+import { ScreeningsComponent } from '../screenings/screenings.component';
 
-describe('ScreeningsComponent', () => {
+describe('FilmsComponent', () => {
   let component: ScreeningsComponent;
   let fixture: ComponentFixture<ScreeningsComponent>;
 

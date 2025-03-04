@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment.dev';
 export class HomeComponent {
   protected films$: Observable<FilmResponse[]>;
   environment = environment;
+  imagesPath = environment.url + '/images/';
 
   constructor(
     private filmService: FilmService,

@@ -49,7 +49,7 @@ export class GenericCrudTableComponent implements OnInit {
   @Output() updateItem = new EventEmitter<any>();
   @Output() deleteItem = new EventEmitter<any>();
 
-  environment = environment;
+  imagesPath = environment.url + '/images/';
   showModal: boolean = false;
   initialValues: any;
   paginatedItems: any[] = [];
@@ -183,6 +183,17 @@ export class GenericCrudTableComponent implements OnInit {
       value instanceof Date ||
       (typeof value === 'string' && !isNaN(Date.parse(value)))
     );
+  }
+
+  isImage(
+    value: any,
+    column: string | { name: string; type: string }
+  ): boolean {
+    const columnType = this.getColumnType(column);
+    if (columnType === 'image') {
+      return true;
+    }
+    return false;
   }
 
   // Valeur d'affichage suivant son type

@@ -29,7 +29,7 @@
         <div class="d-flex justify-content-center col-xl-5 mb-3 mb-xl-0">
           <img
             class="img-fluid rounded"
-            [src]="environment.url + '/' + film.poster"
+            [src]="imagesPath + film.poster"
             alt="Affiche du film"
           />
         </div>
@@ -109,7 +109,7 @@
                 <!-- bouton séances -->
               </div>
               <button
-                *ngIf="!screenings || filmSelectedId !== film.id"
+                *ngIf="film.id && (!screenings || filmSelectedId !== film.id)"
                 class="btn btn-secondary mt-2"
                 (click)="getFilmScreeningsByCinema(film.id, cinemaSelectedId)"
               >

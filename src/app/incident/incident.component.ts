@@ -121,7 +121,7 @@ export class IncidentComponent implements OnInit {
   }
 
   onAddIncident(incident: Incident) {
-    const incidentModified = this.getIncidentReponseModified(
+    const incidentModified = this.getIncidentResponseModified(
       this.getEmptyIncident(),
       incident
     );
@@ -145,7 +145,7 @@ export class IncidentComponent implements OnInit {
   }
 
   onUpdateIncident(incident: Incident) {
-    const incidentModified = this.getIncidentReponseModified(
+    const incidentModified = this.getIncidentResponseModified(
       this.getEmptyIncident(),
       incident
     );
@@ -199,7 +199,7 @@ export class IncidentComponent implements OnInit {
       .subscribe();
   }
 
-  getIncidentReponseModified(incident: Incident, data: any): Incident {
+  getIncidentResponseModified(incident: Incident, data: any): Incident {
     return {
       ...incident,
       id: data.id !== '' ? data.id : undefined,
