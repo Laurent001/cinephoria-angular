@@ -2,8 +2,9 @@ import { CommonModule, registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { switchMap, tap } from 'rxjs';
+import { Subscription, switchMap, tap } from 'rxjs';
 import { AuditoriumResponse, FilmResponse } from 'src/app/film/film';
+import { FilmService } from 'src/app/film/film.service';
 import { Screening } from 'src/app/screening/screening';
 import { Fields } from 'src/app/utils/dynamic-modal-form/dynamic-modal-form';
 import { GenericCrudTableComponent } from 'src/app/utils/generic-crud-table/generic-crud-table.component';
@@ -19,6 +20,7 @@ import { ScreeningsService } from './screenings.service';
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
 })
 export class ScreeningsComponent implements OnInit {
+  private filmDeletedSubscription?: Subscription;
   screenings!: Screening[];
   films!: FilmResponse[];
   auditoriums!: AuditoriumResponse[];
@@ -45,7 +47,8 @@ export class ScreeningsComponent implements OnInit {
   constructor(
     private translate: TranslateService,
     private screeningsService: ScreeningsService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private filmService: FilmService
   ) {
     this.translate.setDefaultLang('fr');
     registerLocaleData(localeFr);
@@ -53,6 +56,16 @@ export class ScreeningsComponent implements OnInit {
 
   ngOnInit() {
     this.getScreenings();
+
+    this.filmDeletedSubscription = this.filmService.onFilmDeleted(() => {
+      this.getScreenings();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.filmDeletedSubscription) {
+      this.filmDeletedSubscription.unsubscribe();
+    }
   }
 
   getScreenings() {
