@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { filter, Observable, take, tap } from 'rxjs';
+import { environment } from 'src/environments/environment.dev';
 import { AuthService } from '../auth/auth.service';
 import { Booking } from '../booking/booking';
 import { BookingStateService } from '../booking/bookingState/booking-state.service';
@@ -37,6 +38,8 @@ import { GenreService } from './genre.service';
   ],
 })
 export class FilmComponent implements OnInit {
+  environment = environment;
+  imagesPath = environment.url + '/images/';
   screenings!: ScreeningsByFilmResponse;
   protected filmsFiltered$?: Observable<FilmResponse[]>;
   protected cinemas?: CinemaResponse[];

@@ -3,7 +3,10 @@
     <h2 mat-dialog-title>{{ title }}</h2>
     <mat-dialog-content>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div *ngFor="let field of fields">
+        <div
+          *ngFor="let field of fields"
+          class="d-flex flex-column justify-content-center"
+        >
           <ng-container [ngSwitch]="field.type">
             <!-- Input masked -->
             <input
@@ -13,6 +16,24 @@
               [readonly]="true"
               hidden
             />
+
+            <!-- Image -->
+            <ng-container *ngSwitchCase="'image'">
+              <img
+                [src]="
+                  field.file && form.get(field.file)?.value?.preview
+                    ? form.get(field.file)?.value.preview
+                    : imagesPath + form.get(field.name)?.value
+                "
+                alt="Poster"
+              />
+              <input
+                *ngIf="field.file"
+                type="file"
+                (change)="onFileChange($event, field.file, field.name)"
+                accept="image/*"
+              />
+            </ng-container>
 
             <!-- Toggle -->
             <mat-slide-toggle
@@ -32,7 +53,7 @@
                 matInput
                 *ngIf="field.type === 'text'"
                 [formControlName]="field.name"
-                [readonly]="true"
+                [readonly]="field.readonly"
               />
 
               <!-- Textarea -->
@@ -70,7 +91,7 @@
         </div>
       </form>
     </mat-dialog-content>
-    <mat-dialog-actions align="end">
+    <mat-dialog-actions class="align-self-end">
       <button mat-button (click)="cancel()">
         {{ "modal-cancel-button" | translate }}
       </button>

@@ -1,13 +1,13 @@
 <div class="container d-flex flex-column">
-  <h1 class="m-3">{{ 'home-title' | translate }}</h1>
-  <h2 class="m-3">{{ 'home-subtitle' | translate }}</h2>
+  <h1 class="m-3">{{ "home-title" | translate }}</h1>
+  <h2 class="m-3">{{ "home-subtitle" | translate }}</h2>
   <div class="list-group">
     <div class="list-group-item" *ngFor="let film of films$ | async">
       <div class="row">
         <div class="d-flex col-12 col-xl-4 mb-2 mb-lg-0">
           <img
             class="img-fluid rounded w-100 h-auto object-fit-cover"
-            [src]="film.poster"
+            [src]="imagesPath + film.poster"
             alt="Affiche du film"
           />
         </div>
@@ -16,8 +16,8 @@
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">{{ film.title }}</h5>
               <h6 class="card-subtitle mb-2 text-muted">
-                {{ film.release_date | date:'dd MMMM yyyy' }} | {{ film.genres
-                }}<br />
+                {{ film.release_date | date : "dd MMMM yyyy" }} |
+                {{ film.genres }}<br />
                 Âge minimum : {{ film.age_minimum }}+
               </h6>
               <p class="card-text">{{ film.description }}</p>

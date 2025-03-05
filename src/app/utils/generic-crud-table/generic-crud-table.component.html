@@ -37,18 +37,32 @@
                   ></i>
                 </div>
               </ng-container>
-              <!-- date -->
+
+              <!-- datetime -->
               <ng-container *ngIf="isDate(item[getColumnName(column)], column)">
                 {{ formatDate(item[getColumnName(column)]) }}
               </ng-container>
+
+              <!-- image -->
+              <ng-container
+                *ngIf="isImage(item[getColumnName(column)], column)"
+              >
+                <img
+                  [src]="imagesPath + item[getColumnName(column)]"
+                  width="150px"
+                  height="auto"
+                />
+              </ng-container>
+
               <!-- autres -->
               <ng-container
                 *ngIf="
                   !isBoolean(item[getColumnName(column)], column) &&
-                  !isDate(item[getColumnName(column)], column)
+                  !isDate(item[getColumnName(column)], column) &&
+                  !isImage(item[getColumnName(column)], column)
                 "
               >
-                {{ item[getColumnName(column)] }}
+                <div class="other">{{ item[getColumnName(column)] }}</div>
               </ng-container>
             </ng-container>
           </td>
