@@ -1,0 +1,11 @@
+<app-generic-crud-table
+  [title]="'Films'"
+  [items]="films"
+  [fields]="fields"
+  [emptyItem]="getEmptyFilm()"
+  [columnsToDisplay]="columnsToDisplay"
+  [columnLabels]="columnLabels"
+  (addItem)="onAddFilm($event)"
+  (updateItem)="onUpdateFilm($event)"
+  (deleteItem)="onDeleteFilm($event)"
+></app-generic-crud-table>

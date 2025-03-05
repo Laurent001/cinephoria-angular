@@ -1,5 +1,5 @@
 export interface FilmResponse {
-  id: number;
+  id?: number;
   title: string;
   description: string;
   genres?: string;
@@ -7,6 +7,7 @@ export interface FilmResponse {
   age_minimum: number;
   favorite: number;
   poster: string;
+  poster_file?: File;
 }
 
 export interface CinemaResponse {
