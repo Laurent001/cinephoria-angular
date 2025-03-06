@@ -84,12 +84,6 @@ export class AuditoriumsComponent implements OnInit {
         required: true,
       },
       {
-        name: 'price',
-        label: 'Prix',
-        type: 'text',
-        required: true,
-      },
-      {
         name: 'cinema',
         label: 'Cinéma',
         type: 'select',
@@ -155,21 +149,23 @@ export class AuditoriumsComponent implements OnInit {
       auditorium
     );
 
-    this.auditoriumsService.updateAuditorium(auditoriumModified).pipe(
-      tap((response) => {
-        this.auditoriums = response.auditoriums;
-        this.cinemas = response.cinemas;
-        this.qualities = response.qualities;
+    this.auditoriumsService
+      .updateAuditorium(auditoriumModified)
+      .pipe(
+        tap((response) => {
+          this.auditoriums = response.auditoriums;
+          this.cinemas = response.cinemas;
+          this.qualities = response.qualities;
 
-        this.utilsService.presentAlert(
-          'Mise à jour réussie',
-          'La salle a été mise à jour',
-          ['OK'],
-          'success'
-        );
-      })
-    );
-    // .subscribe()
+          this.utilsService.presentAlert(
+            'Mise à jour réussie',
+            'La salle a été mise à jour',
+            ['OK'],
+            'success'
+          );
+        })
+      )
+      .subscribe();
   }
 
   onDeleteAuditorium(auditorium: Auditorium) {
@@ -214,7 +210,6 @@ export class AuditoriumsComponent implements OnInit {
       name: data.name,
       seat: data.seat,
       seat_handi: data.seat_handi,
-      price: data.price,
       cinema: {
         id: data.cinema,
         ...(auditorium.cinema || {}),

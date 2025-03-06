@@ -18,11 +18,9 @@ export class AuditoriumsService {
   }
 
   updateAuditorium(auditorium: Auditorium): Observable<AuditoriumResponse> {
-    const formData = this.utilsService.createFormData(auditorium);
-
-    return this.http.post<AuditoriumResponse>(
+    return this.http.put<AuditoriumResponse>(
       `${environment.url}/api/intranet/auditorium/update`,
-      formData
+      auditorium
     );
   }
 
