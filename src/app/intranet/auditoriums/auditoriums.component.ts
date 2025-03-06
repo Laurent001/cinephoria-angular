@@ -133,8 +133,8 @@ export class AuditoriumsComponent implements OnInit {
           this.qualities = response.qualities;
 
           this.utilsService.presentAlert(
-            'Création réussie',
-            'La salle a été ajoutée',
+            'Création réussie ',
+            'la salle a été ajoutée',
             ['OK'],
             'success'
           );
@@ -158,8 +158,8 @@ export class AuditoriumsComponent implements OnInit {
           this.qualities = response.qualities;
 
           this.utilsService.presentAlert(
-            'Mise à jour réussie',
-            'La salle a été mise à jour',
+            'Mise à jour réussie ',
+            'la salle a été mise à jour',
             ['OK'],
             'success'
           );
@@ -182,14 +182,13 @@ export class AuditoriumsComponent implements OnInit {
               .deleteAuditoriumById(auditorium.id)
               .pipe(
                 tap((response) => {
-                  console.log('response : ', response);
                   this.auditoriums = response.auditoriums;
                   this.cinemas = response.cinemas;
                   this.qualities = response.qualities;
 
                   this.utilsService.presentAlert(
-                    'Suppression réussie',
-                    'La séance a été supprimée',
+                    'Suppression réussie ',
+                    'la salle a été supprimée',
                     ['OK'],
                     'success'
                   );
@@ -203,7 +202,6 @@ export class AuditoriumsComponent implements OnInit {
   }
 
   getAuditoriumModified(auditorium: Auditorium, data: any): Auditorium {
-    console.log('data : ', data);
     return {
       ...auditorium,
       id: data.id !== '' ? data.id : undefined,

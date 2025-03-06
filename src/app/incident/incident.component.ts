@@ -134,8 +134,8 @@ export class IncidentComponent implements OnInit {
           this.auditoriums = response.auditoriums;
 
           this.utilsService.presentAlert(
-            'Création réussie',
-            "L'incident' a été ajouté",
+            'Création réussie ',
+            "l'incident' a été ajouté",
             ['OK'],
             'success'
           );
@@ -158,8 +158,8 @@ export class IncidentComponent implements OnInit {
           this.auditoriums = response.auditoriums;
 
           this.utilsService.presentAlert(
-            'Mise à jour réussie',
-            "L'incident a été mise à jour",
+            'Mise à jour réussie ',
+            "l'incident a été mise à jour",
             ['OK'],
             'success'
           );
@@ -185,8 +185,8 @@ export class IncidentComponent implements OnInit {
                 this.auditoriums = deleteResponse.auditoriums;
 
                 this.utilsService.presentAlert(
-                  'Suppression réussie',
-                  "L'incident a été supprimée",
+                  'Suppression réussie ',
+                  "l'incident a été supprimée",
                   ['OK'],
                   'success'
                 );
