@@ -179,10 +179,7 @@ export class GenericCrudTableComponent implements OnInit {
     if (columnType === 'datetime') {
       return true;
     }
-    return (
-      value instanceof Date ||
-      (typeof value === 'string' && !isNaN(Date.parse(value)))
-    );
+    return false;
   }
 
   isImage(

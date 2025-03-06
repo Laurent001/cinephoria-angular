@@ -114,7 +114,7 @@ export class BookingComponent implements OnInit {
       this.booking = JSON.parse(bookingState) as Booking;
       this.seatsSelected = this.booking.seats;
       this.totalPrice = this.booking.totalPrice;
-      this.cinemaSelectedId = this.booking?.screening?.auditorium?.cinema.id;
+      this.cinemaSelectedId = this.booking?.screening?.auditorium?.cinema?.id;
       this.filmSelectedId = this.booking.screening?.film?.id;
       this.screeningSelected = this.booking.screening;
 

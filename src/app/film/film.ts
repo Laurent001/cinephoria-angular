@@ -25,13 +25,24 @@ export interface GenreResponse {
   name: string;
 }
 
-export interface AuditoriumResponse {
-  id: number;
+export interface Auditorium {
+  id?: number;
   name: string;
   seat: number;
-  handi_seat: number;
-  quality: string;
-  quality_id: number;
+  seat_handi: number;
   price: number;
-  cinema: CinemaResponse;
+  cinema?: CinemaResponse;
+  quality?: QualityResponse;
+}
+
+export interface AuditoriumResponse {
+  auditoriums: Auditorium[];
+  cinemas: CinemaResponse[];
+  qualities: QualityResponse[];
+}
+
+export interface QualityResponse {
+  id: number;
+  name: string;
+  price: number;
 }

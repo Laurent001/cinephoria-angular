@@ -57,7 +57,6 @@ export class FilmsComponent implements OnInit {
       .getFilms()
       .pipe(
         tap((films) => {
-          console.log('films : ', films);
           this.films = films;
           this.fields = this.getFields();
         })
@@ -129,8 +128,8 @@ export class FilmsComponent implements OnInit {
           this.films = films;
 
           this.utilsService.presentAlert(
-            'Création réussie',
-            'Le film a été ajoutée',
+            'Création réussie ',
+            'le film a été ajoutée',
             ['OK'],
             'success'
           );
@@ -152,8 +151,8 @@ export class FilmsComponent implements OnInit {
           this.films = films;
 
           this.utilsService.presentAlert(
-            'Mise à jour réussie',
-            'Le film a été mis à jour',
+            'Mise à jour réussie ',
+            'le film a été mis à jour',
             ['OK'],
             'success'
           );
@@ -174,12 +173,11 @@ export class FilmsComponent implements OnInit {
           if (response && film.id) {
             return this.filmService.deleteFilmById(film.id).pipe(
               tap((films) => {
-                console.log('films : ', films);
                 this.films = films;
 
                 this.utilsService.presentAlert(
-                  'Suppression réussie',
-                  'La séance a été supprimée',
+                  'Suppression réussie ',
+                  'le film a été supprimé',
                   ['OK'],
                   'success'
                 );
