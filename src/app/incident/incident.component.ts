@@ -3,7 +3,7 @@ import localeFr from '@angular/common/locales/fr';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { switchMap, tap } from 'rxjs';
-import { AuditoriumResponse } from '../film/film';
+import { Auditorium } from '../film/film';
 import { Fields } from '../utils/dynamic-modal-form/dynamic-modal-form';
 import { GenericCrudTableComponent } from '../utils/generic-crud-table/generic-crud-table.component';
 import { UtilsService } from '../utils/utils.service';
@@ -21,7 +21,7 @@ import { IncidentService } from './incident.service';
 export class IncidentComponent implements OnInit {
   incidents!: Incident[];
   materials!: MaterialResponse[];
-  auditoriums!: AuditoriumResponse[];
+  auditoriums!: Auditorium[];
   fields: Fields[] = [];
   columnsToDisplay = [
     { name: 'id', type: 'number' },
@@ -80,7 +80,7 @@ export class IncidentComponent implements OnInit {
         type: 'select',
         options: this.auditoriums.map((auditorium) => ({
           label: auditorium.name,
-          value: auditorium.id,
+          value: auditorium.id ?? 0,
         })),
         required: true,
       },
@@ -134,8 +134,8 @@ export class IncidentComponent implements OnInit {
           this.auditoriums = response.auditoriums;
 
           this.utilsService.presentAlert(
-            'Création réussie',
-            "L'incident' a été ajouté",
+            'Création réussie ',
+            "l'incident' a été ajouté",
             ['OK'],
             'success'
           );
@@ -158,8 +158,8 @@ export class IncidentComponent implements OnInit {
           this.auditoriums = response.auditoriums;
 
           this.utilsService.presentAlert(
-            'Mise à jour réussie',
-            "L'incident a été mise à jour",
+            'Mise à jour réussie ',
+            "l'incident a été mise à jour",
             ['OK'],
             'success'
           );
@@ -185,8 +185,8 @@ export class IncidentComponent implements OnInit {
                 this.auditoriums = deleteResponse.auditoriums;
 
                 this.utilsService.presentAlert(
-                  'Suppression réussie',
-                  "L'incident a été supprimée",
+                  'Suppression réussie ',
+                  "l'incident a été supprimée",
                   ['OK'],
                   'success'
                 );
@@ -209,7 +209,7 @@ export class IncidentComponent implements OnInit {
       auditorium: {
         id: data.auditorium,
         ...(incident.auditorium || {}),
-      } as AuditoriumResponse,
+      } as Auditorium,
       material: {
         id: data.material,
         ...(incident.material || {}),

@@ -16,21 +16,21 @@ export class ScreeningsService {
 
   updateScreening(screening: Screening): Observable<ScreeningResponse> {
     const data = { screening, locale: 'Europe/Paris' };
-    return this.http.post<ScreeningResponse>(
-      `${environment.url}/api/screening/update`,
+    return this.http.put<ScreeningResponse>(
+      `${environment.url}/api/intranet/screening/update`,
       data
     );
   }
 
   deleteScreeningById(screeningId: number): Observable<ScreeningResponse> {
     return this.http.delete<ScreeningResponse>(
-      `${environment.url}/api/screening/delete/${screeningId}`
+      `${environment.url}/api/intranet/screening/delete/${screeningId}`
     );
   }
 
   addScreening(screening: Screening): Observable<ScreeningResponse> {
     return this.http.post<ScreeningResponse>(
-      `${environment.url}/api/screening/add`,
+      `${environment.url}/api/intranet/screening/add`,
       screening
     );
   }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.dev';
+import { UtilsService } from '../utils/utils.service';
 import { FilmResponse } from './film';
 
 @Injectable({
@@ -10,7 +11,7 @@ import { FilmResponse } from './film';
 export class FilmService {
   filmDeleted: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private utilsService: UtilsService) {}
 
   getFilms(): Observable<FilmResponse[]> {
     return this.http.get<FilmResponse[]>(`${environment.url}/api/film`);
@@ -35,30 +36,19 @@ export class FilmService {
   }
 
   updateFilm(film: FilmResponse): Observable<FilmResponse[]> {
-    const formData = new FormData();
-    formData.append('id', film.id?.toString() || '');
-    formData.append('title', film.title);
-    formData.append('favorite', film.favorite.toString());
-    formData.append('age_minimum', film.age_minimum.toString());
-    formData.append('description', film.description);
-    formData.append('poster', film.poster);
+    const formData = this.utilsService.createFormData(film);
 
-    if (film.release_date) {
-      formData.append('release_date', film.release_date.toString());
-    }
-
-    if (film.poster_file) {
-      formData.append('poster_file', film.poster_file, film.poster_file.name);
-    }
     return this.http.put<FilmResponse[]>(
-      `${environment.url}/api/film/update`,
+      `${environment.url}/api/intranet/film/update`,
       formData
     );
   }
 
   deleteFilmById(filmId: number): Observable<FilmResponse[]> {
     return this.http
-      .delete<FilmResponse[]>(`${environment.url}/api/film/delete/${filmId}`)
+      .delete<FilmResponse[]>(
+        `${environment.url}/api/intranet/film/delete/${filmId}`
+      )
       .pipe(
         tap(() => {
           this.filmDeleted.emit();
@@ -71,24 +61,10 @@ export class FilmService {
   }
 
   addFilm(film: FilmResponse): Observable<FilmResponse[]> {
-    const formData = new FormData();
-    formData.append('id', film.id?.toString() || '');
-    formData.append('title', film.title);
-    formData.append('favorite', film.favorite.toString());
-    formData.append('age_minimum', film.age_minimum.toString());
-    formData.append('description', film.description);
-    formData.append('poster', film.poster);
-
-    if (film.release_date) {
-      formData.append('release_date', film.release_date.toString());
-    }
-
-    if (film.poster_file) {
-      formData.append('poster_file', film.poster_file);
-    }
+    const formData = this.utilsService.createFormData(film);
 
     return this.http.post<FilmResponse[]>(
-      `${environment.url}/api/film/add`,
+      `${environment.url}/api/intranet/film/add`,
       formData
     );
   }

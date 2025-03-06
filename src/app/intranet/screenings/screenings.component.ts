@@ -3,12 +3,13 @@ import localeFr from '@angular/common/locales/fr';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription, switchMap, tap } from 'rxjs';
-import { AuditoriumResponse, FilmResponse } from 'src/app/film/film';
+import { Auditorium, FilmResponse } from 'src/app/film/film';
 import { FilmService } from 'src/app/film/film.service';
 import { Screening } from 'src/app/screening/screening';
 import { Fields } from 'src/app/utils/dynamic-modal-form/dynamic-modal-form';
 import { GenericCrudTableComponent } from 'src/app/utils/generic-crud-table/generic-crud-table.component';
 import { UtilsService } from 'src/app/utils/utils.service';
+import { AuditoriumsService } from '../auditoriums/auditoriums.service';
 import { ScreeningsService } from './screenings.service';
 
 @Component({
@@ -21,9 +22,11 @@ import { ScreeningsService } from './screenings.service';
 })
 export class ScreeningsComponent implements OnInit {
   private filmDeletedSubscription?: Subscription;
-  screenings!: Screening[];
-  films!: FilmResponse[];
-  auditoriums!: AuditoriumResponse[];
+  private auditoriumDeletedSubscription?: Subscription;
+  private auditoriumAddedSubscription?: Subscription;
+  screenings: Screening[] = [];
+  films: FilmResponse[] = [];
+  auditoriums: Auditorium[] = [];
   fields: Fields[] = [];
   columnsToDisplay = [
     { name: 'id', type: 'number' },
@@ -48,7 +51,8 @@ export class ScreeningsComponent implements OnInit {
     private translate: TranslateService,
     private screeningsService: ScreeningsService,
     private utilsService: UtilsService,
-    private filmService: FilmService
+    private filmService: FilmService,
+    private auditoriumsService: AuditoriumsService
   ) {
     this.translate.setDefaultLang('fr');
     registerLocaleData(localeFr);
@@ -60,11 +64,29 @@ export class ScreeningsComponent implements OnInit {
     this.filmDeletedSubscription = this.filmService.onFilmDeleted(() => {
       this.getScreenings();
     });
+
+    this.auditoriumDeletedSubscription =
+      this.auditoriumsService.onAuditoriumDeleted(() => {
+        this.getScreenings();
+      });
+
+    this.auditoriumAddedSubscription =
+      this.auditoriumsService.onAuditoriumAdded(() => {
+        this.getScreenings();
+      });
   }
 
   ngOnDestroy() {
     if (this.filmDeletedSubscription) {
       this.filmDeletedSubscription.unsubscribe();
+    }
+
+    if (this.auditoriumDeletedSubscription) {
+      this.auditoriumDeletedSubscription.unsubscribe();
+    }
+
+    if (this.auditoriumAddedSubscription) {
+      this.auditoriumAddedSubscription.unsubscribe();
     }
   }
 
@@ -91,7 +113,7 @@ export class ScreeningsComponent implements OnInit {
         type: 'select',
         options: this.auditoriums.map((auditorium) => ({
           label: auditorium.name,
-          value: auditorium.id,
+          value: auditorium.id ?? 0,
         })),
         required: true,
       },
@@ -136,7 +158,7 @@ export class ScreeningsComponent implements OnInit {
           this.auditoriums = response.auditoriums;
 
           this.utilsService.presentAlert(
-            'Création réussie',
+            'Création réussie ',
             'La séance a été ajoutée',
             ['OK'],
             'success'
@@ -160,7 +182,7 @@ export class ScreeningsComponent implements OnInit {
           this.auditoriums = response.auditoriums;
 
           this.utilsService.presentAlert(
-            'Mise à jour réussie',
+            'Mise à jour réussie ',
             'La séance a été mise à jour',
             ['OK'],
             'success'
@@ -189,7 +211,7 @@ export class ScreeningsComponent implements OnInit {
                   this.auditoriums = deleteResponse.auditoriums;
 
                   this.utilsService.presentAlert(
-                    'Suppression réussie',
+                    'Suppression réussie ',
                     'La séance a été supprimée',
                     ['OK'],
                     'success'
@@ -214,7 +236,7 @@ export class ScreeningsComponent implements OnInit {
       auditorium: {
         id: data.auditorium,
         ...(screening.auditorium || {}),
-      } as AuditoriumResponse,
+      } as Auditorium,
       film: {
         id: data.film,
         ...(screening.film || {}),

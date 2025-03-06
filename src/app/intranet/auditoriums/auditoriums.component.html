@@ -1,0 +1,11 @@
+<app-generic-crud-table
+  [title]="'Salles'"
+  [items]="auditoriums"
+  [fields]="fields"
+  [emptyItem]="getEmptyAuditorium()"
+  [columnsToDisplay]="columnsToDisplay"
+  [columnLabels]="columnLabels"
+  (addItem)="onAddAuditorium($event)"
+  (updateItem)="onUpdateAuditorium($event)"
+  (deleteItem)="onDeleteAuditorium($event)"
+></app-generic-crud-table>
