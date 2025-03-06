@@ -74,4 +74,30 @@ export class UtilsService {
 
     return undefined;
   }
+
+  createFormData(data: any): FormData {
+    const formData = new FormData();
+
+    const buildFormData = (data: any, parentKey?: string) => {
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          const value = data[key];
+          const fullKey = parentKey ? `${parentKey}[${key}]` : key;
+
+          if (value !== null && value !== undefined) {
+            if (value instanceof File) {
+              formData.append(fullKey, value, value.name);
+            } else if (typeof value === 'object') {
+              buildFormData(value, fullKey);
+            } else {
+              formData.append(fullKey, value.toString());
+            }
+          }
+        }
+      }
+    };
+
+    buildFormData(data);
+    return formData;
+  }
 }

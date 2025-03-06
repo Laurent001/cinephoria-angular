@@ -1,4 +1,4 @@
-import { AuditoriumResponse, FilmResponse } from '../film/film';
+import { Auditorium, FilmResponse } from '../film/film';
 
 export interface Screening {
   id?: number;
@@ -7,13 +7,13 @@ export interface Screening {
   remaining_seat?: number;
   remaining_handi_seat?: number;
   film?: FilmResponse;
-  auditorium?: AuditoriumResponse;
+  auditorium?: Auditorium;
 }
 
 export interface ScreeningResponse {
   screenings: Screening[];
   films: FilmResponse[];
-  auditoriums: AuditoriumResponse[];
+  auditoriums: Auditorium[];
 }
 
 export interface ScreeningsByFilmResponse {

@@ -57,7 +57,6 @@ export class FilmsComponent implements OnInit {
       .getFilms()
       .pipe(
         tap((films) => {
-          console.log('films : ', films);
           this.films = films;
           this.fields = this.getFields();
         })

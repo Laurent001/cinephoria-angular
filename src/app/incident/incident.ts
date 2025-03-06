@@ -1,9 +1,9 @@
-import { AuditoriumResponse } from '../film/film';
+import { Auditorium } from '../film/film';
 
 export interface IncidentResponse {
   incidents: Incident[];
   materials: MaterialResponse[];
-  auditoriums: AuditoriumResponse[];
+  auditoriums: Auditorium[];
 }
 
 export interface Incident {
@@ -12,7 +12,7 @@ export interface Incident {
   added_date?: Date;
   is_solved: boolean;
   material?: MaterialResponse;
-  auditorium?: AuditoriumResponse;
+  auditorium?: Auditorium;
 }
 
 export interface MaterialResponse {

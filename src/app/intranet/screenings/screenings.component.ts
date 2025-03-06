@@ -3,7 +3,7 @@ import localeFr from '@angular/common/locales/fr';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription, switchMap, tap } from 'rxjs';
-import { AuditoriumResponse, FilmResponse } from 'src/app/film/film';
+import { Auditorium, FilmResponse } from 'src/app/film/film';
 import { FilmService } from 'src/app/film/film.service';
 import { Screening } from 'src/app/screening/screening';
 import { Fields } from 'src/app/utils/dynamic-modal-form/dynamic-modal-form';
@@ -23,7 +23,7 @@ export class ScreeningsComponent implements OnInit {
   private filmDeletedSubscription?: Subscription;
   screenings!: Screening[];
   films!: FilmResponse[];
-  auditoriums!: AuditoriumResponse[];
+  auditoriums!: Auditorium[];
   fields: Fields[] = [];
   columnsToDisplay = [
     { name: 'id', type: 'number' },
@@ -91,7 +91,7 @@ export class ScreeningsComponent implements OnInit {
         type: 'select',
         options: this.auditoriums.map((auditorium) => ({
           label: auditorium.name,
-          value: auditorium.id,
+          value: auditorium.id ?? 0,
         })),
         required: true,
       },
@@ -214,7 +214,7 @@ export class ScreeningsComponent implements OnInit {
       auditorium: {
         id: data.auditorium,
         ...(screening.auditorium || {}),
-      } as AuditoriumResponse,
+      } as Auditorium,
       film: {
         id: data.film,
         ...(screening.film || {}),
