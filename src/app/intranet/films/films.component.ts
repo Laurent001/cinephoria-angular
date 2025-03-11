@@ -108,7 +108,7 @@ export class FilmsComponent implements OnInit {
       title: '',
       description: '',
       release_date: new Date(),
-      age_minimum: 0,
+      age_minimum: undefined,
       favorite: 0,
       poster: '',
       poster_file: undefined,
