@@ -4,7 +4,7 @@ export interface FilmResponse {
   description: string;
   genres?: string;
   release_date: Date;
-  age_minimum: number;
+  age_minimum?: number;
   favorite: number;
   poster: string;
   poster_file?: File;
