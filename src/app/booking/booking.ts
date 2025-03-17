@@ -14,6 +14,7 @@ export interface BookingValidateResponse {
 }
 
 export interface Booking {
+  id?: number;
   user?: User;
   totalPrice: number;
   screening?: Screening;

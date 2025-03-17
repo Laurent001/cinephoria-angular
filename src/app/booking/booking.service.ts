@@ -50,4 +50,8 @@ export class BookingService {
       booking
     );
   }
+
+  deleteBookingById(id: number): Observable<Boolean> {
+    return this.http.delete<Boolean>(`${environment.url}/api/booking/${id}`);
+  }
 }

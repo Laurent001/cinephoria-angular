@@ -1,0 +1,85 @@
+<div class="bookings-container m-5">
+  <h2>{{ "space-open-bookings-title" | translate }}</h2>
+  <div class="booking-card" *ngFor="let booking of space.openBookings">
+    <div class="booking-info">
+      <p>
+        <strong>{{ "space-screening-start_time" | translate }}</strong>
+        {{ booking.screening?.start_time | date : "dd MMMM yyyy" }}
+      </p>
+      <p>
+        <strong>{{ "space-screening-film" | translate }}</strong>
+        {{ booking.screening?.film?.title }}
+      </p>
+      <p>
+        <strong>{{ "space-screening-price" | translate }}</strong>
+        {{ booking.totalPrice }} €
+      </p>
+      <p>
+        <strong>{{ "space-screening-seats" | translate }}</strong>
+        {{ getSeatNumbers(booking.seats) }}
+      </p>
+      <p>
+        <strong>{{ "space-screening-cinema" | translate }}</strong>
+        {{ booking.screening?.auditorium?.cinema?.name }}
+      </p>
+      <p>
+        <strong>{{ "space-screening-auditorium" | translate }}</strong>
+        {{ booking.screening?.auditorium?.name }}
+      </p>
+      <button
+        class="btn btn-danger"
+        *ngIf="booking.id"
+        (click)="deleteBooking(booking.id)"
+      >
+        {{ "space-screening-delete" | translate }}
+      </button>
+    </div>
+    <img
+      class="booking-poster"
+      [src]="imagesPath + booking.screening?.film?.poster"
+      alt="Affiche du film"
+    />
+  </div>
+
+  <h2>{{ "space-closed-bookings-title" | translate }}</h2>
+  <div class="booking-card" *ngFor="let booking of space.closedBookings">
+    <div class="booking-info">
+      <p>
+        <strong>{{ "space-screening-start_time" | translate }}</strong>
+        {{ booking.screening?.start_time | date : "dd MMMM yyyy" }}
+      </p>
+      <p>
+        <strong>{{ "space-screening-film" | translate }}</strong>
+        {{ booking.screening?.film?.title }}
+      </p>
+      <p>
+        <strong>{{ "space-screening-price" | translate }}</strong>
+        {{ booking.totalPrice }} €
+      </p>
+      <p>
+        <strong>{{ "space-screening-seats" | translate }}</strong>
+        {{ getSeatNumbers(booking.seats) }}
+      </p>
+      <p>
+        <strong>{{ "space-screening-cinema" | translate }}</strong>
+        {{ booking.screening?.auditorium?.cinema?.name }}
+      </p>
+      <p>
+        <strong>{{ "space-screening-auditorium" | translate }}</strong>
+        {{ booking.screening?.auditorium?.name }}
+      </p>
+      <button
+        class="btn btn-primary h-auto"
+        *ngIf="booking.id"
+        (click)="scoreFilm(booking.id, 5)"
+      >
+        {{ "space-film-score" | translate }}
+      </button>
+    </div>
+    <img
+      class="booking-poster"
+      [src]="imagesPath + booking.screening?.film?.poster"
+      alt="Affiche du film"
+    />
+  </div>
+</div>

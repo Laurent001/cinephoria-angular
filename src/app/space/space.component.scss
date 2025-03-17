@@ -1,0 +1,25 @@
+.bookings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.booking-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+
+  img {
+    max-width: 300px;
+    height: auto;
+  }
+
+  button {
+    height: 40px;
+    position: absolute;
+    bottom: 15px;
+  }
+}
