@@ -54,4 +54,41 @@ export class BookingService {
   deleteBookingById(id: number): Observable<Boolean> {
     return this.http.delete<Boolean>(`${environment.url}/api/booking/${id}`);
   }
+
+  scoreFilmById(id: number, rating: number): void {
+    const userId = this.authService.getCurrentUser()?.id;
+    if (!userId) {
+      this.utilsService.presentAlert(
+        'Attention',
+        'Vous devez être connecté pour noter un film',
+        ['OK'],
+        'warn'
+      );
+      return;
+    }
+
+    this.http
+      .put<void>(`${environment.url}/api/film/${id}/score`, {
+        rating,
+        userId,
+      })
+      .subscribe({
+        next: () => {
+          this.utilsService.presentAlert(
+            'Succès',
+            'Votre note a bien été enregistrée',
+            ['OK'],
+            'success'
+          );
+        },
+        error: () => {
+          this.utilsService.presentAlert(
+            'Attention',
+            'Un problème a été rencontré lors de la mise à jour de la note',
+            ['OK'],
+            'warn'
+          );
+        },
+      });
+  }
 }

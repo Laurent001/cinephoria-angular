@@ -72,6 +72,8 @@
   "space-screening-seats": "Places : ",
   "space-screening-price": "Prix : ",
   "space-screening-film": "Film : ",
-  "space-film-score": "Noter le film",
-  "space-screening-delete": "Supprimer"
+  "space-film-add-rating": "Noter le film",
+  "space-film-update-rating": "Modifier votre note",
+  "space-screening-delete": "Supprimer",
+  "space-screening-rating": "Votre note : "
 }

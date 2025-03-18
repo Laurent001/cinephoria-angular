@@ -12,6 +12,15 @@
   justify-content: space-around;
   position: relative;
 
+  .rating-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .rating-text {
+    margin-right: 10px;
+  }
+
   img {
     max-width: 300px;
     height: auto;

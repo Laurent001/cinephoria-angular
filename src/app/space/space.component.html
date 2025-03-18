@@ -1,5 +1,5 @@
 <div class="bookings-container m-5">
-  <h2>{{ "space-open-bookings-title" | translate }}</h2>
+  <h3>{{ "space-open-bookings-title" | translate }}</h3>
   <div class="booking-card" *ngFor="let booking of space.openBookings">
     <div class="booking-info">
       <p>
@@ -52,6 +52,29 @@
         <strong>{{ "space-screening-film" | translate }}</strong>
         {{ booking.screening?.film?.title }}
       </p>
+      <div class="rating-container">
+        <p class="rating-text">
+          <strong>{{ "space-screening-rating" | translate }}</strong>
+        </p>
+        <bar-rating
+          *ngIf="booking.opinion && booking.opinion.rating"
+          [(rate)]="booking.opinion.rating"
+          max="5"
+          class="d-flex mb-3"
+        >
+          <i
+            *ratingActive
+            class="bi bi-star-fill"
+            style="margin: 2px; color: #edb867"
+          ></i>
+          <i
+            *ratingInactive
+            class="bi bi-star-fill"
+            style="margin: 2px; color: #d2d2d2"
+          ></i>
+        </bar-rating>
+      </div>
+
       <p>
         <strong>{{ "space-screening-price" | translate }}</strong>
         {{ booking.totalPrice }} €
@@ -70,10 +93,28 @@
       </p>
       <button
         class="btn btn-primary h-auto"
-        *ngIf="booking.id"
-        (click)="scoreFilm(booking.id, 5)"
+        *ngIf="
+          booking.screening &&
+          booking.screening.film &&
+          booking.screening.film.id &&
+          booking.opinion &&
+          booking.opinion.id
+        "
+        (click)="openModal(booking)"
       >
-        {{ "space-film-score" | translate }}
+        {{ "space-film-update-rating" | translate }}
+      </button>
+      <button
+        class="btn btn-primary h-auto"
+        *ngIf="
+          booking.screening &&
+          booking.screening.film &&
+          booking.screening.film.id &&
+          !booking.opinion
+        "
+        (click)="openModal(booking)"
+      >
+        {{ "space-film-add-rating" | translate }}
       </button>
     </div>
     <img
@@ -82,4 +123,11 @@
       alt="Affiche du film"
     />
   </div>
+  <app-dynamic-modal-form
+    *ngIf="showModal"
+    [title]="title"
+    [fields]="fields"
+    [initialValues]="initialValues"
+    (closeModal)="onModalClose($event)"
+  ></app-dynamic-modal-form>
 </div>
