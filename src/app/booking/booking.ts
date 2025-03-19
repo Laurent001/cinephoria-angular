@@ -1,5 +1,6 @@
 import { User } from '../app';
 import { Screening } from '../screening/screening';
+import { OpinionResponse } from '../space/space';
 import { SeatResponse } from './seat/seat';
 
 export interface BookingResponse {
@@ -14,8 +15,10 @@ export interface BookingValidateResponse {
 }
 
 export interface Booking {
+  id?: number;
   user?: User;
   totalPrice: number;
   screening?: Screening;
   seats: SeatResponse[];
+  opinion?: OpinionResponse;
 }

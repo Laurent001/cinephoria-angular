@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.dev';
+import { OpinionResponse } from '../space/space';
 import { UtilsService } from '../utils/utils.service';
 import { FilmResponse } from './film';
 
@@ -12,6 +13,10 @@ export class FilmService {
   filmDeleted: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private http: HttpClient, private utilsService: UtilsService) {}
+
+  getFilmById(id?: number): Observable<FilmResponse> {
+    return this.http.get<FilmResponse>(`${environment.url}/api/film/${id}`);
+  }
 
   getFilms(): Observable<FilmResponse[]> {
     return this.http.get<FilmResponse[]>(`${environment.url}/api/film`);
@@ -66,6 +71,15 @@ export class FilmService {
     return this.http.post<FilmResponse[]>(
       `${environment.url}/api/intranet/film/add`,
       formData
+    );
+  }
+
+  getOpinion(
+    userId: number,
+    filmId: number
+  ): Observable<OpinionResponse | null> {
+    return this.http.get<OpinionResponse>(
+      `${environment.url}/api/opinion/user/${userId}/film/${filmId}`
     );
   }
 }

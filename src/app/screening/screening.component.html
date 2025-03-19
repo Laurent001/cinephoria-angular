@@ -2,15 +2,15 @@
   class="screening d-flex flex-column align-items-center justify-content-evenly"
 >
   <div>
-    {{ screening?.start_time | date:'HH:mm' }} - {{ screening?.end_time |
-    date:'HH:mm' }}
+    {{ screening?.start_time | date : "HH:mm" }} -
+    {{ screening?.end_time | date : "HH:mm" }}
   </div>
   <div>{{ screening?.auditorium?.name }}</div>
   <div class="d-flex w-100 justify-content-around auditorium">
     <div>VF</div>
-    <div>{{ screening?.auditorium?.quality }}</div>
+    <div>{{ screening?.auditorium?.quality?.name }}</div>
   </div>
   <div class="price">
-    {{ screening?.auditorium?.price | removeTrailingZeros }} €
+    {{ screening?.auditorium?.quality?.price | removeTrailingZeros }} €
   </div>
 </div>

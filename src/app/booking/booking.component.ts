@@ -226,10 +226,14 @@ export class BookingComponent implements OnInit {
     if (this.screeningSelected) {
       if (this.isSeatSelected(seat)) {
         this.removeSeatSelected(seat);
-        this.totalPrice -= Number(this.screeningSelected.auditorium?.price);
+        this.totalPrice -= Number(
+          this.screeningSelected.auditorium?.quality?.price
+        );
         if (this.booking) this.booking.totalPrice = this.totalPrice;
       } else if (seat.is_available) {
-        this.totalPrice += Number(this.screeningSelected.auditorium?.price);
+        this.totalPrice += Number(
+          this.screeningSelected.auditorium?.quality?.price
+        );
         if (this.booking) this.booking.totalPrice = this.totalPrice;
         this.addSeatSelected(seat);
       } else {
