@@ -112,7 +112,6 @@ export class AuditoriumsComponent implements OnInit {
       name: '',
       seat: 0,
       seat_handi: 0,
-      price: 0,
       cinema: undefined,
       quality: undefined,
     };

@@ -30,7 +30,6 @@ export interface Auditorium {
   name: string;
   seat: number;
   seat_handi: number;
-  price: number;
   cinema?: CinemaResponse;
   quality?: QualityResponse;
 }

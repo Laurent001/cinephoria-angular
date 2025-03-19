@@ -62,5 +62,18 @@
   "auth-password-reset-placeholder": "Nouveau mot de passe",
   "auth-password-reset-submit": "Soumettre",
   "intranet-cinema": "Cinémas",
-  "intranet-opinion": "Avis"
+  "intranet-opinion": "Avis",
+  "space-open-bookings-title": "Réservations ouvertes",
+  "space-closed-bookings-title": "Réservations anciennes",
+  "space-screening-start_time": "Date : ",
+  "space-screening-film_title": "Film : ",
+  "space-screening-cinema": "Cinéma : ",
+  "space-screening-auditorium": "Salle : ",
+  "space-screening-seats": "Places : ",
+  "space-screening-price": "Prix : ",
+  "space-screening-film": "Film : ",
+  "space-film-add-rating": "Noter le film",
+  "space-film-update-rating": "Modifier votre note",
+  "space-screening-delete": "Supprimer",
+  "space-screening-rating": "Votre note : "
 }
