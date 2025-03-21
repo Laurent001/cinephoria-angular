@@ -9,10 +9,11 @@ import { AuthService } from '../auth/auth.service';
 import { Booking } from '../booking/booking';
 import { BookingService } from '../booking/booking.service';
 import { FilmService } from '../film/film.service';
+import { OpinionsService } from '../intranet/opinions/opinions.service';
 import { Fields } from '../utils/dynamic-modal-form/dynamic-modal-form';
 import { DynamicModalFormComponent } from '../utils/dynamic-modal-form/dynamic-modal-form.component';
 import { UtilsService } from '../utils/utils.service';
-import { OpinionResponse, SpaceResponse } from './space';
+import { OpinionResponse, SpaceResponse, StatusResponse } from './space';
 import { SpaceService } from './space.service';
 
 @Component({
@@ -29,12 +30,13 @@ import { SpaceService } from './space.service';
   ],
 })
 export class SpaceComponent implements OnInit {
-  space: SpaceResponse;
+  space: SpaceResponse = { openBookings: [], closedBookings: [], statuses: [] };
   environment = environment;
   imagesPath = environment.url + '/images/';
   showModal: boolean = false;
   initialValues: any;
   opinion: OpinionResponse = this.getEmptyOpinion();
+  statuses: StatusResponse[] = [];
   userId = this.authService.getCurrentUser()?.id;
 
   @Input() title: string = 'Noter le film ';
@@ -47,10 +49,9 @@ export class SpaceComponent implements OnInit {
     private authService: AuthService,
     private bookingService: BookingService,
     private utilsService: UtilsService,
-    private filmService: FilmService
-  ) {
-    this.space = { openBookings: [], closedBookings: [] };
-  }
+    private filmService: FilmService,
+    private opinionService: OpinionsService
+  ) {}
 
   ngOnInit() {
     this.loadUserSpace().subscribe();
@@ -61,6 +62,7 @@ export class SpaceComponent implements OnInit {
       tap((spaceResponse) => {
         this.space.openBookings = spaceResponse.openBookings;
         this.space.closedBookings = spaceResponse.closedBookings;
+        this.statuses = spaceResponse.statuses;
       })
     );
   }
@@ -97,6 +99,7 @@ export class SpaceComponent implements OnInit {
           },
         ],
         required: true,
+        readonly: false,
       },
       {
         name: 'description',
@@ -107,8 +110,12 @@ export class SpaceComponent implements OnInit {
       {
         name: 'status',
         label: 'Statut',
-        type: 'text',
-        readonly: true,
+        type: 'select',
+        options: this.statuses.map((status) => ({
+          label: status.name,
+          value: status.id,
+        })),
+        disabled: true,
       },
     ];
   }
@@ -145,7 +152,7 @@ export class SpaceComponent implements OnInit {
       film: undefined,
       rating: 0,
       description: '',
-      status: 'needs approval',
+      status: undefined,
     };
   }
 
@@ -196,7 +203,6 @@ export class SpaceComponent implements OnInit {
       item = { ...this.emptyItem };
     }
     this.fields = this.getFields();
-    this.initialValues = this.opinion;
 
     if (
       this.userId &&
@@ -228,13 +234,13 @@ export class SpaceComponent implements OnInit {
 
   onModalClose(finalOpinion: OpinionResponse) {
     this.showModal = false;
-
     if (finalOpinion) {
       finalOpinion.user = this.initialValues.user;
       finalOpinion.film = this.initialValues.film;
+      finalOpinion.status = this.statuses.find((status) => status.id === 2);
 
       if (!finalOpinion.id) {
-        this.spaceService
+        this.opinionService
           .addOpinion(finalOpinion)
           .pipe(
             tap((response) => {
@@ -243,7 +249,7 @@ export class SpaceComponent implements OnInit {
           )
           .subscribe();
       } else {
-        this.spaceService
+        this.opinionService
           .updateOpinion(finalOpinion)
           .pipe(
             tap((response) => {

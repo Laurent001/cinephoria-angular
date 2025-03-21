@@ -15,7 +15,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment.dev';
 import { Fields } from '../dynamic-modal-form/dynamic-modal-form';
 import { DynamicModalFormComponent } from '../dynamic-modal-form/dynamic-modal-form.component';
-import { UtilsService } from '../utils.service';
 
 @Component({
   selector: 'app-generic-crud-table',
@@ -34,6 +33,7 @@ import { UtilsService } from '../utils.service';
 export class GenericCrudTableComponent implements OnInit {
   @Input() title: string = "Modifier l'élément";
   @Input() items: any[] = [];
+  @Input() addItemAvailable?: boolean = true;
   @Input() fields: Fields[] = [];
   @Input() emptyItem: any = {};
   @Input() columnsToDisplay: Array<string | { name: string; type: string }> =
@@ -57,10 +57,7 @@ export class GenericCrudTableComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 1;
 
-  constructor(
-    private translate: TranslateService,
-    private utilsService: UtilsService
-  ) {
+  constructor(private translate: TranslateService) {
     this.translate.setDefaultLang('fr');
     registerLocaleData(localeFr);
   }

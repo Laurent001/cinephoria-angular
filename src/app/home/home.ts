@@ -2,7 +2,7 @@ export interface HelloResponse {
   message: string;
 }
 
-export interface UsersResponse {
+export interface UserResponse {
   id: number;
   login: string;
   password: string;
