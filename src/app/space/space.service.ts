@@ -21,15 +21,4 @@ export class SpaceService {
       `${environment.url}/api/space/user/${id}`
     );
   }
-
-  addOpinion(newOpinion: OpinionResponse): Observable<any> {
-    return this.http.post<any>(`${environment.url}/api/opinion`, newOpinion);
-  }
-
-  updateOpinion(opinion: OpinionResponse): Observable<OpinionResponse> {
-    return this.http.put<OpinionResponse>(
-      `${environment.url}/api/opinion/${opinion.id}`,
-      opinion
-    );
-  }
 }

@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -69,14 +70,27 @@ export class DynamicModalFormComponent implements OnInit {
         initialValue = this.initialValues[nestedField]?.id;
       }
 
+      if (field.type === 'object' && typeof initialValue === 'object') {
+        const nestedField = field.name;
+        const value = field.value;
+
+        initialValue =
+          value !== undefined
+            ? this.initialValues[nestedField]?.[value]
+            : undefined;
+      }
+
       if (field.type === 'datetime' && initialValue) {
         initialValue = this.formatDateTimeForInput(initialValue);
       }
 
-      controls[field.name] = [
-        initialValue ?? '',
-        field.required ? Validators.required : [],
-      ];
+      controls[field.name] = new FormControl(
+        {
+          value: initialValue ?? '',
+          disabled: field.disabled,
+        },
+        field.required ? Validators.required : []
+      );
     });
     this.form = this.fb.group(controls);
   }
@@ -84,6 +98,11 @@ export class DynamicModalFormComponent implements OnInit {
   onSubmit() {
     if (this.form.valid) {
       const formData = { ...this.form.value };
+
+      const statusControl = this.form.get('status');
+      if (statusControl?.disabled) {
+        formData.status = statusControl.value;
+      }
 
       // Parcourir pour traiter les fichiers
       Object.keys(this.form.controls).forEach((key) => {

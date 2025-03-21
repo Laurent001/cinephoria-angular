@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { ScreeningsComponent } from './screenings/screenings.component';
-import { FilmsComponent } from './films/films.component';
 import { AuditoriumsComponent } from './auditoriums/auditoriums.component';
+import { FilmsComponent } from './films/films.component';
+import { OpinionsComponent } from './opinions/opinions.component';
+import { ScreeningsComponent } from './screenings/screenings.component';
 
 @Component({
   selector: 'app-intranet',
@@ -16,6 +17,7 @@ import { AuditoriumsComponent } from './auditoriums/auditoriums.component';
     ScreeningsComponent,
     FilmsComponent,
     AuditoriumsComponent,
+    OpinionsComponent,
   ],
 })
 export class IntranetComponent implements OnInit {

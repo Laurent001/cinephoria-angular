@@ -1,0 +1,11 @@
+<app-generic-crud-table
+  [title]="'Opinions'"
+  [items]="opinions"
+  [addItemAvailable]="false"
+  [fields]="fields"
+  [emptyItem]="getEmptyOpinion()"
+  [columnsToDisplay]="columnsToDisplay"
+  [columnLabels]="columnLabels"
+  (updateItem)="onUpdateOpinion($event)"
+  (deleteItem)="onDeleteOpinion($event)"
+></app-generic-crud-table>

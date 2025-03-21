@@ -56,11 +56,20 @@
                 [readonly]="field.readonly"
               />
 
+              <!-- Input Object -->
+              <input
+                matInput
+                *ngIf="field.type === 'object'"
+                [formControlName]="field.name"
+                [readonly]="field.readonly"
+              />
+
               <!-- Textarea -->
               <textarea
                 matInput
                 *ngIf="field.type === 'textarea'"
                 [formControlName]="field.name"
+                [readonly]="field.readonly"
               ></textarea>
 
               <!-- DateTime -->
