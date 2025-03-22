@@ -15,7 +15,7 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./home/home.component').then((m) => m.HomeComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'user', 'guest', 'employe'] },
+    data: { roles: ['admin', 'user', 'guest', 'employee'] },
   });
 
   routes.push({
@@ -23,7 +23,7 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./film/film.component').then((m) => m.FilmComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'user', 'guest', 'employe'] },
+    data: { roles: ['admin', 'user', 'guest', 'employee'] },
   });
 
   routes.push({
@@ -31,7 +31,7 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./booking/booking.component').then((m) => m.BookingComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'user', 'guest', 'employe'] },
+    data: { roles: ['admin', 'user', 'guest', 'employee'] },
   });
 
   routes.push({
@@ -47,7 +47,7 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./incident/incident.component').then((m) => m.IncidentComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'employe'] },
+    data: { roles: ['admin', 'employee'] },
   });
 
   routes.push({
@@ -55,15 +55,7 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./intranet/intranet.component').then((m) => m.IntranetComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'employe'] },
-  });
-
-  routes.push({
-    path: 'admin',
-    loadComponent: () =>
-      import('./admin/admin.component').then((m) => m.AdminComponent),
-    canActivate: [AuthGuard],
-    data: { roles: ['admin'] },
+    data: { roles: ['admin', 'employee'] },
   });
 
   routes.push({
@@ -107,7 +99,7 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./logout/logout.component').then((m) => m.LogoutComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'user', 'employe'] },
+    data: { roles: ['admin', 'user', 'employee'] },
   });
 
   return routes;

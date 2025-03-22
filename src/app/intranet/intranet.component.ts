@@ -5,6 +5,8 @@ import { AuditoriumsComponent } from './auditoriums/auditoriums.component';
 import { FilmsComponent } from './films/films.component';
 import { OpinionsComponent } from './opinions/opinions.component';
 import { ScreeningsComponent } from './screenings/screenings.component';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-intranet',
@@ -18,11 +20,21 @@ import { ScreeningsComponent } from './screenings/screenings.component';
     FilmsComponent,
     AuditoriumsComponent,
     OpinionsComponent,
+    CommonModule,
   ],
 })
 export class IntranetComponent implements OnInit {
-  constructor(private translate: TranslateService) {
+  userRole: string = 'guest';
+
+  constructor(
+    private translate: TranslateService,
+    private authService: AuthService
+  ) {
     this.translate.setDefaultLang('fr');
+    const user = this.authService.getCurrentUser();
+    if (user) {
+      this.userRole = user.role;
+    }
   }
 
   ngOnInit() {}

@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
           this.showLogout =
             this.roles.includes('admin') ||
             this.roles.includes('user') ||
-            this.roles.includes('employe');
+            this.roles.includes('employee');
         } else {
           this.roles = ['guest'];
           this.updatePages(this.roles);
@@ -66,7 +66,7 @@ export class AppComponent implements OnInit {
       this.showLogout =
         this.roles.includes('admin') ||
         this.roles.includes('user') ||
-        this.roles.includes('employe');
+        this.roles.includes('employee');
     });
   }
 
@@ -76,19 +76,19 @@ export class AppComponent implements OnInit {
         title: this.translateService.instant('menu-home'),
         url: '/home',
         icon: 'house',
-        roles: ['admin', 'user', 'employe', 'guest'],
+        roles: ['admin', 'user', 'employee', 'guest'],
       },
       {
         title: this.translateService.instant('menu-film'),
         url: '/film',
         icon: 'film',
-        roles: ['admin', 'user', 'employe', 'guest'],
+        roles: ['admin', 'user', 'employee', 'guest'],
       },
       {
         title: this.translateService.instant('menu-booking'),
         url: '/booking',
         icon: 'ticket-perforated',
-        roles: ['admin', 'user', 'employe', 'guest'],
+        roles: ['admin', 'user', 'employee', 'guest'],
       },
       {
         title: this.translateService.instant('menu-contact'),
@@ -106,19 +106,15 @@ export class AppComponent implements OnInit {
         title: this.translateService.instant('menu-incident'),
         url: '/incident',
         icon: 'exclamation-octagon',
-        roles: ['admin', 'employe'],
+        roles: ['admin', 'employee'],
       },
       {
-        title: this.translateService.instant('menu-intranet'),
+        title: roles.includes('admin')
+          ? this.translateService.instant('menu-admin')
+          : this.translateService.instant('menu-employee'),
         url: '/intranet',
-        icon: 'server',
-        roles: ['admin', 'employe'],
-      },
-      {
-        title: this.translateService.instant('menu-admin'),
-        url: '/admin',
-        icon: 'gear',
-        roles: ['admin'],
+        icon: roles.includes('admin') ? 'gear' : 'server',
+        roles: ['admin', 'employee'],
       },
       {
         title: this.translateService.instant('menu-space'),
@@ -130,7 +126,7 @@ export class AppComponent implements OnInit {
         title: this.translateService.instant('menu-logout'),
         url: '/logout',
         icon: 'box-arrow-in-left',
-        roles: ['admin', 'user', 'employe'],
+        roles: ['admin', 'user', 'employee'],
       },
     ];
 
