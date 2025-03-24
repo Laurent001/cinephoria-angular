@@ -7,6 +7,7 @@ import { OpinionsComponent } from './opinions/opinions.component';
 import { ScreeningsComponent } from './screenings/screenings.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
+import { EmployeesComponent } from './employees/employees.component';
 
 @Component({
   selector: 'app-intranet',
@@ -21,6 +22,7 @@ import { AuthService } from '../auth/auth.service';
     AuditoriumsComponent,
     OpinionsComponent,
     CommonModule,
+    EmployeesComponent,
   ],
 })
 export class IntranetComponent implements OnInit {

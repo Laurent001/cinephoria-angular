@@ -4,7 +4,7 @@ import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { switchMap, tap } from 'rxjs';
 import { FilmResponse } from 'src/app/film/film';
-import { UserResponse } from 'src/app/home/home';
+import { User } from 'src/app/app';
 import { OpinionResponse, StatusResponse } from 'src/app/space/space';
 import { Fields } from 'src/app/utils/dynamic-modal-form/dynamic-modal-form';
 import { GenericCrudTableComponent } from 'src/app/utils/generic-crud-table/generic-crud-table.component';
@@ -204,7 +204,7 @@ export class OpinionsComponent implements OnInit {
       user: {
         email: data.user,
         ...(opinion.user || {}),
-      } as UserResponse,
+      } as User,
 
       film: {
         title: data.film,
