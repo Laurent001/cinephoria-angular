@@ -4,13 +4,11 @@ import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { switchMap, tap } from 'rxjs';
 import { User } from 'src/app/app';
+import { LoginService } from 'src/app/login/login.service';
 import { Fields } from 'src/app/utils/dynamic-modal-form/dynamic-modal-form';
 import { GenericCrudTableComponent } from 'src/app/utils/generic-crud-table/generic-crud-table.component';
 import { UtilsService } from 'src/app/utils/utils.service';
 import { EmployeesService } from './employees.service';
-
-const EMPLOYEE_ROLE = 'employee';
-const ADMIN_ROLE = 'admin';
 
 @Component({
   selector: 'app-employees           ',
@@ -28,20 +26,21 @@ export class EmployeesComponent implements OnInit {
     { name: 'email', type: 'string' },
     { name: 'first_name', type: 'string' },
     { name: 'last_name', type: 'string' },
-    { name: 'role', type: 'string' },
+    { name: 'role.name', type: 'string' },
   ];
   columnLabels: Record<string, string> = {
     id: '#',
     email: 'Email',
     first_name: 'Prénom',
     last_name: 'Nom',
-    role: 'Rôle',
+    'role.name': 'Rôle',
   };
 
   constructor(
     private translate: TranslateService,
     private employeesService: EmployeesService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private loginService: LoginService
   ) {
     this.translate.setDefaultLang('fr');
     registerLocaleData(localeFr);
@@ -85,18 +84,23 @@ export class EmployeesComponent implements OnInit {
         type: 'text',
         required: true,
       },
-
+      {
+        name: 'password',
+        label: 'Mot de passe',
+        type: 'text',
+        required: true,
+      },
       {
         name: 'role',
         label: 'rôle',
         type: 'select',
         options: [
           {
-            label: 'employee',
+            label: 'admin',
             value: 1,
           },
           {
-            label: 'admin',
+            label: 'staff',
             value: 2,
           },
         ],
@@ -111,7 +115,8 @@ export class EmployeesComponent implements OnInit {
       email: '',
       first_name: '',
       last_name: '',
-      role: '',
+      password: '',
+      role: { id: 2, name: 'staff' },
     };
   }
 
@@ -120,8 +125,8 @@ export class EmployeesComponent implements OnInit {
       this.getEmptyEmployee(),
       employee
     );
-    this.employeesService
-      .addEmployee(employeeModified)
+    this.loginService
+      .register(employeeModified)
       .pipe(
         tap((response) => {
           this.getEmployees();
@@ -137,11 +142,17 @@ export class EmployeesComponent implements OnInit {
       .subscribe();
   }
 
+  onOpeningModal(employee: User) {
+    delete employee.password;
+    this.fields = this.fields.filter((field) => field.name !== 'password');
+  }
+
   onUpdateEmployee(employee: User) {
     const EmployeeModified = this.getEmployeeResponseModified(
       this.getEmptyEmployee(),
       employee
     );
+
     this.employeesService
       .updateEmployee(EmployeeModified)
       .pipe(
@@ -195,7 +206,11 @@ export class EmployeesComponent implements OnInit {
       email: data.email,
       first_name: data.first_name,
       last_name: data.last_name,
-      role: data.role === 1 ? EMPLOYEE_ROLE : ADMIN_ROLE,
+      password: data.password,
+      role: {
+        id: data.role,
+        name: data.role === 1 ? 'admin' : 'staff',
+      },
     };
   }
 }

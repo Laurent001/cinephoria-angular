@@ -19,7 +19,7 @@
       </button>
     </li>
     <li
-      *ngIf="userRole === 'employee'"
+      *ngIf="userRole.id === ROLE_STAFF"
       class="nav-item flex-fill"
       role="presentation"
     >
@@ -37,7 +37,7 @@
       </button>
     </li>
     <li
-      *ngIf="userRole === 'admin'"
+      *ngIf="userRole.id === ROLE_ADMIN"
       class="nav-item flex-fill"
       role="presentation"
     >
@@ -55,7 +55,7 @@
       </button>
     </li>
     <li
-      *ngIf="userRole === 'admin'"
+      *ngIf="userRole.id === ROLE_ADMIN"
       class="nav-item flex-fill"
       role="presentation"
     >
@@ -94,7 +94,7 @@
 
   <!-- opinion-->
   <div
-    *ngIf="userRole === 'employee'"
+    *ngIf="userRole.id === ROLE_STAFF"
     class="tab-pane fade"
     id="pills-opinion"
     role="tabpanel"

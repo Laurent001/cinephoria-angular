@@ -4,7 +4,7 @@ import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, switchMap } from 'rxjs';
-import { Page, User } from './app';
+import { Page, Role, User } from './app';
 import { AuthService } from './auth/auth.service';
 
 @Component({
@@ -18,7 +18,7 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent implements OnInit {
   public pages$ = new BehaviorSubject<Page[]>([]);
   public showLogout = false;
-  private roles: string[] = [];
+  private roles: Role[] = [];
 
   constructor(
     private translateService: TranslateService,
@@ -50,89 +50,122 @@ export class AppComponent implements OnInit {
           this.roles = [user.role];
           this.updatePages(this.roles);
           this.showLogout =
-            this.roles.includes('admin') ||
-            this.roles.includes('user') ||
-            this.roles.includes('employee');
+            this.roles.some((role) => role.name === 'admin') ||
+            this.roles.some((role) => role.name === 'user') ||
+            this.roles.some((role) => role.name === 'staff');
         } else {
-          this.roles = ['guest'];
+          this.roles = [{ id: 0, name: 'guest' }];
           this.updatePages(this.roles);
           this.showLogout = false;
         }
       });
 
     this.authService.user$.subscribe((user) => {
-      this.roles = user ? [user.role] : ['guest'];
+      this.roles = user ? [user.role] : [{ id: 0, name: 'guest' }];
       this.updatePages(this.roles);
       this.showLogout =
-        this.roles.includes('admin') ||
-        this.roles.includes('user') ||
-        this.roles.includes('employee');
+        this.roles.some((role) => role.name === 'admin') ||
+        this.roles.some((role) => role.name === 'user') ||
+        this.roles.some((role) => role.name === 'staff');
     });
   }
 
-  updatePages(roles: string[]) {
+  updatePages(roles: Role[]) {
     const pages = [
       {
         title: this.translateService.instant('menu-home'),
         url: '/home',
         icon: 'house',
-        roles: ['admin', 'user', 'employee', 'guest'],
+        roles: [
+          { id: 0, name: 'guest' },
+          { id: 1, name: 'admin' },
+          { id: 2, name: 'staff' },
+          { id: 3, name: 'user' },
+        ],
       },
       {
         title: this.translateService.instant('menu-film'),
         url: '/film',
         icon: 'film',
-        roles: ['admin', 'user', 'employee', 'guest'],
+        roles: [
+          { id: 0, name: 'guest' },
+          { id: 1, name: 'admin' },
+          { id: 2, name: 'staff' },
+          { id: 3, name: 'user' },
+        ],
       },
       {
         title: this.translateService.instant('menu-booking'),
         url: '/booking',
         icon: 'ticket-perforated',
-        roles: ['admin', 'user', 'employee', 'guest'],
+        roles: [
+          { id: 0, name: 'guest' },
+          { id: 1, name: 'admin' },
+          { id: 2, name: 'staff' },
+          { id: 3, name: 'user' },
+        ],
       },
       {
         title: this.translateService.instant('menu-contact'),
         url: '/contact',
         icon: 'people',
-        roles: ['user', 'guest'],
+        roles: [
+          { id: 0, name: 'guest' },
+          { id: 3, name: 'user' },
+        ],
       },
       {
         title: this.translateService.instant('menu-login'),
         url: '/login',
         icon: 'box-arrow-in-right',
-        roles: ['guest'],
+        roles: [{ id: 0, name: 'guest' }],
       },
       {
         title: this.translateService.instant('menu-incident'),
         url: '/incident',
         icon: 'exclamation-octagon',
-        roles: ['admin', 'employee'],
+        roles: [
+          { id: 1, name: 'admin' },
+          { id: 2, name: 'staff' },
+        ],
       },
       {
-        title: roles.includes('admin')
+        title: roles.some((role) => role.name === 'admin')
           ? this.translateService.instant('menu-admin')
-          : this.translateService.instant('menu-employee'),
+          : this.translateService.instant('menu-intranet'),
         url: '/intranet',
-        icon: roles.includes('admin') ? 'gear' : 'server',
-        roles: ['admin', 'employee'],
+        icon: roles.some((role) => role.name === 'admin') ? 'gear' : 'server',
+        roles: [
+          { id: 1, name: 'admin' },
+          { id: 2, name: 'staff' },
+        ],
       },
       {
         title: this.translateService.instant('menu-space'),
         url: '/space',
         icon: 'cloud',
-        roles: ['user'],
+        roles: [{ id: 3, name: 'user' }],
       },
       {
         title: this.translateService.instant('menu-logout'),
         url: '/logout',
         icon: 'box-arrow-in-left',
-        roles: ['admin', 'user', 'employee'],
+        roles: [
+          { id: 1, name: 'admin' },
+          { id: 2, name: 'staff' },
+          { id: 3, name: 'user' },
+        ],
       },
     ];
 
-    const filteredPages = pages.filter((page) =>
-      page.roles.some((role) => roles.includes(role))
-    );
+    const filteredPages = pages
+      .filter((page) =>
+        page.roles.some((role) => roles.map((r) => r.name).includes(role.name))
+      )
+      .map((page) => ({
+        ...page,
+        roles: page.roles.map((role) => role.name),
+      }));
     this.pages$.next(filteredPages);
   }
 

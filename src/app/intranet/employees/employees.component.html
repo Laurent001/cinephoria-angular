@@ -5,6 +5,8 @@
   [emptyItem]="getEmptyEmployee()"
   [columnsToDisplay]="columnsToDisplay"
   [columnLabels]="columnLabels"
+  [resetPassword]="true"
+  (openingModal)="onOpeningModal($event)"
   (addItem)="onAddEmployee($event)"
   (updateItem)="onUpdateEmployee($event)"
   (deleteItem)="onDeleteEmployee($event)"

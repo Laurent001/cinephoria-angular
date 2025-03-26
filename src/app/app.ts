@@ -13,7 +13,7 @@ export interface User {
   reset_password?: boolean;
   first_name: string;
   last_name: string;
-  role: string;
+  role: Role;
   created_at?: string;
 }
 

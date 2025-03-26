@@ -12,9 +12,12 @@ import {
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { User } from 'src/app/app';
+import { AuthService } from 'src/app/auth/auth.service';
 import { environment } from 'src/environments/environment.dev';
 import { Fields } from '../dynamic-modal-form/dynamic-modal-form';
 import { DynamicModalFormComponent } from '../dynamic-modal-form/dynamic-modal-form.component';
+import { UtilsService } from '../utils.service';
 
 @Component({
   selector: 'app-generic-crud-table',
@@ -44,7 +47,9 @@ export class GenericCrudTableComponent implements OnInit {
     true: 'Oui',
     false: 'Non',
   };
+  @Input() resetPassword?: boolean = false;
 
+  @Output() openingModal = new EventEmitter<any>();
   @Output() addItem = new EventEmitter<any>();
   @Output() updateItem = new EventEmitter<any>();
   @Output() deleteItem = new EventEmitter<any>();
@@ -57,7 +62,11 @@ export class GenericCrudTableComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 1;
 
-  constructor(private translate: TranslateService) {
+  constructor(
+    private translate: TranslateService,
+    private authService: AuthService,
+    private utilsService: UtilsService
+  ) {
     this.translate.setDefaultLang('fr');
     registerLocaleData(localeFr);
   }
@@ -130,6 +139,8 @@ export class GenericCrudTableComponent implements OnInit {
     if (!item) {
       item = { ...this.emptyItem };
     }
+
+    this.openingModal.emit(item);
     this.initialValues = item;
     this.showModal = true;
   }
@@ -148,6 +159,27 @@ export class GenericCrudTableComponent implements OnInit {
 
   onDeleteItem(item: any) {
     this.deleteItem.emit(item);
+  }
+
+  onResetItem(user: User) {
+    this.authService.requestPasswordReset(user.email).subscribe({
+      next: (response) => {
+        this.utilsService.presentAlert(
+          'Information',
+          'Un e-mail de réinitialisation de mot de passe a été envoyé.',
+          ['OK'],
+          'success'
+        );
+      },
+      error: (error) => {
+        this.utilsService.presentAlert(
+          'Information',
+          "Une erreur s'est produite. Veuillez réessayer.",
+          ['OK'],
+          'error'
+        );
+      },
+    });
   }
 
   getColumnName(column: string | { name: string; type: string }): string {
