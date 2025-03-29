@@ -3,9 +3,12 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Role, User } from '../app';
 import { AuthService } from '../auth/auth.service';
 import { UtilsService } from '../utils/utils.service';
 import { LoginService } from './login.service';
+
+const ROLE_USER = 3;
 
 @Component({
   selector: 'app-login',
@@ -16,6 +19,16 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent {
   currentView = 'login';
+  user: User = {
+    id: 0,
+    email: '',
+    first_name: '',
+    last_name: '',
+    role: {
+      id: ROLE_USER,
+      name: 'user',
+    },
+  };
 
   // Login form
   loginEmail: string = '';
@@ -26,7 +39,7 @@ export class LoginComponent {
   registerLastName: string = '';
   registerEmail: string = '';
   registerPassword: string = '';
-  registerRole: string = 'user';
+  registerRole: Role = { id: ROLE_USER, name: 'user' };
 
   constructor(
     private router: Router,
@@ -70,34 +83,34 @@ export class LoginComponent {
     });
   }
 
-  register(role?: string) {
+  register(role?: Role) {
     if (role) {
       this.registerRole = role;
     }
 
-    this.loginService
-      .register(
-        this.registerEmail,
-        this.registerPassword,
-        this.registerFirstName,
-        this.registerLastName,
-        this.registerRole
-      )
-      .subscribe({
-        next: (response) => {
-          this.login(this.registerEmail, this.registerPassword);
-          this.router.navigate(['/home']);
-        },
-        error: (error) => {
-          console.error('Registration error', error);
-          this.utilsService.presentAlert(
-            'Attention',
-            "Une erreur pendant l'enregistrement s'est produite",
-            ['OK'],
-            'error'
-          );
-        },
-      });
+    this.user = {
+      email: this.registerEmail,
+      first_name: this.registerFirstName,
+      password: this.registerPassword,
+      last_name: this.registerLastName,
+      role: this.registerRole,
+    };
+
+    this.loginService.register(this.user).subscribe({
+      next: (response) => {
+        this.login(this.registerEmail, this.registerPassword);
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        console.error('Registration error', error);
+        this.utilsService.presentAlert(
+          'Attention',
+          "Une erreur pendant l'enregistrement s'est produite",
+          ['OK'],
+          'error'
+        );
+      },
+    });
   }
 
   resetPassword() {

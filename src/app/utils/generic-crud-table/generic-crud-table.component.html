@@ -81,6 +81,13 @@
               >
                 <i class="bi bi-trash"></i>
               </button>
+              <button
+                *ngIf="resetPassword"
+                class="btn btn-sm btn-outline-info"
+                (click)="onResetItem(item)"
+              >
+                <i class="bi bi-key-fill"></i>
+              </button>
             </div>
           </td>
         </tr>

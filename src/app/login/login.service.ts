@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.dev';
+import { User } from '../app';
 import { RegisterResponse } from './login';
 
 @Injectable({
@@ -18,20 +19,7 @@ export class LoginService {
     );
   }
 
-  register(
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-    role: string
-  ): Observable<any> {
-    const data = {
-      email,
-      password,
-      firstName,
-      lastName,
-      role,
-    };
-    return this.http.post(`${environment.url}/api/register`, data);
+  register(user: User): Observable<any> {
+    return this.http.post(`${environment.url}/api/register`, user);
   }
 }

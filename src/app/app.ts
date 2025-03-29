@@ -6,15 +6,15 @@ export interface Page {
 }
 
 export interface User {
-  id: number;
+  id?: number;
   email: string;
-  token: string;
-  password: string;
-  reset_password: boolean;
+  token?: string;
+  password?: string;
+  reset_password?: boolean;
   first_name: string;
   last_name: string;
-  role: string;
-  created_at: string;
+  role: Role;
+  created_at?: string;
 }
 
 export interface Role {

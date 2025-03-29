@@ -15,7 +15,14 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./home/home.component').then((m) => m.HomeComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'user', 'guest', 'employe'] },
+    data: {
+      roles: [
+        { id: 0, name: 'guest' },
+        { id: 1, name: 'admin' },
+        { id: 2, name: 'staff' },
+        { id: 3, name: 'user' },
+      ],
+    },
   });
 
   routes.push({
@@ -23,7 +30,14 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./film/film.component').then((m) => m.FilmComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'user', 'guest', 'employe'] },
+    data: {
+      roles: [
+        { id: 0, name: 'guest' },
+        { id: 1, name: 'admin' },
+        { id: 2, name: 'staff' },
+        { id: 3, name: 'user' },
+      ],
+    },
   });
 
   routes.push({
@@ -31,7 +45,14 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./booking/booking.component').then((m) => m.BookingComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'user', 'guest', 'employe'] },
+    data: {
+      roles: [
+        { id: 0, name: 'guest' },
+        { id: 1, name: 'admin' },
+        { id: 2, name: 'staff' },
+        { id: 3, name: 'user' },
+      ],
+    },
   });
 
   routes.push({
@@ -39,7 +60,12 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./contact/contact.component').then((m) => m.ContactComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['user', 'guest'] },
+    data: {
+      roles: [
+        { id: 0, name: 'guest' },
+        { id: 3, name: 'user' },
+      ],
+    },
   });
 
   routes.push({
@@ -47,7 +73,12 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./incident/incident.component').then((m) => m.IncidentComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'employe'] },
+    data: {
+      roles: [
+        { id: 1, name: 'admin' },
+        { id: 2, name: 'staff' },
+      ],
+    },
   });
 
   routes.push({
@@ -55,15 +86,12 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./intranet/intranet.component').then((m) => m.IntranetComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'employe'] },
-  });
-
-  routes.push({
-    path: 'admin',
-    loadComponent: () =>
-      import('./admin/admin.component').then((m) => m.AdminComponent),
-    canActivate: [AuthGuard],
-    data: { roles: ['admin'] },
+    data: {
+      roles: [
+        { id: 1, name: 'admin' },
+        { id: 2, name: 'staff' },
+      ],
+    },
   });
 
   routes.push({
@@ -71,7 +99,9 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./space/space.component').then((m) => m.SpaceComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['user'] },
+    data: {
+      roles: [{ id: 3, name: 'user' }],
+    },
   });
 
   routes.push({
@@ -81,7 +111,9 @@ export const initRoutes = (): Routes => {
         './auth/password-reset-request/password-reset-request.component'
       ).then((m) => m.PasswordResetRequestComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['guest'] },
+    data: {
+      roles: [{ id: 0, name: 'guest' }],
+    },
   });
 
   routes.push({
@@ -91,7 +123,9 @@ export const initRoutes = (): Routes => {
         (m) => m.PasswordResetComponent
       ),
     canActivate: [AuthGuard],
-    data: { roles: ['guest'] },
+    data: {
+      roles: [{ id: 0, name: 'guest' }],
+    },
   });
 
   routes.push({
@@ -99,7 +133,9 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./login/login.component').then((m) => m.LoginComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['guest'] },
+    data: {
+      roles: [{ id: 0, name: 'guest' }],
+    },
   });
 
   routes.push({
@@ -107,7 +143,13 @@ export const initRoutes = (): Routes => {
     loadComponent: () =>
       import('./logout/logout.component').then((m) => m.LogoutComponent),
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'user', 'employe'] },
+    data: {
+      roles: [
+        { id: 1, name: 'admin' },
+        { id: 2, name: 'staff' },
+        { id: 3, name: 'user' },
+      ],
+    },
   });
 
   return routes;
