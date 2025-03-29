@@ -9,6 +9,7 @@ import { EmployeesComponent } from './employees/employees.component';
 import { FilmsComponent } from './films/films.component';
 import { OpinionsComponent } from './opinions/opinions.component';
 import { ScreeningsComponent } from './screenings/screenings.component';
+import { DashboardComponent } from '../utils/dashboard/dashboard.component';
 
 @Component({
   selector: 'app-intranet',
@@ -24,6 +25,7 @@ import { ScreeningsComponent } from './screenings/screenings.component';
     OpinionsComponent,
     CommonModule,
     EmployeesComponent,
+    DashboardComponent,
   ],
 })
 export class IntranetComponent implements OnInit {
