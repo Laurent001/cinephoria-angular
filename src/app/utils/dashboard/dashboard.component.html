@@ -1,0 +1,19 @@
+<div>
+  <label for="film-select">{{ "dashboard-choose-film" | translate }}</label>
+  <select id="film-select" class="ms-3" (change)="onFilmSelect($event)">
+    <option *ngFor="let film of films" [value]="film.id">
+      {{ film.title }} - {{ film.release_date | date : "yyyy" }}
+    </option>
+  </select>
+</div>
+<div class="d-block mt-3">
+  <canvas
+    baseChart
+    [datasets]="barChartData"
+    [labels]="barChartLabels"
+    [options]="barChartOptions"
+    [legend]="barChartLegend"
+    [type]="barChartType"
+  >
+  </canvas>
+</div>

@@ -14,6 +14,7 @@ import { provideRouter, withHashLocation } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import 'bootstrap';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { AppComponent } from './app/app.component';
 import { initRoutes } from './app/app.routes';
 import { authInterceptor } from './app/config/auth.interceptor';
@@ -44,5 +45,6 @@ bootstrapApplication(AppComponent, {
       })
     ),
     provideAnimationsAsync(),
+    provideCharts(withDefaultRegisterables()),
   ],
 }).catch((err) => console.error(err));

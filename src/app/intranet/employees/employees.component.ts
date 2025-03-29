@@ -174,7 +174,7 @@ export class EmployeesComponent implements OnInit {
     this.utilsService
       .openConfirmModal(
         'Confirmation',
-        'Cela va supprimer toutes les sièges et réservations associés à cette séance. Êtes-vous sûr de vouloir supprimer cette séance ?',
+        'Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.',
         ['Confirmer', 'Annuler']
       )
       .pipe(

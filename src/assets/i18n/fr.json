@@ -77,5 +77,7 @@
   "space-film-add-rating": "Noter le film",
   "space-film-update-rating": "Modifier votre note",
   "space-screening-delete": "Supprimer",
-  "space-screening-rating": "Votre note : "
+  "space-screening-rating": "Votre note : ",
+  "dashboard-choose-film": "Choisissez un film",
+  "dashboard-booking": "Réservations"
 }
