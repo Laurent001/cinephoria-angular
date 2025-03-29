@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { map, take } from 'rxjs/operators';
+import { Role } from '../app';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,15 +11,15 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot) {
-    const requiredRoles = route.data['roles'] as string[];
+    const requiredRoles = route.data['roles'] as Role[];
 
     return this.authService.user$.pipe(
       take(1),
       map((user) => {
-        if (user && requiredRoles.includes(user.role)) {
+        if (user && requiredRoles.some((role) => role.id === user.role.id)) {
           return true;
         }
-        this.router.navigate(['/login']);
+
         return false;
       })
     );

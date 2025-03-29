@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.dev';
-import { User } from '../app';
+import { Role, User } from '../app';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,10 @@ export class AuthService {
   private tokenKey = 'auth-token';
 
   constructor(private http: HttpClient) {
-    this.userSubject.next({ id: 0, role: 'guest' } as User);
+    this.userSubject.next({
+      id: 0,
+      role: { id: 0, name: 'guest' } as Role,
+    } as User);
   }
 
   setUser(user: User) {
@@ -29,7 +32,10 @@ export class AuthService {
   }
 
   resetUserToGuest() {
-    this.userSubject.next({ role: 'guest' } as User);
+    this.userSubject.next({
+      id: 0,
+      role: { id: 0, name: 'guest' } as Role,
+    } as User);
   }
 
   getRolesByUserId(userId: number): Observable<string[]> {
@@ -38,12 +44,12 @@ export class AuthService {
     );
   }
 
-  getUserRole(): string | null {
+  getUserRole(): Role | null {
     const user = this.userSubject.value;
     return user ? user.role : null;
   }
 
-  hasRole(roles: string[]): boolean {
+  hasRole(roles: Role[]): boolean {
     const user = this.userSubject.value;
     return user ? roles.includes(user.role) : false;
   }

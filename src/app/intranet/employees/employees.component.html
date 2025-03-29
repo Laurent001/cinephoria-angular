@@ -1,0 +1,13 @@
+<app-generic-crud-table
+  [title]="'Employés'"
+  [items]="employees"
+  [fields]="fields"
+  [emptyItem]="getEmptyEmployee()"
+  [columnsToDisplay]="columnsToDisplay"
+  [columnLabels]="columnLabels"
+  [resetPassword]="true"
+  (openingModal)="onOpeningModal($event)"
+  (addItem)="onAddEmployee($event)"
+  (updateItem)="onUpdateEmployee($event)"
+  (deleteItem)="onDeleteEmployee($event)"
+></app-generic-crud-table>

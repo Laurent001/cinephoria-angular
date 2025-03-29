@@ -1,6 +1,6 @@
 import { Booking } from '../booking/booking';
 import { FilmResponse } from '../film/film';
-import { UserResponse } from '../home/home';
+import { User } from '../app';
 
 export interface SpaceResponse {
   openBookings: Booking[];
@@ -10,7 +10,7 @@ export interface SpaceResponse {
 
 export interface OpinionResponse {
   id?: number;
-  user?: UserResponse;
+  user?: User;
   film?: FilmResponse;
   rating: number;
   description: string;

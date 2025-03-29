@@ -73,7 +73,7 @@ export class PasswordResetComponent {
       next: (response) => {
         this.utilsService.presentAlert(
           'Information',
-          'Votre email a été changé avec succès.',
+          'Votre mot de passe a été changé avec succès.',
           ['OK'],
           'success'
         );

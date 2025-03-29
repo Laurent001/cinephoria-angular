@@ -60,7 +60,7 @@ export class PasswordResetRequestComponent {
       next: (response) => {
         this.utilsService.presentAlert(
           'Information',
-          'Un e-mail de réinitialisation a été envoyé.',
+          'Un e-mail de réinitialisation de mot de passe a été envoyé.',
           ['OK'],
           'success'
         );
