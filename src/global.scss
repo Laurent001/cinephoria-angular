@@ -16,6 +16,10 @@ body {
   height: 100vh;
   border-right: 1px solid var(--bs-gray-200);
   border-left: 1px solid var(--bs-gray-200);
+
+  i.bi.bi-suit-heart-fill {
+    color: $danger;
+  }
 }
 
 .text-primary {
