@@ -17,7 +17,6 @@ export interface CinemaResponse {
   city: string;
   postcode: number;
   phone: number;
-  opening_hours: number;
 }
 
 export interface GenreResponse {

@@ -78,6 +78,10 @@ export class BookingComponent implements OnInit {
       this.cinemas = cinemas;
     });
 
+    this.cinemaService['cinemaSubject'].subscribe((cinemaId) => {
+      this.cinemaSelectedId = cinemaId;
+    });
+
     this.loadBookingStateFromLocalStorage();
 
     this.screeningService.screenings$
@@ -115,6 +119,7 @@ export class BookingComponent implements OnInit {
       this.seatsSelected = this.booking.seats;
       this.totalPrice = this.booking.totalPrice;
       this.cinemaSelectedId = this.booking?.screening?.auditorium?.cinema?.id;
+      this.cinemaService.updateCinemaId(this.cinemaSelectedId);
       this.filmSelectedId = this.booking.screening?.film?.id;
       this.screeningSelected = this.booking.screening;
 
@@ -145,6 +150,7 @@ export class BookingComponent implements OnInit {
   onCinemaChange(event: any) {
     this.screenings = undefined;
     this.cinemaSelectedId = event.value;
+    this.cinemaService.updateCinemaId(this.cinemaSelectedId);
 
     if (this.cinemaSelectedId) {
       this.filmsFiltered$ = this.filmService.getFilmsByCinema(

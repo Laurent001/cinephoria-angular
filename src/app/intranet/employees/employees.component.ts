@@ -55,7 +55,6 @@ export class EmployeesComponent implements OnInit {
       .getEmployees()
       .pipe(
         tap((employees) => {
-          console.log('employees : ', employees);
           this.employees = employees;
           this.fields = this.getFields();
         })
