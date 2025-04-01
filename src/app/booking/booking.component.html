@@ -36,7 +36,10 @@
         <div class="d-flex col-12 col-xl-7">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">{{ film.title }}</h5>
+              <h5 class="card-title">
+                {{ film.title }}
+                <i *ngIf="film.favorite" class="bi bi-heart ms-3"></i>
+              </h5>
               <h6 class="card-subtitle mb-2 text-muted">
                 {{ film.release_date | date : "dd MMMM yyyy" }} |
                 {{ film.genres }}<br />
