@@ -79,6 +79,10 @@ export class FilmComponent implements OnInit {
       this.genres = genres;
     });
 
+    this.cinemaService['cinemaSubject'].subscribe((cinemaId) => {
+      this.cinemaSelectedId = cinemaId;
+    });
+
     const bookingState = localStorage.getItem('bookingState');
     if (bookingState) {
       this.booking = JSON.parse(bookingState) as Booking;
@@ -108,6 +112,7 @@ export class FilmComponent implements OnInit {
 
   onCinemaChange(event: any) {
     this.cinemaSelectedId = event.value;
+    this.cinemaService.updateCinemaId(this.cinemaSelectedId);
 
     if (this.cinemaSelectedId) {
       this.filmsFiltered$ = this.filmService.getFilmsByCinema(

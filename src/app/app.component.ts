@@ -6,6 +6,9 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, switchMap } from 'rxjs';
 import { Page, Role, User } from './app';
 import { AuthService } from './auth/auth.service';
+import { CinemaService } from './film/cinema.service';
+import { OpeningHoursResponse } from './utils/utils';
+import { UtilsService } from './utils/utils.service';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +22,16 @@ export class AppComponent implements OnInit {
   public pages$ = new BehaviorSubject<Page[]>([]);
   public showLogout = false;
   private roles: Role[] = [];
+  public openings_hours: OpeningHoursResponse[] = [];
+  public currentDay: number = new Date().getDay();
+  public cinemaSelectedByUser: boolean = false;
 
   constructor(
     private translateService: TranslateService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private utilsService: UtilsService,
+    private cinemaService: CinemaService
   ) {
     this.translateService.setDefaultLang('fr');
     registerLocaleData(localeFr);
@@ -67,6 +75,17 @@ export class AppComponent implements OnInit {
         this.roles.some((role) => role.name === 'admin') ||
         this.roles.some((role) => role.name === 'user') ||
         this.roles.some((role) => role.name === 'staff');
+    });
+
+    this.cinemaService.cinemaId$.subscribe((cinemaId) => {
+      if (cinemaId)
+        this.getOpeningHours(cinemaId).subscribe(
+          (data: OpeningHoursResponse[]) => {
+            this.openings_hours = data;
+            this.cinemaSelectedByUser = true;
+          }
+        );
+      else this.cinemaSelectedByUser = false;
     });
   }
 
@@ -172,5 +191,13 @@ export class AppComponent implements OnInit {
   logout() {
     this.authService.resetUserToGuest();
     this.router.navigate(['/login']);
+  }
+
+  getOpeningHours(cinemaId: number) {
+    return this.utilsService.getOpeningHours(cinemaId);
+  }
+
+  formatTime(time: string): string {
+    return time.slice(0, 5);
   }
 }

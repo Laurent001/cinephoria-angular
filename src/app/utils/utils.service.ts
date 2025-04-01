@@ -4,12 +4,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { Screening, ScreeningsByFilmResponse } from '../screening/screening';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
+import { OpeningHoursResponse } from './utils';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment.dev';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilsService {
-  constructor(private snackBar: MatSnackBar, private modal: MatDialog) {}
+  constructor(
+    private snackBar: MatSnackBar,
+    private modal: MatDialog,
+    private http: HttpClient
+  ) {}
 
   presentAlert(
     header: string,
@@ -99,5 +106,11 @@ export class UtilsService {
 
     buildFormData(data);
     return formData;
+  }
+
+  getOpeningHours(cinemaId: number): Observable<OpeningHoursResponse[]> {
+    return this.http.get<OpeningHoursResponse[]>(
+      `${environment.url}/api/openings/${cinemaId}`
+    );
   }
 }

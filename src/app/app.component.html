@@ -54,6 +54,37 @@
         </div>
       </nav>
       <router-outlet></router-outlet>
+      <footer *ngIf="cinemaSelectedByUser" class="mt-auto bg-light py-3">
+        <div class="container w-25">
+          <div class="row">
+            <div class="col-12 text-center">
+              <h5 class="mb-3">{{ "footer-openings-hours" | translate }}</h5>
+              <ul class="opening-hours-list">
+                <li
+                  *ngFor="let opening of openings_hours"
+                  class="opening-hours-item"
+                >
+                  <span class="day">{{
+                    "days." + opening.day_of_week | translate
+                  }}</span>
+                  <span class="hours">
+                    <span *ngIf="opening.opening_time && opening.closing_time">
+                      {{ formatTime(opening.opening_time) }} -
+                      {{ formatTime(opening.closing_time) }}
+                    </span>
+                    <span
+                      *ngIf="!opening.opening_time || !opening.closing_time"
+                      class="text-muted"
+                    >
+                      {{ "footer-closed" | translate }}
+                    </span>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
     </main>
   </div>
 </div>
