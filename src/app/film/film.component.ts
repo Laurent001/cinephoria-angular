@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { BarRatingModule } from 'ngx-bar-rating';
 import { filter, Observable, take, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.dev';
 import { AuthService } from '../auth/auth.service';
@@ -35,12 +36,13 @@ import { GenreService } from './genre.service';
     MatSelectModule,
     MatInputModule,
     DatePipe,
+    BarRatingModule,
   ],
 })
 export class FilmComponent implements OnInit {
   environment = environment;
   imagesPath = environment.url + '/images/';
-  screenings!: ScreeningsByFilmResponse;
+  screenings?: ScreeningsByFilmResponse;
   protected filmsFiltered$?: Observable<FilmResponse[]>;
   protected cinemas?: CinemaResponse[];
   protected genres?: GenreResponse[];
@@ -111,6 +113,7 @@ export class FilmComponent implements OnInit {
   }
 
   onCinemaChange(event: any) {
+    this.screenings = undefined;
     this.cinemaSelectedId = event.value;
     this.cinemaService.updateCinemaId(this.cinemaSelectedId);
 
@@ -184,11 +187,11 @@ export class FilmComponent implements OnInit {
   }
 
   onScreeningSelected(screening: Screening) {
-    this.screenings.screeningSelected = screening;
+    if (this.screenings) this.screenings.screeningSelected = screening;
   }
 
   onBookingButton() {
-    if (this.screenings.screeningSelected) {
+    if (this.screenings && this.screenings.screeningSelected) {
       const booking: Booking = {
         user: this.authService.getCurrentUser(),
         totalPrice: 0,

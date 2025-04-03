@@ -8,6 +8,7 @@ export interface FilmResponse {
   favorite: number;
   poster: string;
   poster_file?: File;
+  rating?: number;
 }
 
 export interface CinemaResponse {

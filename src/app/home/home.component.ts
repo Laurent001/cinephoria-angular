@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { BarRatingModule } from 'ngx-bar-rating';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { FilmResponse } from '../film/film';
@@ -12,7 +13,7 @@ import { environment } from 'src/environments/environment.dev';
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, TranslateModule, BarRatingModule],
 })
 export class HomeComponent {
   protected films$: Observable<FilmResponse[]>;

@@ -14,7 +14,7 @@ export class ScreeningService {
 
   constructor(private http: HttpClient) {}
 
-  setScreenings(screenings: ScreeningsByFilmResponse) {
+  setScreenings(screenings: ScreeningsByFilmResponse | null) {
     this.screeningsSubject.next(screenings);
   }
 

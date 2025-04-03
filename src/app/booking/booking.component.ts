@@ -6,6 +6,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { BarRatingModule } from 'ngx-bar-rating';
 import { Observable, of, switchMap, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.dev';
 import { AuthService } from '../auth/auth.service';
@@ -39,6 +40,7 @@ import { SeatService } from './seat/seat.service';
     MatNativeDateModule,
     MatSelectModule,
     MatInputModule,
+    BarRatingModule,
   ],
 })
 export class BookingComponent implements OnInit {
@@ -149,6 +151,7 @@ export class BookingComponent implements OnInit {
 
   onCinemaChange(event: any) {
     this.screenings = undefined;
+    this.filmSelectedId = undefined;
     this.cinemaSelectedId = event.value;
     this.cinemaService.updateCinemaId(this.cinemaSelectedId);
 
@@ -181,7 +184,6 @@ export class BookingComponent implements OnInit {
       return;
     }
 
-    this.loadBookingStateFromLocalStorage();
     if (this.screeningSelected && this.screeningSelected.film?.id != filmId)
       this.screeningSelected = undefined;
 
