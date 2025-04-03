@@ -18,6 +18,20 @@
                 {{ film.title }}
                 <i *ngIf="film.favorite" class="bi bi-suit-heart-fill ms-3"></i>
               </h5>
+              <div *ngIf="film.rating" class="rating-container">
+                <bar-rating [(rate)]="film.rating" max="5" class="d-flex mb-3">
+                  <i
+                    *ratingActive
+                    class="bi bi-star-fill"
+                    style="margin: 2px; color: #edb867"
+                  ></i>
+                  <i
+                    *ratingInactive
+                    class="bi bi-star-fill"
+                    style="margin: 2px; color: #d2d2d2"
+                  ></i>
+                </bar-rating>
+              </div>
               <h6 class="card-subtitle mb-2 text-muted">
                 {{ film.release_date | date : "dd MMMM yyyy" }} |
                 {{ film.genres }}<br />
