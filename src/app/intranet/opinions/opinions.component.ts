@@ -3,8 +3,8 @@ import localeFr from '@angular/common/locales/fr';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { switchMap, tap } from 'rxjs';
-import { FilmResponse } from 'src/app/film/film';
 import { User } from 'src/app/app';
+import { FilmResponse } from 'src/app/film/film';
 import { OpinionResponse, StatusResponse } from 'src/app/space/space';
 import { Fields } from 'src/app/utils/dynamic-modal-form/dynamic-modal-form';
 import { GenericCrudTableComponent } from 'src/app/utils/generic-crud-table/generic-crud-table.component';
@@ -111,7 +111,7 @@ export class OpinionsComponent implements OnInit {
             value: 5,
           },
         ],
-        readonly: true,
+        disabled: true,
       },
       {
         name: 'description',
@@ -150,7 +150,7 @@ export class OpinionsComponent implements OnInit {
       opinion
     );
     this.opinionsService
-      .updateOpinion(OpinionModified)
+      .updateOpinionStatus(OpinionModified)
       .pipe(
         tap((opinions) => {
           this.getOpinions();

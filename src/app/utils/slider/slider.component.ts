@@ -174,8 +174,8 @@ export class SliderComponent {
     if (!this.screenings?.screenings) return false;
     const uniqueDays = [
       ...new Set(
-        this.screenings.screenings.map((screeningByDay) => {
-          const date = new Date(screeningByDay.day);
+        this.screenings.screenings.map((screening) => {
+          const date = new Date(screening.day);
           return date.toISOString().split('T')[0];
         })
       ),
