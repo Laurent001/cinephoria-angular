@@ -22,7 +22,6 @@ export class CinemaService {
       this.getCinemaById(cinemaId)
         .pipe(
           tap((cinema) => {
-            console.log('cinema : ', cinema);
             this.cinemaSubject.next(cinema);
           })
         )
