@@ -3,12 +3,11 @@ import localeFr from '@angular/common/locales/fr';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject, switchMap } from 'rxjs';
+import { BehaviorSubject, switchMap, tap } from 'rxjs';
 import { Page, Role, User } from './app';
 import { AuthService } from './auth/auth.service';
-import { CinemaService } from './film/cinema.service';
-import { OpeningHoursResponse } from './utils/utils';
-import { UtilsService } from './utils/utils.service';
+import { CinemaResponse, OpeningHoursResponse } from './cinema/cinema';
+import { CinemaService } from './cinema/cinema.service';
 
 @Component({
   selector: 'app-root',
@@ -24,13 +23,13 @@ export class AppComponent implements OnInit {
   private roles: Role[] = [];
   public openings_hours: OpeningHoursResponse[] = [];
   public currentDay: number = new Date().getDay();
+  public cinema!: CinemaResponse;
   public cinemaSelectedByUser: boolean = false;
 
   constructor(
     private translateService: TranslateService,
     private authService: AuthService,
     private router: Router,
-    private utilsService: UtilsService,
     private cinemaService: CinemaService
   ) {
     this.translateService.setDefaultLang('fr');
@@ -77,16 +76,16 @@ export class AppComponent implements OnInit {
         this.roles.some((role) => role.name === 'staff');
     });
 
-    this.cinemaService.cinemaId$.subscribe((cinemaId) => {
-      if (cinemaId)
-        this.getOpeningHours(cinemaId).subscribe(
-          (data: OpeningHoursResponse[]) => {
-            this.openings_hours = data;
+    this.cinemaService.cinema$
+      .pipe(
+        tap((cinema?: CinemaResponse) => {
+          if (cinema) {
+            this.cinema = cinema;
             this.cinemaSelectedByUser = true;
           }
-        );
-      else this.cinemaSelectedByUser = false;
-    });
+        })
+      )
+      .subscribe();
   }
 
   updatePages(roles: Role[]) {
@@ -191,10 +190,6 @@ export class AppComponent implements OnInit {
   logout() {
     this.authService.resetUserToGuest();
     this.router.navigate(['/login']);
-  }
-
-  getOpeningHours(cinemaId: number) {
-    return this.utilsService.getOpeningHours(cinemaId);
   }
 
   formatTime(time: string): string {
