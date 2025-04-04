@@ -10,8 +10,9 @@ import { BarRatingModule } from 'ngx-bar-rating';
 import { Observable, of, switchMap, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.dev';
 import { AuthService } from '../auth/auth.service';
-import { CinemaService } from '../film/cinema.service';
-import { CinemaResponse, FilmResponse } from '../film/film';
+import { CinemaResponse } from '../cinema/cinema';
+import { CinemaService } from '../cinema/cinema.service';
+import { FilmResponse } from '../film/film';
 import { FilmService } from '../film/film.service';
 import { Screening, ScreeningsByFilmResponse } from '../screening/screening';
 import { ScreeningService } from '../screening/screening.service';
@@ -80,10 +81,6 @@ export class BookingComponent implements OnInit {
       this.cinemas = cinemas;
     });
 
-    this.cinemaService['cinemaSubject'].subscribe((cinemaId) => {
-      this.cinemaSelectedId = cinemaId;
-    });
-
     this.loadBookingStateFromLocalStorage();
 
     this.screeningService.screenings$
@@ -121,7 +118,7 @@ export class BookingComponent implements OnInit {
       this.seatsSelected = this.booking.seats;
       this.totalPrice = this.booking.totalPrice;
       this.cinemaSelectedId = this.booking?.screening?.auditorium?.cinema?.id;
-      this.cinemaService.updateCinemaId(this.cinemaSelectedId);
+      this.cinemaService.updateCinemaById(this.cinemaSelectedId);
       this.filmSelectedId = this.booking.screening?.film?.id;
       this.screeningSelected = this.booking.screening;
 
@@ -153,7 +150,7 @@ export class BookingComponent implements OnInit {
     this.screenings = undefined;
     this.filmSelectedId = undefined;
     this.cinemaSelectedId = event.value;
-    this.cinemaService.updateCinemaId(this.cinemaSelectedId);
+    this.cinemaService.updateCinemaById(this.cinemaSelectedId);
 
     if (this.cinemaSelectedId) {
       this.filmsFiltered$ = this.filmService.getFilmsByCinema(

@@ -13,11 +13,12 @@ import { environment } from 'src/environments/environment.dev';
 import { AuthService } from '../auth/auth.service';
 import { Booking } from '../booking/booking';
 import { BookingStateService } from '../booking/bookingState/booking-state.service';
+import { CinemaResponse } from '../cinema/cinema';
+import { CinemaService } from '../cinema/cinema.service';
 import { Screening, ScreeningsByFilmResponse } from '../screening/screening';
 import { ScreeningService } from '../screening/screening.service';
 import { SliderComponent } from '../utils/slider/slider.component';
-import { CinemaService } from './cinema.service';
-import { CinemaResponse, FilmResponse, GenreResponse } from './film';
+import { FilmResponse, GenreResponse } from './film';
 import { FilmService } from './film.service';
 import { GenreService } from './genre.service';
 
@@ -81,9 +82,6 @@ export class FilmComponent implements OnInit {
       this.genres = genres;
     });
 
-    this.cinemaService['cinemaSubject'].subscribe((cinemaId) => {
-      this.cinemaSelectedId = cinemaId;
-    });
 
     const bookingState = localStorage.getItem('bookingState');
     if (bookingState) {
@@ -115,7 +113,7 @@ export class FilmComponent implements OnInit {
   onCinemaChange(event: any) {
     this.screenings = undefined;
     this.cinemaSelectedId = event.value;
-    this.cinemaService.updateCinemaId(this.cinemaSelectedId);
+    this.cinemaService.updateCinemaById(this.cinemaSelectedId);
 
     if (this.cinemaSelectedId) {
       this.filmsFiltered$ = this.filmService.getFilmsByCinema(
