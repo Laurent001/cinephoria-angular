@@ -54,14 +54,20 @@
         </div>
       </nav>
       <router-outlet></router-outlet>
-      <footer *ngIf="cinemaSelectedByUser" class="mt-auto bg-light py-3">
-        <div class="container w-25">
+      <footer *ngIf="cinema" class="mt-auto bg-light py-3">
+        <div class="container w-50">
           <div class="row">
             <div class="col-12 text-center">
-              <h5 class="mb-3">{{ "footer-openings-hours" | translate }}</h5>
+              <h5 class="mb-3">
+                {{ "footer-openings-hours" | translate }}
+              </h5>
+              <h6>{{ cinema.name }} - {{ cinema.phone }}</h6>
+              <h6>
+                {{ cinema.address }} - {{ cinema.postcode }} {{ cinema.city }}
+              </h6>
               <ul class="opening-hours-list">
                 <li
-                  *ngFor="let opening of openings_hours"
+                  *ngFor="let opening of cinema.opening_hours"
                   class="opening-hours-item"
                 >
                   <span class="day">{{

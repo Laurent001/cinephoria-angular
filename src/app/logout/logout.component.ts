@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
-import { CinemaService } from '../film/cinema.service';
+import { CinemaService } from '../cinema/cinema.service';
 
 @Component({
   selector: 'app-logout',
@@ -17,7 +17,7 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit() {
     this.authService.resetUserToGuest();
-    this.cinemaService.updateCinemaId(undefined);
+    this.cinemaService.updateCinemaById(undefined);
     this.router.navigate(['/home']);
   }
 }

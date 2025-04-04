@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Role, User } from '../app';
 import { AuthService } from '../auth/auth.service';
-import { CinemaService } from '../film/cinema.service';
+import { CinemaService } from '../cinema/cinema.service';
 import { UtilsService } from '../utils/utils.service';
 import { LoginService } from './login.service';
 
@@ -51,11 +51,10 @@ export class LoginComponent {
     private cinemaService: CinemaService
   ) {
     this.translate.setDefaultLang('fr');
-    this.cinemaService.updateCinemaId(undefined);
   }
 
   ngOnInit() {
-    this.cinemaService.updateCinemaId(undefined);
+    this.cinemaService.updateCinemaById(undefined);
   }
 
   login(email: string, password: string) {

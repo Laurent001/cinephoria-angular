@@ -1,3 +1,5 @@
+import { CinemaResponse } from '../cinema/cinema';
+
 export interface FilmResponse {
   id?: number;
   title: string;
@@ -9,15 +11,6 @@ export interface FilmResponse {
   poster: string;
   poster_file?: File;
   rating?: number;
-}
-
-export interface CinemaResponse {
-  id: number;
-  name: string;
-  address: string;
-  city: string;
-  postcode: number;
-  phone: number;
 }
 
 export interface GenreResponse {
