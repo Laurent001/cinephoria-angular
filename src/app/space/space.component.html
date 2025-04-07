@@ -39,6 +39,7 @@
       [src]="imagesPath + booking.screening?.film?.poster"
       alt="Affiche du film"
     />
+    <app-qrcode *ngIf="booking.id" [bookingId]="booking.id"></app-qrcode>
   </div>
 
   <h3>{{ "space-closed-bookings-title" | translate }}</h3>

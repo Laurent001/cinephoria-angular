@@ -15,6 +15,7 @@ import { DynamicModalFormComponent } from '../utils/dynamic-modal-form/dynamic-m
 import { UtilsService } from '../utils/utils.service';
 import { OpinionResponse, SpaceResponse, StatusResponse } from './space';
 import { SpaceService } from './space.service';
+import { QRCodeComponent } from '../booking/qrcode/qrcode.component';
 
 @Component({
   selector: 'app-space',
@@ -27,6 +28,7 @@ import { SpaceService } from './space.service';
     TranslateModule,
     DynamicModalFormComponent,
     BarRatingModule,
+    QRCodeComponent,
   ],
 })
 export class SpaceComponent implements OnInit {
