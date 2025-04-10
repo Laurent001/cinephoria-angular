@@ -10,7 +10,7 @@ import { DashboardService } from './dashboard.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  styleUrls: ['./dashboard.component.scss'],
   standalone: true,
   imports: [BaseChartDirective, CommonModule, TranslateModule],
 })

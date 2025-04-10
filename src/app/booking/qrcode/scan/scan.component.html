@@ -1,0 +1,82 @@
+<div class="scan-container">
+  <!-- Header section -->
+  <div class="header">
+    <h2>Scanner un ticket</h2>
+    <p *ngIf="!scanning && !scanResult">
+      Utilisez la caméra pour scanner le QR code d'un ticket
+    </p>
+  </div>
+
+  <!-- Scanner controls and status -->
+  <div class="scanner-controls">
+    <!-- Big scan button when not scanning -->
+    <button
+      *ngIf="!scanning && !scanResult"
+      class="scan-button"
+      (click)="startScanner()"
+    >
+      <span>Scanner un QR code</span>
+    </button>
+
+    <!-- Camera view when scanning -->
+    <div *ngIf="scanning" class="camera-container">
+      <video #video playsinline autoplay></video>
+      <canvas #canvas class="qr-canvas" hidden></canvas>
+
+      <div class="scanner-overlay">
+        <div class="scan-region"></div>
+      </div>
+
+      <button class="cancel-button" (click)="stopScanner()">Annuler</button>
+    </div>
+
+    <!-- Error message -->
+    <div *ngIf="scanError" class="error-message">
+      <p>{{ scanError }}</p>
+      <button class="retry-button" (click)="startScanner()">Réessayer</button>
+    </div>
+  </div>
+
+  <!-- Results section -->
+  <div *ngIf="scanResult" class="result-container">
+    <div
+      class="result-card"
+      [ngClass]="{ valid: scanResult.valid, invalid: !scanResult.valid }"
+    >
+      <div class="result-header">
+        <span class="status-icon">
+          <span *ngIf="scanResult.valid">✓</span>
+          <span *ngIf="!scanResult.valid">✗</span>
+        </span>
+        <h3>{{ scanResult.valid ? "Ticket valide" : "Ticket invalide" }}</h3>
+      </div>
+
+      <div class="result-details">
+        <div *ngIf="scanResult.valid">
+          <p class="detail-item">
+            <strong>Film:</strong> {{ scanResult.movieTitle }}
+          </p>
+          <p class="detail-item">
+            <strong>Séance:</strong>
+            {{ scanResult.date | date : "dd/MM/yyyy" }} à {{ scanResult.time }}
+          </p>
+          <p class="detail-item">
+            <strong>Siège:</strong> {{ scanResult.seat }}
+          </p>
+          <p class="detail-item">
+            <strong>Client:</strong> {{ scanResult.customerName }}
+          </p>
+        </div>
+        <div *ngIf="!scanResult.valid">
+          <p class="detail-item">
+            <strong>Raison:</strong> {{ scanResult.reason }}
+          </p>
+        </div>
+      </div>
+
+      <button class="scan-again-button" (click)="scanAgain()">
+        Scanner un autre ticket
+      </button>
+    </div>
+  </div>
+</div>

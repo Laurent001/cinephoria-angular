@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { BarRatingModule } from 'ngx-bar-rating';
 import { Observable, of, switchMap, tap } from 'rxjs';
-import { environment } from 'src/environments/environment.dev';
+import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { Booking } from '../booking/booking';
 import { BookingService } from '../booking/booking.service';
+import { QRCodeComponent } from '../booking/qrcode/qrcode.component';
 import { FilmService } from '../film/film.service';
 import { OpinionsService } from '../intranet/opinions/opinions.service';
 import { Fields } from '../utils/dynamic-modal-form/dynamic-modal-form';
@@ -15,7 +16,6 @@ import { DynamicModalFormComponent } from '../utils/dynamic-modal-form/dynamic-m
 import { UtilsService } from '../utils/utils.service';
 import { OpinionResponse, SpaceResponse, StatusResponse } from './space';
 import { SpaceService } from './space.service';
-import { QRCodeComponent } from '../booking/qrcode/qrcode.component';
 
 @Component({
   selector: 'app-space',

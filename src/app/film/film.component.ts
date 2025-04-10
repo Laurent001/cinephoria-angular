@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BarRatingModule } from 'ngx-bar-rating';
 import { filter, Observable, take, tap } from 'rxjs';
-import { environment } from 'src/environments/environment.dev';
+import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { Booking } from '../booking/booking';
 import { BookingStateService } from '../booking/bookingState/booking-state.service';
@@ -81,7 +81,6 @@ export class FilmComponent implements OnInit {
     this.genreService.getGenres().subscribe((genres: GenreResponse[]) => {
       this.genres = genres;
     });
-
 
     const bookingState = localStorage.getItem('bookingState');
     if (bookingState) {

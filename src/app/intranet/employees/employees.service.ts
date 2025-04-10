@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/app';
-import { environment } from 'src/environments/environment.dev';
+import { environment } from 'src/environments/environment';
 const ROLE_STAFF = 'staff';
 
 @Injectable({

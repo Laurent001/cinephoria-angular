@@ -8,7 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BarRatingModule } from 'ngx-bar-rating';
 import { Observable, of, switchMap, tap } from 'rxjs';
-import { environment } from 'src/environments/environment.dev';
+import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { CinemaResponse } from '../cinema/cinema';
 import { CinemaService } from '../cinema/cinema.service';
