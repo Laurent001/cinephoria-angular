@@ -18,7 +18,7 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { AppComponent } from './app/app.component';
 import { initRoutes } from './app/app.routes';
 import { authInterceptor } from './app/config/auth.interceptor';
-import { environment } from './environments/environment.dev';
+import { environment } from './environments/environment';
 
 registerLocaleData(localeFr);
 

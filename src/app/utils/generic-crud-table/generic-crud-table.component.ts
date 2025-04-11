@@ -14,7 +14,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { User } from 'src/app/app';
 import { AuthService } from 'src/app/auth/auth.service';
-import { environment } from 'src/environments/environment.dev';
+import { environment } from 'src/environments/environment';
 import { Fields } from '../dynamic-modal-form/dynamic-modal-form';
 import { DynamicModalFormComponent } from '../dynamic-modal-form/dynamic-modal-form.component';
 import { UtilsService } from '../utils.service';

@@ -65,6 +65,7 @@
   "intranet-opinion": "Avis",
   "intranet-dashboard": "Tableau de bord",
   "intranet-employee": "Employés",
+  "intranet-scan": "Scan QR Code",
   "space-open-bookings-title": "Réservations ouvertes",
   "space-closed-bookings-title": "Réservations anciennes",
   "space-screening-start_time": "Date : ",
@@ -78,6 +79,7 @@
   "space-film-update-rating": "Modifier votre note",
   "space-screening-delete": "Supprimer",
   "space-screening-rating": "Votre note : ",
+  "space-qrcode-title": "QR Code",
   "dashboard-choose-film": "Choisissez un film",
   "dashboard-booking": "Réservations",
   "days": {

@@ -10,6 +10,7 @@ import { FilmsComponent } from './films/films.component';
 import { OpinionsComponent } from './opinions/opinions.component';
 import { ScreeningsComponent } from './screenings/screenings.component';
 import { DashboardComponent } from '../utils/dashboard/dashboard.component';
+import { ScanTicketComponent } from '../booking/qrcode/scan/scan.component';
 
 @Component({
   selector: 'app-intranet',
@@ -26,6 +27,7 @@ import { DashboardComponent } from '../utils/dashboard/dashboard.component';
     CommonModule,
     EmployeesComponent,
     DashboardComponent,
+    ScanTicketComponent,
   ],
 })
 export class IntranetComponent implements OnInit {

@@ -37,6 +37,24 @@
       </button>
     </li>
     <li
+      *ngIf="userRole.id === ROLE_STAFF"
+      class="nav-item flex-fill"
+      role="presentation"
+    >
+      <button
+        class="nav-link w-100"
+        id="pills-scan-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-scan"
+        type="button"
+        role="tab"
+        aria-controls="pills-scan"
+        aria-selected="false"
+      >
+        {{ "intranet-scan" | translate }}
+      </button>
+    </li>
+    <li
       *ngIf="userRole.id === ROLE_ADMIN"
       class="nav-item flex-fill"
       role="presentation"
@@ -102,6 +120,19 @@
       aria-labelledby="pills-opinion-tab"
     >
       <app-opinions></app-opinions>
+    </div>
+  </div>
+
+  <!-- scan QR Code-->
+  <div class="tab-content" id="pills-tabContent">
+    <div
+      *ngIf="userRole.id === ROLE_STAFF"
+      class="tab-pane fade"
+      id="pills-scan"
+      role="tabpanel"
+      aria-labelledby="pills-scan-tab"
+    >
+      <app-scan></app-scan>
     </div>
   </div>
 
