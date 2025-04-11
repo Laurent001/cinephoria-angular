@@ -1,7 +1,10 @@
 <div class="bookings-container m-5">
   <h3>{{ "space-open-bookings-title" | translate }}</h3>
-  <div class="booking-card" *ngFor="let booking of space.openBookings">
-    <div class="booking-info">
+  <div
+    class="booking-card flex-column flex-lg-row w-100 position-relative"
+    *ngFor="let booking of space.openBookings"
+  >
+    <div class="booking-info flex-grow-1 me-lg-3 align-self-center">
       <p>
         <strong>{{ "space-screening-start_time" | translate }}</strong>
         {{ booking.screening?.start_time | date : "dd MMMM yyyy" }}
@@ -26,19 +29,25 @@
         <strong>{{ "space-screening-auditorium" | translate }}</strong>
         {{ booking.screening?.auditorium?.name }}
       </p>
-      <button
-        class="btn btn-danger"
-        *ngIf="booking.id"
-        (click)="deleteBooking(booking.id)"
-      >
-        {{ "space-screening-delete" | translate }}
-      </button>
     </div>
     <img
-      class="booking-poster"
+      class="booking-poster flex-lg-grow-0 me-lg-3 align-self-center img-fluid"
       [src]="imagesPath + booking.screening?.film?.poster"
       alt="Affiche du film"
     />
+
+    <app-qrcode
+      *ngIf="booking.id"
+      [bookingId]="booking.id"
+      class="flex-shrink-1 align-self-center"
+    ></app-qrcode>
+    <button
+      class="btn btn-danger bottom-0 end-0 m-3"
+      *ngIf="booking.id"
+      (click)="deleteBooking(booking.id)"
+    >
+      {{ "space-screening-delete" | translate }}
+    </button>
   </div>
 
   <h3>{{ "space-closed-bookings-title" | translate }}</h3>

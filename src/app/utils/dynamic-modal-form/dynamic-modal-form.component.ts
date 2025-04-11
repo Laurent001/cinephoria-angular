@@ -23,12 +23,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { environment } from 'src/environments/environment.dev';
+import { environment } from 'src/environments/environment';
 import { Fields } from './dynamic-modal-form';
 
 @Component({
   selector: 'app-dynamic-modal-form',
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -45,6 +44,7 @@ import { Fields } from './dynamic-modal-form';
   templateUrl: './dynamic-modal-form.component.html',
   styleUrls: ['./dynamic-modal-form.component.scss'],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
+  standalone: true,
 })
 export class DynamicModalFormComponent implements OnInit {
   @Input() title!: string;

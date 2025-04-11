@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { environment } from 'src/environments/environment.dev';
+import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { UtilsService } from '../utils/utils.service';
 import { Booking, BookingResponse, BookingValidateResponse } from './booking';
