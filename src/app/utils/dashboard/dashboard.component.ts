@@ -32,7 +32,6 @@ export class DashboardComponent {
     private dashboardService: DashboardService,
     private filmService: FilmService
   ) {
-    this.translateService.setDefaultLang('fr');
     this.updateChartData();
   }
 

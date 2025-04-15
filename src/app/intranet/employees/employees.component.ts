@@ -37,14 +37,10 @@ export class EmployeesComponent implements OnInit {
   };
 
   constructor(
-    private translate: TranslateService,
     private employeesService: EmployeesService,
     private utilsService: UtilsService,
     private loginService: LoginService
-  ) {
-    this.translate.setDefaultLang('fr');
-    registerLocaleData(localeFr);
-  }
+  ) {}
 
   ngOnInit() {
     this.getEmployees();

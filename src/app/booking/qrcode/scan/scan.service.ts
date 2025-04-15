@@ -18,7 +18,6 @@ export class CameraService {
     }
 
     try {
-      // Pour Capacitor v3+
       await Camera.requestPermissions();
       return true;
     } catch (error) {

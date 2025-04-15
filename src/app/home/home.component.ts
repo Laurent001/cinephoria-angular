@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { BarRatingModule } from 'ngx-bar-rating';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -20,11 +20,7 @@ export class HomeComponent {
   environment = environment;
   imagesPath = environment.url + '/images/';
 
-  constructor(
-    private filmService: FilmService,
-    private translate: TranslateService
-  ) {
-    this.translate.setDefaultLang('fr');
+  constructor(private filmService: FilmService) {
     this.films$ = this.filmService.getFilms();
   }
 }

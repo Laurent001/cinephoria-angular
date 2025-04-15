@@ -1,43 +1,41 @@
 <div class="scan-container">
-  <!-- Header section -->
   <div class="header">
-    <h2>Scanner un ticket</h2>
+    <h2>{{ "scan-ticket" | translate }}</h2>
     <p *ngIf="!scanning && !scanResult">
-      Utilisez la caméra pour scanner le QR code d'un ticket
+      {{ "scan-instruction" | translate }}
     </p>
   </div>
 
-  <!-- Scanner controls and status -->
   <div class="scanner-controls">
-    <!-- Big scan button when not scanning -->
     <button
       *ngIf="!scanning && !scanResult"
-      class="scan-button"
-      (click)="startScanner()"
+      class="scan-button btn-primary"
+      (click)="prepareScanner()"
     >
-      <span>Scanner un QR code</span>
+      <span>{{ "scan-button" | translate }}</span>
     </button>
 
-    <!-- Camera view when scanning -->
     <div *ngIf="scanning" class="camera-container">
       <video #video playsinline autoplay></video>
-      <canvas #canvas class="qr-canvas" hidden></canvas>
+      <canvas #canvas class="qr-canvas"></canvas>
 
       <div class="scanner-overlay">
         <div class="scan-region"></div>
       </div>
 
-      <button class="cancel-button" (click)="stopScanner()">Annuler</button>
+      <button class="cancel-button" (click)="stopScanner()">
+        {{ "scan-cancel" | translate }}
+      </button>
     </div>
 
-    <!-- Error message -->
     <div *ngIf="scanError" class="error-message">
       <p>{{ scanError }}</p>
-      <button class="retry-button" (click)="startScanner()">Réessayer</button>
+      <button class="retry-button" (click)="startScanner()">
+        {{ "scan-retry" | translate }}
+      </button>
     </div>
   </div>
 
-  <!-- Results section -->
   <div *ngIf="scanResult" class="result-container">
     <div
       class="result-card"
@@ -45,38 +43,70 @@
     >
       <div class="result-header">
         <span class="status-icon">
-          <span *ngIf="scanResult.valid">✓</span>
-          <span *ngIf="!scanResult.valid">✗</span>
+          <span *ngIf="scanResult.valid" class="valid">✓</span>
+          <span *ngIf="!scanResult.valid" class="invalid">✗</span>
         </span>
-        <h3>{{ scanResult.valid ? "Ticket valide" : "Ticket invalide" }}</h3>
+        <h3>
+          {{
+            scanResult.valid
+              ? ("scan-valid" | translate)
+              : ("scan-invalid" | translate)
+          }}
+        </h3>
       </div>
 
       <div class="result-details">
-        <div *ngIf="scanResult.valid">
+        <ng-container *ngIf="scanResult.valid; else invalidDetails">
           <p class="detail-item">
-            <strong>Film:</strong> {{ scanResult.movieTitle }}
+            <strong>{{ "scan-film" | translate }}</strong>
+            {{ scanResult.film_title }}
           </p>
           <p class="detail-item">
-            <strong>Séance:</strong>
-            {{ scanResult.date | date : "dd/MM/yyyy" }} à {{ scanResult.time }}
+            <strong>{{ "scan-auditorium" | translate }}</strong>
+            {{ scanResult.auditorium_name }}
           </p>
           <p class="detail-item">
-            <strong>Siège:</strong> {{ scanResult.seat }}
+            <strong>{{ "scan-session" | translate }}</strong>
+            {{ scanResult.screening_start_time | date : "dd/MM/yyyy HH:mm" }} à
+            {{ scanResult.screening_end_time | date : "HH:mm" }}
           </p>
           <p class="detail-item">
-            <strong>Client:</strong> {{ scanResult.customerName }}
+            <strong>{{ "scan-seat" | translate }}</strong>
+            {{ scanResult.seat_numbers }}
           </p>
-        </div>
-        <div *ngIf="!scanResult.valid">
           <p class="detail-item">
-            <strong>Raison:</strong> {{ scanResult.reason }}
+            <strong>{{ "scan-email" | translate }}</strong>
+            {{ scanResult.user_email }}
           </p>
-        </div>
-      </div>
+          <p class="detail-item">
+            <strong>{{ "scan-lastname" | translate }}</strong>
+            {{ scanResult.user_last_name }}
+          </p>
+          <p class="detail-item">
+            <strong>{{ "scan-firstname" | translate }}</strong>
+            {{ scanResult.user_first_name }}
+          </p>
+          <p class="detail-item">
+            <strong>{{ "scan-quality" | translate }}</strong>
+            {{ scanResult.quality_name }}
+          </p>
+        </ng-container>
 
-      <button class="scan-again-button" (click)="scanAgain()">
-        Scanner un autre ticket
-      </button>
+        <ng-template #invalidDetails>
+          <p class="detail-item">
+            <strong>{{ "scan-reason" | translate }}</strong>
+            {{ scanResult.reason }}
+          </p>
+        </ng-template>
+      </div>
     </div>
   </div>
+
+  <button
+    *ngIf="scanResult"
+    class="btn btn-primary scan-again-button mt-3"
+    (click)="scanAgain()"
+  >
+    {{ "scan-again" | translate }}
+  </button>
 </div>

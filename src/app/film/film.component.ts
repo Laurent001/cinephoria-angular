@@ -60,13 +60,12 @@ export class FilmComponent implements OnInit {
     private filmService: FilmService,
     private cinemaService: CinemaService,
     private genreService: GenreService,
-    private translate: TranslateService,
     private router: Router,
     private screeningService: ScreeningService,
     private bookingStateService: BookingStateService,
     private authService: AuthService
   ) {
-    this.translate.setDefaultLang('fr');
+
   }
 
   ngOnInit() {

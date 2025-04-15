@@ -47,11 +47,8 @@ export class LoginComponent {
     private loginService: LoginService,
     private authService: AuthService,
     private utilsService: UtilsService,
-    private translate: TranslateService,
     private cinemaService: CinemaService
-  ) {
-    this.translate.setDefaultLang('fr');
-  }
+  ) {}
 
   ngOnInit() {
     this.cinemaService.updateCinemaById(undefined);

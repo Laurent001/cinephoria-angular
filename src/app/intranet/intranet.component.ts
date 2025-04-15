@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { Role } from '../app';
 import { AuthService } from '../auth/auth.service';
+import { ScanTicketComponent } from '../booking/qrcode/scan/scan.component';
+import { DashboardComponent } from '../utils/dashboard/dashboard.component';
 import { AuditoriumsComponent } from './auditoriums/auditoriums.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { FilmsComponent } from './films/films.component';
 import { OpinionsComponent } from './opinions/opinions.component';
 import { ScreeningsComponent } from './screenings/screenings.component';
-import { DashboardComponent } from '../utils/dashboard/dashboard.component';
-import { ScanTicketComponent } from '../booking/qrcode/scan/scan.component';
 
 @Component({
   selector: 'app-intranet',
@@ -36,11 +36,7 @@ export class IntranetComponent implements OnInit {
   ROLE_STAFF = 2;
   ROLE_USER = 3;
 
-  constructor(
-    private translate: TranslateService,
-    private authService: AuthService
-  ) {
-    this.translate.setDefaultLang('fr');
+  constructor(private authService: AuthService) {
     const user = this.authService.getCurrentUser();
     if (user) {
       this.userRole = user.role;
