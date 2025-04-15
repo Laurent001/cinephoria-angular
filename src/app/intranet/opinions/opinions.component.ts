@@ -1,7 +1,6 @@
-import { CommonModule, registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
+import { CommonModule } from '@angular/common';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { switchMap, tap } from 'rxjs';
 import { User } from 'src/app/app';
 import { FilmResponse } from 'src/app/film/film';
@@ -43,13 +42,9 @@ export class OpinionsComponent implements OnInit {
   };
 
   constructor(
-    private translate: TranslateService,
     private opinionsService: OpinionsService,
     private utilsService: UtilsService
-  ) {
-    this.translate.setDefaultLang('fr');
-    registerLocaleData(localeFr);
-  }
+  ) {}
 
   ngOnInit() {
     this.getOpinions();

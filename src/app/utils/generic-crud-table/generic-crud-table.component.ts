@@ -1,5 +1,4 @@
-import { CommonModule, registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -11,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { User } from 'src/app/app';
 import { AuthService } from 'src/app/auth/auth.service';
 import { environment } from 'src/environments/environment';
@@ -63,13 +62,9 @@ export class GenericCrudTableComponent implements OnInit {
   totalPages: number = 1;
 
   constructor(
-    private translate: TranslateService,
     private authService: AuthService,
     private utilsService: UtilsService
-  ) {
-    this.translate.setDefaultLang('fr');
-    registerLocaleData(localeFr);
-  }
+  ) {}
 
   ngOnInit() {
     this.updatePagination();

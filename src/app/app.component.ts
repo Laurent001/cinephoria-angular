@@ -33,7 +33,6 @@ export class AppComponent implements OnInit {
     private cinemaService: CinemaService
   ) {
     this.translateService.setDefaultLang('fr');
-    registerLocaleData(localeFr);
   }
 
   ngOnInit() {

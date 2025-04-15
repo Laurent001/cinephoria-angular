@@ -1,7 +1,6 @@
-import { CommonModule, registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
+import { CommonModule } from '@angular/common';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { Subscription, switchMap, tap } from 'rxjs';
 import { Auditorium, FilmResponse } from 'src/app/film/film';
 import { FilmService } from 'src/app/film/film.service';
@@ -48,15 +47,11 @@ export class ScreeningsComponent implements OnInit {
   };
 
   constructor(
-    private translate: TranslateService,
     private screeningsService: ScreeningsService,
     private utilsService: UtilsService,
     private filmService: FilmService,
     private auditoriumsService: AuditoriumsService
-  ) {
-    this.translate.setDefaultLang('fr');
-    registerLocaleData(localeFr);
-  }
+  ) {}
 
   ngOnInit() {
     this.getScreenings();
