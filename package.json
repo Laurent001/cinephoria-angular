@@ -5,9 +5,11 @@
   "homepage": "https://angular.dev/",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
     "build": "ng build --configuration=production",
     "watch": "ng build --watch --configuration=development",
+    "build:android": "ng build --configuration=development && npx cap add android && npx cap sync android && node scripts/fix-manifest.js && npx cap open android",
+    "build:sync-android": "ng build --configuration=development && npx cap sync android && node scripts/enrich-manifest.js",
+    "deploy-dev": "sudo scp -P 903 -r ~/www/formation/studi/cinephoria/frontend/dist/browser/* root@192.168.1.77:/var/www/html/cinephoria/",
     "test": "ng test",
     "lint": "ng lint"
   },
@@ -52,6 +54,7 @@
     "@angular/language-service": "^19.1.6",
     "@capacitor/cli": "^7.2.0",
     "@types/jasmine": "~5.1.0",
+    "@types/jwt-decode": "^2.2.1",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
     "eslint": "^9.16.0",
@@ -60,6 +63,7 @@
     "eslint-plugin-prefer-arrow": "1.2.2",
     "jasmine-core": "~5.1.0",
     "jasmine-spec-reporter": "~5.0.0",
+    "jwt-decode": "^4.0.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: 'https://192.168.1.91:3000',
+  url: 'https://cinephoria.affiche.site',
 };
 
 /*

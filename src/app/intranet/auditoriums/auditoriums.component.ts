@@ -42,12 +42,10 @@ export class AuditoriumsComponent implements OnInit {
   };
 
   constructor(
-    private translate: TranslateService,
     private utilsService: UtilsService,
     private auditoriumsService: AuditoriumsService
   ) {
-    this.translate.setDefaultLang('fr');
-    registerLocaleData(localeFr);
+
   }
 
   ngOnInit() {

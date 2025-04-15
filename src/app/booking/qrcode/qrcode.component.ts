@@ -21,10 +21,9 @@ export class QRCodeComponent {
   environment = environment;
 
   constructor(
-    private translate: TranslateService,
     private qrCodeService: QRCodeService
   ) {
-    this.translate.setDefaultLang('fr');
+
   }
 
   ngOnInit() {

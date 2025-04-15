@@ -22,7 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import { Fields } from './dynamic-modal-form';
 
@@ -56,9 +56,7 @@ export class DynamicModalFormComponent implements OnInit {
   form!: FormGroup;
   selectedFile: File | null = null;
 
-  constructor(private fb: FormBuilder, private translate: TranslateService) {
-    this.translate.setDefaultLang('fr');
-  }
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
     const controls: { [key: string]: any } = {};

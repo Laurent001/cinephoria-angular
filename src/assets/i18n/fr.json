@@ -92,5 +92,22 @@
     "6": "Samedi"
   },
   "footer-openings-hours": "Horaires d'ouverture",
-  "footer-closed": "Fermé"
+  "footer-closed": "Fermé",
+  "scan-ticket": "Scanner un ticket",
+  "scan-instruction": "Utilisez la caméra pour scanner le QR code d'un ticket",
+  "scan-button": "Scanner un QR code",
+  "scan-cancel": "Annuler",
+  "scan-retry": "Réessayer",
+  "scan-valid": "Ticket valide",
+  "scan-invalid": "Ticket invalide",
+  "scan-film": "Film : ",
+  "scan-session": "Séance : ",
+  "scan-seat": "Siège : ",
+  "scan-email": "email : ",
+  "scan-lastname": "Nom : ",
+  "scan-firstname": "Prénom : ",
+  "scan-quality": "Qualité : ",
+  "scan-reason": "Raison : ",
+  "scan-auditorium": "Salle : ",
+  "scan-again": "Scanner un autre ticket"
 }

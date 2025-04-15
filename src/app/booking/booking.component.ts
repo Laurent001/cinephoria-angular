@@ -66,15 +66,12 @@ export class BookingComponent implements OnInit {
     private filmService: FilmService,
     private authService: AuthService,
     private cinemaService: CinemaService,
-    private translate: TranslateService,
     private utilsService: UtilsService,
     private screeningService: ScreeningService,
     private bookingStateService: BookingStateService,
     private seatService: SeatService,
     private bookingService: BookingService
-  ) {
-    this.translate.setDefaultLang('fr');
-  }
+  ) {}
 
   ngOnInit() {
     this.cinemaService.getCinemas().subscribe((cinemas: CinemaResponse[]) => {

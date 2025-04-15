@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { UtilsService } from 'src/app/utils/utils.service';
 import { AuthService } from '../auth.service';
 
@@ -35,11 +35,9 @@ export class PasswordResetRequestComponent {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private translate: TranslateService,
+
     private utilsService: UtilsService
   ) {
-    this.translate.setDefaultLang('fr');
-
     this.resetForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
     });

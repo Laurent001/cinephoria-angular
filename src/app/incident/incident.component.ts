@@ -45,12 +45,10 @@ export class IncidentComponent implements OnInit {
   };
 
   constructor(
-    private translate: TranslateService,
     private incidentService: IncidentService,
     private utilsService: UtilsService
   ) {
-    this.translate.setDefaultLang('fr');
-    registerLocaleData(localeFr);
+
   }
 
   ngOnInit() {

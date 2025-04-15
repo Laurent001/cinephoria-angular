@@ -11,7 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { UtilsService } from 'src/app/utils/utils.service';
 import { AuthService } from '../auth.service';
 import { passwordValidator } from './password-validator';
@@ -38,13 +38,11 @@ export class PasswordResetComponent {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private translate: TranslateService,
+
     private utilsService: UtilsService,
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.translate.setDefaultLang('fr');
-
     this.resetForm = this.fb.group({
       password: [
         '',
