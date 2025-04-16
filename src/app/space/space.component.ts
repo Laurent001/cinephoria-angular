@@ -6,7 +6,7 @@ import { BarRatingModule } from 'ngx-bar-rating';
 import { Observable, of, switchMap, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
-import { Booking } from '../booking/booking';
+import { Booking, BookingWithOccurrence } from '../booking/booking';
 import { BookingService } from '../booking/booking.service';
 import { QRCodeComponent } from '../booking/qrcode/qrcode.component';
 import { FilmService } from '../film/film.service';
@@ -63,7 +63,25 @@ export class SpaceComponent implements OnInit {
     return this.spaceService.getSpaceByUserId(this.userId).pipe(
       tap((spaceResponse) => {
         this.space.openBookings = spaceResponse.openBookings;
-        this.space.closedBookings = spaceResponse.closedBookings;
+
+        const seenFilmIds = new Set<number>();
+
+        this.space.closedBookings = spaceResponse.closedBookings.map(
+          (booking) => {
+            const filmId = booking?.screening?.film?.id;
+
+            const bookingWithFlag = booking as BookingWithOccurrence;
+
+            if (filmId && !seenFilmIds.has(filmId)) {
+              seenFilmIds.add(filmId);
+              bookingWithFlag.isFirstOccurrence = true;
+            } else {
+              bookingWithFlag.isFirstOccurrence = false;
+            }
+
+            return bookingWithFlag;
+          }
+        );
         this.statuses = spaceResponse.statuses;
       })
     );
@@ -177,7 +195,7 @@ export class SpaceComponent implements OnInit {
               }),
               tap(() => {
                 this.utilsService.presentAlert(
-                  'Suppression réussie ',
+                  'Suppression réussie',
                   'Votre réservation a été supprimée',
                   ['OK'],
                   'success'
@@ -247,18 +265,44 @@ export class SpaceComponent implements OnInit {
           .pipe(
             tap((response) => {
               this.addBookingOpinionId(response.opinionId, finalOpinion);
-            })
+            }),
+            switchMap(() => this.loadUserSpace())
           )
-          .subscribe();
+          .subscribe({
+            next: () => {
+              console.log(
+                "Espace utilisateur rechargé après ajout de l'opinion"
+              );
+            },
+            error: (err) => {
+              console.error(
+                "Erreur lors du chargement de l'espace utilisateur après ajout de l'opinion",
+                err
+              );
+            },
+          });
       } else {
         this.opinionService
           .updateOpinion(finalOpinion)
           .pipe(
             tap((response) => {
               this.updateBookingOpinion(finalOpinion);
-            })
+            }),
+            switchMap(() => this.loadUserSpace())
           )
-          .subscribe();
+          .subscribe({
+            next: () => {
+              console.log(
+                "Espace utilisateur rechargé après mise à jour de l'opinion"
+              );
+            },
+            error: (err) => {
+              console.error(
+                "Erreur lors du chargement de l'espace utilisateur après mise à jour de l'opinion",
+                err
+              );
+            },
+          });
       }
     }
   }
