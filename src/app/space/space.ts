@@ -1,10 +1,10 @@
-import { Booking } from '../booking/booking';
-import { FilmResponse } from '../film/film';
 import { User } from '../app';
+import { Booking, BookingWithOccurrence } from '../booking/booking';
+import { FilmResponse } from '../film/film';
 
 export interface SpaceResponse {
   openBookings: Booking[];
-  closedBookings: Booking[];
+  closedBookings: BookingWithOccurrence[];
   statuses: StatusResponse[];
 }
 

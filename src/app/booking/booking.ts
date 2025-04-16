@@ -19,9 +19,14 @@ export interface BookingValidateResponse {
 
 export interface Booking {
   id?: number;
+  film_id?: number;
   user?: User;
   totalPrice: number;
   screening?: Screening;
   seats: SeatResponse[];
   opinion?: OpinionResponse;
+}
+
+export interface BookingWithOccurrence extends Booking {
+  isFirstOccurrence?: boolean;
 }

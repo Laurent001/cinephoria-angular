@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { UtilsService } from '../utils/utils.service';
@@ -55,7 +55,7 @@ export class BookingService {
     return this.http.delete<Boolean>(`${environment.url}/api/booking/${id}`);
   }
 
-  scoreFilmById(id: number, rating: number): void {
+  scoreFilmById(id: number, rating: number): Observable<void> {
     const userId = this.authService.getCurrentUser()?.id;
     if (!userId) {
       this.utilsService.presentAlert(
@@ -64,31 +64,33 @@ export class BookingService {
         ['OK'],
         'warn'
       );
-      return;
+      return EMPTY;
     }
 
-    this.http
+    return this.http
       .put<void>(`${environment.url}/api/film/${id}/score`, {
         rating,
         userId,
       })
-      .subscribe({
-        next: () => {
-          this.utilsService.presentAlert(
-            'Succès',
-            'Votre note a bien été enregistrée',
-            ['OK'],
-            'success'
-          );
-        },
-        error: () => {
-          this.utilsService.presentAlert(
-            'Attention',
-            'Un problème a été rencontré lors de la mise à jour de la note',
-            ['OK'],
-            'warn'
-          );
-        },
-      });
+      .pipe(
+        tap({
+          next: () => {
+            this.utilsService.presentAlert(
+              'Succès',
+              'Votre note a bien été enregistrée',
+              ['OK'],
+              'success'
+            );
+          },
+          error: () => {
+            this.utilsService.presentAlert(
+              'Attention',
+              'Un problème a été rencontré lors de la mise à jour de la note',
+              ['OK'],
+              'warn'
+            );
+          },
+        })
+      );
   }
 }
