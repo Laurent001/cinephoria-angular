@@ -90,6 +90,10 @@
             <strong>{{ "scan-quality" | translate }}</strong>
             {{ scanResult.quality_name }}
           </p>
+          <p class="detail-item">
+            <strong>{{ "scan-price" | translate }}</strong>
+            {{ scanResult.booking_total_price | currency : "EUR" }}
+          </p>
         </ng-container>
 
         <ng-template #invalidDetails>
