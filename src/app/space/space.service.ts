@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
-import { UtilsService } from '../utils/utils.service';
+import { UtilsService } from '../shared/utils/utils.service';
 import { SpaceResponse } from './space';
 
 @Injectable({

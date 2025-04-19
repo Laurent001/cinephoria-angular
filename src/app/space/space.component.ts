@@ -11,9 +11,9 @@ import { BookingService } from '../booking/booking.service';
 import { QRCodeComponent } from '../booking/qrcode/qrcode.component';
 import { FilmService } from '../film/film.service';
 import { OpinionsService } from '../intranet/opinions/opinions.service';
-import { Fields } from '../utils/dynamic-modal-form/dynamic-modal-form';
-import { DynamicModalFormComponent } from '../utils/dynamic-modal-form/dynamic-modal-form.component';
-import { UtilsService } from '../utils/utils.service';
+import { Fields } from '../shared/utils/dynamic-modal-form/dynamic-modal-form';
+import { DynamicModalFormComponent } from '../shared/utils/dynamic-modal-form/dynamic-modal-form.component';
+import { UtilsService } from '../shared/utils/utils.service';
 import { OpinionResponse, SpaceResponse, StatusResponse } from './space';
 import { SpaceService } from './space.service';
 

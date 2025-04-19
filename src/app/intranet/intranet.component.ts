@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Role } from '../app';
 import { AuthService } from '../auth/auth.service';
 import { ScanTicketComponent } from '../booking/qrcode/scan/scan.component';
-import { DashboardComponent } from '../utils/dashboard/dashboard.component';
+import { DashboardComponent } from '../shared/utils/dashboard/dashboard.component';
 import { AuditoriumsComponent } from './auditoriums/auditoriums.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { FilmsComponent } from './films/films.component';

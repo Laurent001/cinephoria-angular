@@ -1,12 +1,11 @@
-import { CommonModule, registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
+import { CommonModule } from '@angular/common';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { switchMap, tap } from 'rxjs';
 import { Auditorium } from '../film/film';
-import { Fields } from '../utils/dynamic-modal-form/dynamic-modal-form';
-import { GenericCrudTableComponent } from '../utils/generic-crud-table/generic-crud-table.component';
-import { UtilsService } from '../utils/utils.service';
+import { Fields } from '../shared/utils/dynamic-modal-form/dynamic-modal-form';
+import { GenericCrudTableComponent } from '../shared/utils/generic-crud-table/generic-crud-table.component';
+import { UtilsService } from '../shared/utils/utils.service';
 import { Incident, MaterialResponse } from './incident';
 import { IncidentService } from './incident.service';
 
@@ -47,9 +46,7 @@ export class IncidentComponent implements OnInit {
   constructor(
     private incidentService: IncidentService,
     private utilsService: UtilsService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
     this.getIncidents();

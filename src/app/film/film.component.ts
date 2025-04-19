@@ -6,7 +6,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { BarRatingModule } from 'ngx-bar-rating';
 import { filter, Observable, take, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -17,7 +17,7 @@ import { CinemaResponse } from '../cinema/cinema';
 import { CinemaService } from '../cinema/cinema.service';
 import { Screening, ScreeningsByFilmResponse } from '../screening/screening';
 import { ScreeningService } from '../screening/screening.service';
-import { SliderComponent } from '../utils/slider/slider.component';
+import { SliderComponent } from '../shared/utils/slider/slider.component';
 import { FilmResponse, GenreResponse } from './film';
 import { FilmService } from './film.service';
 import { GenreService } from './genre.service';
@@ -47,7 +47,7 @@ export class FilmComponent implements OnInit {
   protected filmsFiltered$?: Observable<FilmResponse[]>;
   protected cinemas?: CinemaResponse[];
   protected genres?: GenreResponse[];
-  private datePipe = new DatePipe('en-US'); // Instanciation manuelle
+  private datePipe = new DatePipe('fr-FR');
   filmSelectedId?: number;
   cinemaSelectedId?: number;
   genreSelectedId?: number;
@@ -64,9 +64,7 @@ export class FilmComponent implements OnInit {
     private screeningService: ScreeningService,
     private bookingStateService: BookingStateService,
     private authService: AuthService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
     this.screeningService.screenings$.subscribe((screenings) => {
