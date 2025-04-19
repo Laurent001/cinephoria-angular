@@ -49,7 +49,10 @@
                 *ngIf="isImage(item[getColumnName(column)], column)"
               >
                 <img
-                  [src]="imagesPath + item[getColumnName(column)]"
+                  [src]="
+                    imagesPath + item[getColumnName(column)]
+                      | safe : 'resourceUrl'
+                  "
                   width="150px"
                   height="auto"
                 />

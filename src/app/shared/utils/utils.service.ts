@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { Screening, ScreeningsByFilmResponse } from '../screening/screening';
+import { Screening, ScreeningsByFilmResponse } from '../../screening/screening';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 
 @Injectable({
@@ -70,7 +70,7 @@ export class UtilsService {
 
     for (const day of screenings.screenings) {
       const screening = day.screeningsByDay.find(
-        (screening) => screening.id === screeningIdSelected
+        (screening: Screening) => screening.id === screeningIdSelected
       );
       if (screening) {
         return screening;

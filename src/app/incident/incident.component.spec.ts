@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
-import { UtilsService } from '../utils/utils.service';
-import { Incident } from './incident';
+import { UtilsService } from '../shared/utils/utils.service';
 import { IncidentComponent } from './incident.component';
 import { IncidentService } from './incident.service';
 

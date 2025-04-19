@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { SeatResponse } from '../booking/seat/seat';
-import { RemoveTrailingZerosPipe } from '../utils/pipes/removeTrailingZeros.pipe';
+import { RemoveTrailingZerosPipe } from '../shared/pipes/removeTrailingZeros.pipe';
 import { Screening } from './screening';
 
 @Component({

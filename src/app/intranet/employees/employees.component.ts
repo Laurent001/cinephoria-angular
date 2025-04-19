@@ -1,13 +1,12 @@
-import { CommonModule, registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
+import { CommonModule } from '@angular/common';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { switchMap, tap } from 'rxjs';
 import { User } from 'src/app/app';
 import { LoginService } from 'src/app/login/login.service';
-import { Fields } from 'src/app/utils/dynamic-modal-form/dynamic-modal-form';
-import { GenericCrudTableComponent } from 'src/app/utils/generic-crud-table/generic-crud-table.component';
-import { UtilsService } from 'src/app/utils/utils.service';
+import { Fields } from 'src/app/shared/utils/dynamic-modal-form/dynamic-modal-form';
+import { GenericCrudTableComponent } from 'src/app/shared/utils/generic-crud-table/generic-crud-table.component';
+import { UtilsService } from 'src/app/shared/utils/utils.service';
 import { EmployeesService } from './employees.service';
 
 @Component({

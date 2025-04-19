@@ -4,10 +4,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { switchMap, tap } from 'rxjs';
 import { User } from 'src/app/app';
 import { FilmResponse } from 'src/app/film/film';
+import { Fields } from 'src/app/shared/utils/dynamic-modal-form/dynamic-modal-form';
+import { GenericCrudTableComponent } from 'src/app/shared/utils/generic-crud-table/generic-crud-table.component';
+import { UtilsService } from 'src/app/shared/utils/utils.service';
 import { OpinionResponse, StatusResponse } from 'src/app/space/space';
-import { Fields } from 'src/app/utils/dynamic-modal-form/dynamic-modal-form';
-import { GenericCrudTableComponent } from 'src/app/utils/generic-crud-table/generic-crud-table.component';
-import { UtilsService } from 'src/app/utils/utils.service';
 import { OpinionsService } from './opinions.service';
 
 @Component({
