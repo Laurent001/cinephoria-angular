@@ -32,7 +32,9 @@
     </div>
     <img
       class="booking-poster flex-lg-grow-0 me-lg-3 align-self-center img-fluid"
-      [src]="imagesPath + booking.screening?.film?.poster"
+      [src]="
+        imagesPath + booking.screening?.film?.poster | safe : 'resourceUrl'
+      "
       alt="Affiche du film"
     />
 
@@ -130,7 +132,9 @@
     </div>
     <img
       class="booking-poster"
-      [src]="imagesPath + booking.screening?.film?.poster"
+      [src]="
+        imagesPath + booking.screening?.film?.poster | safe : 'resourceUrl'
+      "
       alt="Affiche du film"
     />
   </div>

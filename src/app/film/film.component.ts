@@ -21,6 +21,7 @@ import { SliderComponent } from '../shared/utils/slider/slider.component';
 import { FilmResponse, GenreResponse } from './film';
 import { FilmService } from './film.service';
 import { GenreService } from './genre.service';
+import { SafePipe } from '../shared/pipes/safe.pipe';
 
 @Component({
   selector: 'app-film',
@@ -38,6 +39,7 @@ import { GenreService } from './genre.service';
     MatInputModule,
     DatePipe,
     BarRatingModule,
+    SafePipe,
   ],
 })
 export class FilmComponent implements OnInit {
