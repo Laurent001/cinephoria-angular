@@ -5,9 +5,9 @@ import { Subscription, switchMap, tap } from 'rxjs';
 import { Auditorium, FilmResponse } from 'src/app/film/film';
 import { FilmService } from 'src/app/film/film.service';
 import { Screening } from 'src/app/screening/screening';
-import { Fields } from 'src/app/utils/dynamic-modal-form/dynamic-modal-form';
-import { GenericCrudTableComponent } from 'src/app/utils/generic-crud-table/generic-crud-table.component';
-import { UtilsService } from 'src/app/utils/utils.service';
+import { Fields } from 'src/app/shared/utils/dynamic-modal-form/dynamic-modal-form';
+import { GenericCrudTableComponent } from 'src/app/shared/utils/generic-crud-table/generic-crud-table.component';
+import { UtilsService } from 'src/app/shared/utils/utils.service';
 import { AuditoriumsService } from '../auditoriums/auditoriums.service';
 import { ScreeningsService } from './screenings.service';
 

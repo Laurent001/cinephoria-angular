@@ -4,9 +4,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { switchMap, tap } from 'rxjs';
 import { FilmResponse } from 'src/app/film/film';
 import { FilmService } from 'src/app/film/film.service';
-import { Fields } from 'src/app/utils/dynamic-modal-form/dynamic-modal-form';
-import { GenericCrudTableComponent } from 'src/app/utils/generic-crud-table/generic-crud-table.component';
-import { UtilsService } from 'src/app/utils/utils.service';
+import { Fields } from 'src/app/shared/utils/dynamic-modal-form/dynamic-modal-form';
+import { GenericCrudTableComponent } from 'src/app/shared/utils/generic-crud-table/generic-crud-table.component';
+import { UtilsService } from 'src/app/shared/utils/utils.service';
 
 @Component({
   selector: 'app-films',

@@ -11,7 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
-import { UtilsService } from 'src/app/utils/utils.service';
+import { UtilsService } from 'src/app/shared/utils/utils.service';
 import { AuthService } from '../auth.service';
 
 @Component({

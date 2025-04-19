@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 import { Fields } from '../dynamic-modal-form/dynamic-modal-form';
 import { DynamicModalFormComponent } from '../dynamic-modal-form/dynamic-modal-form.component';
 import { UtilsService } from '../utils.service';
+import { SafePipe } from '../../pipes/safe.pipe';
 
 @Component({
   selector: 'app-generic-crud-table',
@@ -29,6 +30,7 @@ import { UtilsService } from '../utils.service';
     TranslateModule,
     MatDialogModule,
     DynamicModalFormComponent,
+    SafePipe,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
 })

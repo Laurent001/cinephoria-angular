@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Email } from '../utils/mailer/mailer';
-import { MailerService } from '../utils/mailer/mailer.service';
-import { UtilsService } from '../utils/utils.service';
+import { Email } from '../shared/utils/mailer/mailer';
+import { MailerService } from '../shared/utils/mailer/mailer.service';
+import { UtilsService } from '../shared/utils/utils.service';
 
 @Component({
   selector: 'app-contact',

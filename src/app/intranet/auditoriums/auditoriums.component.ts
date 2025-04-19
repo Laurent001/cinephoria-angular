@@ -1,13 +1,12 @@
-import { CommonModule, registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
+import { CommonModule } from '@angular/common';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { switchMap, tap } from 'rxjs';
 import { CinemaResponse } from 'src/app/cinema/cinema';
 import { Auditorium, QualityResponse } from 'src/app/film/film';
-import { Fields } from 'src/app/utils/dynamic-modal-form/dynamic-modal-form';
-import { GenericCrudTableComponent } from 'src/app/utils/generic-crud-table/generic-crud-table.component';
-import { UtilsService } from 'src/app/utils/utils.service';
+import { Fields } from 'src/app/shared/utils/dynamic-modal-form/dynamic-modal-form';
+import { GenericCrudTableComponent } from 'src/app/shared/utils/generic-crud-table/generic-crud-table.component';
+import { UtilsService } from 'src/app/shared/utils/utils.service';
 import { AuditoriumsService } from './auditoriums.service';
 
 @Component({
@@ -44,9 +43,7 @@ export class AuditoriumsComponent implements OnInit {
   constructor(
     private utilsService: UtilsService,
     private auditoriumsService: AuditoriumsService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
     this.getAuditoriums();

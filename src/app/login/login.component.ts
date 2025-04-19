@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { Role, User } from '../app';
 import { AuthService } from '../auth/auth.service';
 import { CinemaService } from '../cinema/cinema.service';
-import { UtilsService } from '../utils/utils.service';
+import { UtilsService } from '../shared/utils/utils.service';
 import { LoginService } from './login.service';
 
 const ROLE_USER = 3;
