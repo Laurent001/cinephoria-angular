@@ -11,6 +11,7 @@ import { BookingService } from '../booking/booking.service';
 import { QRCodeComponent } from '../booking/qrcode/qrcode.component';
 import { FilmService } from '../film/film.service';
 import { OpinionsService } from '../intranet/opinions/opinions.service';
+import { SafePipe } from '../shared/pipes/safe.pipe';
 import { Fields } from '../shared/utils/dynamic-modal-form/dynamic-modal-form';
 import { DynamicModalFormComponent } from '../shared/utils/dynamic-modal-form/dynamic-modal-form.component';
 import { UtilsService } from '../shared/utils/utils.service';
@@ -29,6 +30,7 @@ import { SpaceService } from './space.service';
     DynamicModalFormComponent,
     BarRatingModule,
     QRCodeComponent,
+    SafePipe,
   ],
 })
 export class SpaceComponent implements OnInit {

@@ -7,13 +7,20 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { FilmResponse } from '../film/film';
 import { FilmService } from '../film/film.service';
+import { SafePipe } from '../shared/pipes/safe.pipe';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule, BarRatingModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    TranslateModule,
+    BarRatingModule,
+    SafePipe,
+  ],
 })
 export class HomeComponent {
   protected films$: Observable<FilmResponse[]>;

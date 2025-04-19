@@ -24,6 +24,7 @@ import { BookingStateService } from './bookingState/booking-state.service';
 import { SeatResponse, SeatsScreeningResponse } from './seat/seat';
 import { SeatComponent } from './seat/seat.component';
 import { SeatService } from './seat/seat.service';
+import { SafePipe } from '../shared/pipes/safe.pipe';
 
 @Component({
   selector: 'app-booking',
@@ -42,6 +43,7 @@ import { SeatService } from './seat/seat.service';
     MatSelectModule,
     MatInputModule,
     BarRatingModule,
+    SafePipe,
   ],
 })
 export class BookingComponent implements OnInit {
