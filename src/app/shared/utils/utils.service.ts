@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { Screening, ScreeningsByFilmResponse } from '../../screening/screening';
+import {
+  Screening,
+  ScreeningsByFilmResponse,
+} from 'src/app/screening/screening';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 
 @Injectable({
