@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { switchMap, tap } from 'rxjs';
+import { catchError, EMPTY, of, switchMap, tap } from 'rxjs';
 import { Auditorium } from '../film/film';
 import { Fields } from '../shared/utils/dynamic-modal-form/dynamic-modal-form';
 import { GenericCrudTableComponent } from '../shared/utils/generic-crud-table/generic-crud-table.component';
@@ -144,20 +144,34 @@ export class IncidentComponent implements OnInit {
       this.getEmptyIncident(),
       incident
     );
+
     this.incidentService
       .updateIncident(incidentModified)
       .pipe(
-        tap((response) => {
-          this.incidents = response.incidents;
-          this.materials = response.materials;
-          this.auditoriums = response.auditoriums;
+        tap({
+          next: (response) => {
+            this.incidents = response.incidents;
+            this.materials = response.materials;
+            this.auditoriums = response.auditoriums;
 
-          this.utilsService.presentAlert(
-            'Mise à jour réussie ',
-            "l'incident a été mise à jour",
-            ['OK'],
-            'success'
-          );
+            this.utilsService.presentAlert(
+              'Mise à jour réussie ',
+              "l'incident a été mise à jour",
+              ['OK'],
+              'success'
+            );
+          },
+          error: (err) => {
+            this.utilsService.presentAlert(
+              'Erreur',
+              "Une erreur est survenue lors de la mise à jour de l'incident",
+              ['OK'],
+              'error'
+            );
+          },
+        }),
+        catchError((err) => {
+          return of(null);
         })
       )
       .subscribe();
@@ -185,30 +199,45 @@ export class IncidentComponent implements OnInit {
                   ['OK'],
                   'success'
                 );
+              }),
+              catchError(() => {
+                this.utilsService.presentAlert(
+                  'Erreur',
+                  "Une erreur est survenue lors de la suppression de l'incident",
+                  ['OK'],
+                  'error'
+                );
+                return EMPTY;
               })
             );
           }
-          return [];
+          return EMPTY;
         })
       )
       .subscribe();
   }
 
   getIncidentResponseModified(incident: Incident, data: any): Incident {
+    const auditoriumId =
+      typeof data.auditorium === 'object'
+        ? data.auditorium.id
+        : data.auditorium;
+    const materialId =
+      typeof data.material === 'object' ? data.material.id : data.material;
+
+    const selectedAuditorium = this.auditoriums.find(
+      (a) => a.id === auditoriumId
+    );
+    const selectedMaterial = this.materials.find((m) => m.id === materialId);
+
     return {
       ...incident,
       id: data.id !== '' ? data.id : undefined,
       description: data.description,
       is_solved: data.is_solved,
       added_date: data.added_date,
-      auditorium: {
-        id: data.auditorium,
-        ...(incident.auditorium || {}),
-      } as Auditorium,
-      material: {
-        id: data.material,
-        ...(incident.material || {}),
-      } as MaterialResponse,
+      auditorium: selectedAuditorium,
+      material: selectedMaterial,
     };
   }
 }

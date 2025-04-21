@@ -1,7 +1,1 @@
-{
-  "typescript.preferences.autoImportFileExcludePatterns": [
-    "@ionic/angular/common",
-    "@ionic/angular"
-  ],
-  "workbench.editor.enablePreview": false
-}
+{}
