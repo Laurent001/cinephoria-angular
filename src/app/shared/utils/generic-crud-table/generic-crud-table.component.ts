@@ -13,11 +13,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { User } from 'src/app/app';
 import { AuthService } from 'src/app/auth/auth.service';
+import { SafePipe } from 'src/app/shared/pipes/safe.pipe';
 import { environment } from 'src/environments/environment';
 import { Fields } from '../dynamic-modal-form/dynamic-modal-form';
 import { DynamicModalFormComponent } from '../dynamic-modal-form/dynamic-modal-form.component';
 import { UtilsService } from '../utils.service';
-import { SafePipe } from '../../pipes/safe.pipe';
 
 @Component({
   selector: 'app-generic-crud-table',
