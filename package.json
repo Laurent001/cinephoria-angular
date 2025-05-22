@@ -9,9 +9,12 @@
     "watch": "ng build --watch --configuration=development",
     "build:android": "ng build --configuration=development && npx cap add android && npx cap sync android && node scripts/fix-manifest.js && npx cap open android",
     "build:sync-android": "ng build --configuration=development && npx cap sync android && node scripts/enrich-manifest.js",
-    "deploy-front-dev-for-android": "sudo scp -P 903 -r ~/www/formation/studi/cinephoria/frontend/dist/browser/* root@192.168.1.77:/var/www/html/cinephoria/",
+    "deploy-front-dev": "sudo scp -P 903 -r ~/www/formation/studi/cinephoria/frontend/dist/browser/* root@77.199.152.70:/var/www/html/cinephoria/",
+    "delete-front-dev": "sudo ssh -p 903 root@77.199.152.70 'rm -rf /var/www/html/cinephoria/*'",
     "test": "CHROME_BIN=/usr/bin/chromium ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "start:dev-tunnel": "autossh -M 0 -N -R 3001:localhost:3000 laurent@77.199.152.70",
+    "dev": "npm run start:dev-tunnel & ng serve"
   },
   "private": true,
   "dependencies": {
