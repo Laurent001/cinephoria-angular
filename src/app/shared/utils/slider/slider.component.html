@@ -2,23 +2,26 @@
   <i
     (click)="prev()"
     class="bi bi-chevron-left"
-    [ngClass]="{'text-primary': currentIndex > 0, 'text-secondary': currentIndex === 0}"
+    [ngClass]="{
+      'text-primary': currentIndex > 0,
+      'text-secondary': currentIndex === 0
+    }"
   ></i>
 
   <div class="slides">
     <span
       *ngFor="let day of visibleDays"
       (click)="onDayClick(day)"
-      [ngClass]="{'bg-primary text-white': day === selectedDay}"
+      [ngClass]="{ 'bg-primary text-white': isSameDay(day, selectedDay!) }"
     >
-      {{ day | date:'EEE d MMM' }}
+      {{ day | date : "EEE d MMM" }}
     </span>
   </div>
 
   <i
     (click)="next()"
     class="bi bi-chevron-right"
-    [ngClass]="{'text-primary': hasMoreDays, 'text-secondary': !hasMoreDays}"
+    [ngClass]="{ 'text-primary': hasMoreDays, 'text-secondary': !hasMoreDays }"
   ></i>
 </div>
 
@@ -29,7 +32,8 @@
       [screening]="screening"
       (click)="selectScreening(screening)"
       [ngClass]="{
-        'bg-primary text-white screening': (selectedScreening?.id || booking?.screening?.id) === screening.id
+        'bg-primary text-white screening':
+          (selectedScreening?.id || booking?.screening?.id) === screening.id
       }"
     >
     </app-screening>
