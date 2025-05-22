@@ -50,19 +50,13 @@ export class SliderComponent {
       this.seatsSelected = this.booking.seats;
     }
 
-    this.updateVisibleDays();
+    const selectedScreening =
+      this.booking?.screening || this.screenings?.screeningSelected;
 
-    if (this.visibleDays.length > 0) {
-      this.onDayClick(this.visibleDays[0]);
-    }
-  }
-
-  updateVisibleDays() {
     if (this.screenings?.screenings) {
-      const screeningsResponse: ScreeningsByFilmResponse = this.screenings;
-      const uniqueDays: string[] = Array.from(
+      const allDays: string[] = Array.from(
         new Set(
-          screeningsResponse.screenings.flatMap(
+          this.screenings.screenings.flatMap(
             (screeningByDay: ScreeningsByDayResponse) =>
               screeningByDay.screeningsByDay.map((screening: Screening) => {
                 const date = new Date(screening.start_time);
@@ -72,12 +66,49 @@ export class SliderComponent {
         )
       ).sort();
 
-      this.visibleDays = uniqueDays
-        .slice(this.currentIndex, this.currentIndex + this.visibleDaysCount)
-        .map((day) => new Date(day + 'T00:00:00Z'));
-    }
+      if (selectedScreening) {
+        const selectedDateStr = new Date(selectedScreening.start_time)
+          .toISOString()
+          .split('T')[0];
+        const selectedIndex = allDays.findIndex(
+          (day) => day === selectedDateStr
+        );
 
-    this.onDayClick(this.visibleDays[0]);
+        if (selectedIndex !== -1) {
+          this.currentIndex = Math.max(
+            0,
+            Math.min(selectedIndex, allDays.length - this.visibleDaysCount)
+          );
+        }
+      }
+
+      this.updateVisibleDays();
+      const selectedDay = selectedScreening
+        ? new Date(new Date(selectedScreening.start_time).toDateString())
+        : new Date(allDays[0] + 'T00:00:00Z');
+
+      this.onDayClick(selectedDay);
+    }
+  }
+
+  updateVisibleDays() {
+    if (!this.screenings?.screenings) return;
+
+    const allDays: string[] = Array.from(
+      new Set(
+        this.screenings.screenings.flatMap(
+          (screeningByDay: ScreeningsByDayResponse) =>
+            screeningByDay.screeningsByDay.map((screening: Screening) => {
+              const date = new Date(screening.start_time);
+              return date.toISOString().split('T')[0];
+            })
+        )
+      )
+    ).sort();
+
+    this.visibleDays = allDays
+      .slice(this.currentIndex, this.currentIndex + this.visibleDaysCount)
+      .map((day) => new Date(day + 'T00:00:00Z'));
   }
 
   isScreeningVisible(screening: Screening): boolean {
@@ -181,5 +212,13 @@ export class SliderComponent {
       ),
     ];
     return this.currentIndex + this.visibleDaysCount < uniqueDays.length;
+  }
+
+  isSameDay(date1: Date, date2: Date): boolean {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
   }
 }
