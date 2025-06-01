@@ -21,6 +21,7 @@ import { ScreeningsService } from './screenings.service';
 })
 export class ScreeningsComponent implements OnInit {
   private filmDeletedSubscription?: Subscription;
+  private filmAddedSubscription?: Subscription;
   private auditoriumDeletedSubscription?: Subscription;
   private auditoriumAddedSubscription?: Subscription;
   screenings: Screening[] = [];
@@ -56,24 +57,31 @@ export class ScreeningsComponent implements OnInit {
   ngOnInit() {
     this.getScreenings();
 
-    this.filmDeletedSubscription = this.filmService.onFilmDeleted(() => {
-      this.getScreenings();
-    });
+    this.filmDeletedSubscription = this.filmService.filmDeleted$
+      .pipe(tap(() => this.getScreenings()))
+      .subscribe();
+
+    this.filmAddedSubscription = this.filmService.filmAdded$
+      .pipe(tap(() => this.getScreenings()))
+      .subscribe();
 
     this.auditoriumDeletedSubscription =
-      this.auditoriumsService.onAuditoriumDeleted(() => {
-        this.getScreenings();
-      });
+      this.auditoriumsService.auditoriumDeleted$
+        .pipe(tap(() => this.getScreenings()))
+        .subscribe();
 
-    this.auditoriumAddedSubscription =
-      this.auditoriumsService.onAuditoriumAdded(() => {
-        this.getScreenings();
-      });
+    this.auditoriumAddedSubscription = this.auditoriumsService.auditoriumAdded$
+      .pipe(tap(() => this.getScreenings()))
+      .subscribe();
   }
 
   ngOnDestroy() {
     if (this.filmDeletedSubscription) {
       this.filmDeletedSubscription.unsubscribe();
+    }
+
+    if (this.filmAddedSubscription) {
+      this.filmAddedSubscription.unsubscribe();
     }
 
     if (this.auditoriumDeletedSubscription) {

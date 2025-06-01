@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UtilsService } from '../shared/utils/utils.service';
 import { OpinionResponse } from '../space/space';
@@ -10,7 +10,11 @@ import { FilmResponse } from './film';
   providedIn: 'root',
 })
 export class FilmService {
-  filmDeleted: EventEmitter<void> = new EventEmitter<void>();
+  private filmDeletedSubject = new Subject<void>();
+  private filmAddedSubject = new Subject<void>();
+
+  filmDeleted$: Observable<void> = this.filmDeletedSubject.asObservable();
+  filmAdded$: Observable<void> = this.filmAddedSubject.asObservable();
 
   constructor(private http: HttpClient, private utilsService: UtilsService) {}
 
@@ -54,24 +58,18 @@ export class FilmService {
       .delete<FilmResponse[]>(
         `${environment.url}/api/intranet/film/delete/${filmId}`
       )
-      .pipe(
-        tap(() => {
-          this.filmDeleted.emit();
-        })
-      );
-  }
-
-  onFilmDeleted(callback: () => void) {
-    return this.filmDeleted.subscribe(callback);
+      .pipe(tap(() => this.filmDeletedSubject.next()));
   }
 
   addFilm(film: FilmResponse): Observable<FilmResponse[]> {
     const formData = this.utilsService.createFormData(film);
 
-    return this.http.post<FilmResponse[]>(
-      `${environment.url}/api/intranet/film/add`,
-      formData
-    );
+    return this.http
+      .post<FilmResponse[]>(
+        `${environment.url}/api/intranet/film/add`,
+        formData
+      )
+      .pipe(tap(() => this.filmAddedSubject.next()));
   }
 
   getOpinion(
