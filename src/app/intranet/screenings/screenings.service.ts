@@ -29,9 +29,10 @@ export class ScreeningsService {
   }
 
   addScreening(screening: Screening): Observable<ScreeningResponse> {
+    const data = { screening, locale: 'Europe/Paris' };
     return this.http.post<ScreeningResponse>(
       `${environment.url}/api/intranet/screening/add`,
-      screening
+      data
     );
   }
 }
