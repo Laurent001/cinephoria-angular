@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, Subject, tap } from 'rxjs';
 import { Auditorium, AuditoriumResponse } from 'src/app/film/film';
 import { UtilsService } from 'src/app/shared/utils/utils.service';
 import { environment } from 'src/environments/environment';
@@ -9,8 +9,13 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class AuditoriumsService {
-  auditoriumDeleted: EventEmitter<void> = new EventEmitter<void>();
-  auditoriumAdded: EventEmitter<void> = new EventEmitter<void>();
+  private auditoriumDeletedSubject = new Subject<void>();
+  private auditoriumAddedSubject = new Subject<void>();
+
+  auditoriumDeleted$: Observable<void> =
+    this.auditoriumDeletedSubject.asObservable();
+  auditoriumAdded$: Observable<void> =
+    this.auditoriumAddedSubject.asObservable();
 
   constructor(private http: HttpClient, private utilsService: UtilsService) {}
 
@@ -32,15 +37,7 @@ export class AuditoriumsService {
       .delete<AuditoriumResponse>(
         `${environment.url}/api/intranet/auditorium/delete/${auditoriumId}`
       )
-      .pipe(
-        tap(() => {
-          this.auditoriumDeleted.emit();
-        })
-      );
-  }
-
-  onAuditoriumDeleted(callback: () => void) {
-    return this.auditoriumDeleted.subscribe(callback);
+      .pipe(tap(() => this.auditoriumDeletedSubject.next()));
   }
 
   addAuditorium(auditorium: Auditorium): Observable<AuditoriumResponse> {
@@ -49,14 +46,6 @@ export class AuditoriumsService {
         `${environment.url}/api/intranet/auditorium/add`,
         auditorium
       )
-      .pipe(
-        tap(() => {
-          this.auditoriumAdded.emit();
-        })
-      );
-  }
-
-  onAuditoriumAdded(callback: () => void) {
-    return this.auditoriumAdded.subscribe(callback);
+      .pipe(tap(() => this.auditoriumAddedSubject.next()));
   }
 }
