@@ -6,8 +6,13 @@
   >
     <div class="booking-info flex-grow-1 me-lg-3 align-self-center">
       <p>
-        <strong>{{ "space-screening-start_time" | translate }}</strong>
+        <strong>{{ "space-screening-date" | translate }}</strong>
         {{ booking.screening?.start_time | date : "dd MMMM yyyy" }}
+      </p>
+      <p>
+        <strong>{{ "space-screening-time" | translate }}</strong>
+        {{ booking.screening?.start_time | date : "hh:mm" }} -
+        {{ booking.screening?.end_time | date : "hh:mm" }}
       </p>
       <p>
         <strong>{{ "space-screening-film" | translate }}</strong>
@@ -56,8 +61,13 @@
   <div class="booking-card" *ngFor="let booking of space.closedBookings">
     <div class="booking-info">
       <p>
-        <strong>{{ "space-screening-start_time" | translate }}</strong>
+        <strong>{{ "space-screening-date" | translate }}</strong>
         {{ booking.screening?.start_time | date : "dd MMMM yyyy" }}
+      </p>
+      <p>
+        <strong>{{ "space-screening-time" | translate }}</strong>
+        {{ booking.screening?.start_time | date : "hh:mm" }} -
+        {{ booking.screening?.end_time | date : "hh:mm" }}
       </p>
       <p>
         <strong>{{ "space-screening-film" | translate }}</strong>
