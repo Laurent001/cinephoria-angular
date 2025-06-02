@@ -1,5 +1,4 @@
-import { CommonModule, registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
+import { CommonModule } from '@angular/common';
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -28,7 +27,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private translateService: TranslateService,
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router,
     private cinemaService: CinemaService
   ) {
