@@ -7,6 +7,7 @@ import { Page, Role, User } from './app';
 import { AuthService } from './auth/auth.service';
 import { CinemaResponse, OpeningHoursResponse } from './cinema/cinema';
 import { CinemaService } from './cinema/cinema.service';
+import { StatusBar } from '@capacitor/status-bar';
 
 @Component({
   selector: 'app-root',
@@ -36,6 +37,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     const lang = 'fr';
+    StatusBar.hide();
 
     this.translateService
       .use(lang)
