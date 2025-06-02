@@ -1,4 +1,27 @@
 <div class="container-fluid p-0">
+  <!-- User info en haut -->
+  <div
+    class="user-info-bar bg-light py-2 text-end pe-3"
+    *ngIf="authService.user$ | async as user"
+  >
+    <ng-container *ngIf="user.role.name !== 'guest'; else guestTemplate">
+      <span>{{ user.first_name }} {{ user.last_name }}</span>
+      <span class="text-muted ms-2">[{{ user.role.name }}]</span>
+      <button
+        class="btn btn-link btn-sm ms-3"
+        (click)="logout()"
+        title="{{ 'menu-logout' | translate }}"
+      >
+        <i class="bi bi-box-arrow-right"></i>
+      </button>
+    </ng-container>
+    <ng-template #guestTemplate>
+      <a class="btn btn-link btn-sm" [routerLink]="['/login']">
+        {{ "login" | translate }}</a
+      >
+    </ng-template>
+  </div>
+
   <div class="row">
     <!-- Offcanvas Sidebar -->
     <div
