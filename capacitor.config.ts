@@ -18,10 +18,6 @@ const config: CapacitorConfig = {
     captureInput: true,
     webContentsDebuggingEnabled: true,
   },
-  server: {
-    url: 'https://cinephoria.affiche.site',
-    cleartext: false,
-  },
 };
 
 export default config;
