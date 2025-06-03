@@ -23,7 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslateModule } from '@ngx-translate/core';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 import { environment } from 'src/environments/environment';
 import { Fields } from './dynamic-modal-form';
 
@@ -119,8 +119,9 @@ export class DynamicModalFormComponent implements OnInit {
           typeof control.value === 'string' &&
           control.value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/)
         ) {
-          formData[key] = moment
-            .tz(control.value, 'YYYY-MM-DDTHH:mm', 'Europe/Paris')
+          const localDate = new Date(control.value);
+          formData[key] = moment(localDate)
+            .tz('Europe/Paris')
             .format('YYYY-MM-DD HH:mm:ss');
         }
       });
