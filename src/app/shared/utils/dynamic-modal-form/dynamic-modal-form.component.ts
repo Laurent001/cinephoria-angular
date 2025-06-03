@@ -119,10 +119,12 @@ export class DynamicModalFormComponent implements OnInit {
           typeof control.value === 'string' &&
           control.value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/)
         ) {
-          const localDate = new Date(control.value);
-          formData[key] = moment(localDate)
-            .tz('Europe/Paris')
-            .format('YYYY-MM-DD HH:mm:ss');
+          const parisDate = moment.tz(
+            control.value,
+            'YYYY-MM-DDTHH:mm',
+            'Europe/Paris'
+          );
+          formData[key] = parisDate.utc().format('YYYY-MM-DD HH:mm:ss');
         }
       });
 
